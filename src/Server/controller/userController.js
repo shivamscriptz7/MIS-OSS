@@ -25,6 +25,7 @@ const emailRegex = /^[a-zA-Z]+[a-zA-Z0-9._-]+@(echelonedge.com)$/
 const singleSpaceValidation = /^[a-zA-Z0-9-_](\s?[a-zA-Z0-9-_]){0,50}$/
 //const singleSpace = /^[a-zA-Z0-9-_](\s?[a-zA-Z0-9-_]){0,50}$/
 
+
 //const alphabet=
 // var myCon = connection.then((connection) => {
 //     dbCon = connection;
