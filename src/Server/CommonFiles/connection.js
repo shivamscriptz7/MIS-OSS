@@ -21,10 +21,10 @@ const dbConnection = new Promise((resolve, reject) => {
     try {
         const pool = new Pool({
             user: 'postgres',
-            password: 'india@123',
+            password: 'India@123',
             host: 'localhost',
             port: 5432,
-            database: 'MIS_OSS',
+            database: 'MIS',
             max: 20 // same as poolMax in Oracle
         });
 
