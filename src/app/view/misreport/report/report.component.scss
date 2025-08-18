@@ -1,0 +1,370 @@
+.reportpage_section .report_lstng .row .col-sm-12 {
+    padding: 0px 2px;
+}
+
+.reportpage_section .report_lstng h4 {
+    color: #696f7f;
+    font-size: 1rem;
+    font-family: "Poppins-SemiBold";
+    position: relative;
+    padding: 0 10px;
+}
+
+.reportpage_section .report_lstng h4::before {
+    content: '';
+    background-color: #696f7f;
+    width: 100%;
+    position: absolute;
+    height: 1px;
+    bottom: -7px;
+    left: 0px;
+    opacity: 0.4;
+}
+
+
+
+/***********************************/
+.reportpage_section .filter_icon {
+    text-align: right;
+    padding: 2px 7px;
+    margin: 0px 0px 0px 8px;
+    color: #fff;
+    font-family: 'Poppins-Medium';
+    background-color: #182848;
+    border-radius: 8px;
+    font-size: .9rem;
+    cursor: pointer;
+
+}
+
+.reportpage_section .filter_icon:disabled,
+.reportpage_section .export-btn button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.reportpage_section .filter_icon i.fas.fa-filter {
+    margin-right: 2px;
+    padding: 4px 0px 0px;
+}
+
+.reportpage_section .filter_table_design .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.reportpage_section .filter_table_design .title h4 {
+    color: #696f7f;
+    font-size: 1rem;
+    font-family: "Poppins-SemiBold";
+    position: relative;
+    padding: 0 10px;
+}
+
+.reportpage_section .filter_table_design .title:before {
+    content: "";
+    background-color: #696f7f;
+    width: 100%;
+    position: absolute;
+    height: 1px;
+    bottom: 2px;
+    left: 0;
+    opacity: .4;
+}
+
+.reportpage_section .filter-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 999;
+    padding: 10px 20px;
+    box-shadow: 0 3px 10px #4b6cb733;
+    width: 270px;
+    height: 100%;
+    background-color: #fff;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    visibility: visible;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+}
+
+.reportpage_section.filter_open::before {
+    content: '';
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 5;
+}
+
+.reportpage_section.filter_open .filter-sidebar {
+    visibility: visible;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.reportpage_section .filter-sidebar h2 {
+    margin-bottom: 20px;
+    color: #4b6cb7;
+    font-family: "Poppins-SemiBold";
+    font-size: 1.2rem;
+}
+
+.reportpage_section .filter-sidebar button.close {
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    border: none;
+    background-color: transparent;
+    color: #696f7f;
+    font-size: 1.4rem;
+}
+
+.reportpage_section .filter-sidebar .form-group {
+    margin-bottom: 14px;
+}
+
+.reportpage_section .filter-sidebar .form-group .form-control,
+.reportpage_section .filter-sidebar .form-group .form-select {
+    height: 34px;
+    font-size: 13px;
+    border-radius: 10px;
+}
+
+.reportpage_section .filter-sidebar .form-group label {
+    margin-bottom: 2px;
+    color: #4f4a3f;
+    font-size: 13px;
+}
+
+.reportpage_section .filter-sidebar .submit_button-filtr {
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 30px);
+    left: 15px;
+}
+
+.reportpage_section .filter-sidebar .submit_button-filtr button {
+    width: 100%;
+    min-width: auto !important;
+    margin: 0 2px;
+}
+
+.reportpage_section .filter-sidebar .submit_button-filtr .btn-reset {
+    border: 1px solid var(--blue2);
+    border-radius: 8px;
+    color: var(--blue2);
+    min-width: 120px;
+    background-color: transparent;
+    font-size: 14px;
+    letter-spacing: 0px;
+    box-shadow: 0 12px 24px #0000000d;
+}
+
+.reportpage_section .filter-sidebar .submit_button-filtr .btn-submit {
+    background: transparent linear-gradient(180deg, #4B6CB7 0%, #182848 100%) 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    color: #fff;
+    min-width: 120px;
+    border: 1px solid #4B6CB7;
+    font-size: 14px;
+    letter-spacing: 0px;
+    box-shadow: 7px 7px 20px #4b6cb766;
+}
+
+.reportpage_section .filter-sidebar .form-group input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+}
+
+/************No Data Placeholder*************/
+.reportpage_section .placeholder_box {
+    position: relative;
+    height: calc(100vh - 200px);
+}
+
+.reportpage_section .placeholder_box .without_box_error {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.reportpage_section .placeholder_box .without_box_error h2 {
+    color: #cc2a2a;
+    font-size: 34px;
+    margin-bottom: 5px;
+    font-family: "Poppins-SemiBold";
+    text-transform: uppercase;
+}
+
+.reportpage_section .placeholder_box .without_box_error img {
+    width: 280px;
+}
+
+.reportpage_section .placeholder_box .withoutdata_box {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.reportpage_section .placeholder_box .withoutdata_box img {
+    max-width: 190px;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.reportpage_section .placeholder_box .withoutdata_box p,
+.reportpage_section .placeholder_box .without_box_error p {
+    color: #696f7f;
+    font-family: 'Poppins-Medium';
+    font-size: 14px;
+}
+
+/**************Custome Check box*****************/
+.reportpage_section .custom_radio {
+    display: block;
+    position: relative;
+    padding-left: 23px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #696f7f;
+    font-size: 13px;
+    font-family: 'Poppins-Medium';
+    display: flex;
+    align-items: center;
+}
+
+/* Hide the browser's default radio button */
+.reportpage_section .custom_radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    left: 0;
+    top: 2px;
+}
+
+/* Create a custom radio button */
+.reportpage_section .custom_radio .checkmark {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+    border-radius: 50%;
+    border: 1px solid #18284880;
+}
+
+/* On mouse-over, add a grey background color */
+.reportpage_section .custom_radio:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.reportpage_section .custom_radio input:checked~.checkmark {
+    background-color: #182848;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.reportpage_section .custom_radio .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.reportpage_section .custom_radio input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.reportpage_section .custom_radio .checkmark:after {
+    top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+/******************************/
+.reportpage_section .custom_matselect ::ng-deep.mat-form-field-label {
+    display: flex;
+}
+
+.reportpage_section .custom_matselect ::ng-deep.mat-form-field-label.mat-form-field-empty span {
+    line-height: 2.1;
+    height: 100%;
+    display: flex;
+    font-size: 13px;
+}
+
+.reportpage_section .custom_matselect ::ng-deep.mat-form-field-label.mat-form-field-empty {
+    line-height: 2.1;
+    font-size: 13px;
+}
+
+.reportpage_section .report_datepicker ::ng-deep.dp-picker-input {
+    border: none;
+    /* display: none; */
+    width: 100%;
+    margin-top: -4px;
+    padding: 0px;
+}
+
+::ng-deep.dp-material .dp-calendar-weekday {
+    font-size: 12px;
+}
+
+::ng-deep.dp-material .dp-calendar-month,
+::ng-deep.dp-material .dp-calendar-day {
+    font-size: 14px;
+}
+
+::ng-deep.dp-material .dp-selected {
+    background-color: #182848 !important;
+    border-color: #182848 !important;
+}
+
+::ng-deep.dp-material .dp-current-day {
+    border-color: #182848 !important;
+}
+
+::ng-deep.dp-material .dp-nav-header-btn {
+    text-align: left;
+}
+
+::ng-deep.mat-select-min-line {
+    font-size: 12px;
+    color: #212529;
+}
+
+::ng-deep.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
+::ng-deep.mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element {
+    background: #3f51b5 !important;
+}
+
+::ng-deep.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+::ng-deep.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #3f51b5 !important;
+}

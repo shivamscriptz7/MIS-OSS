@@ -1,0 +1,46 @@
+.pagenot-found {
+    height: calc(100vh - 30px);
+    border: 1px solid #DADEE1;
+    border-radius: 4px;
+    margin-top: 15px;
+    width: calc(100% - 0px);
+    text-align: center;
+  }
+  .pagenot-found h4{
+    color: var(--blue);
+    font-family: "Poppins-SemiBold";
+    font-size: 2.2rem;
+    margin-bottom: 4px;
+  }
+  .pagenot-found p{
+    color: var(--gray);
+    font-family: "Poppins-Regular";
+    font-size: 1.1rem;
+  }
+  .pagenot-found img{
+    max-width: 400px;
+  }
+  .pagenot-found button.go_login{
+    border-radius: 6px;
+    font-size: .9rem;
+    min-width: 140px;
+    font-weight: 400;
+    color: #fff;
+    background: transparent linear-gradient(180deg,#4B6CB7 0%,#182848 100%) 0% 0% no-repeat padding-box;
+    padding: 8px 10px;
+  }
+  .pagenot-found button.go_login:hover,
+  .pagenot-found button.go_login:focus,
+  .pagenot-found button.go_login:active{
+    background: transparent linear-gradient(180deg,#4B6CB7 0%,#182848 100%) 0% 0% no-repeat padding-box;
+  }
+  .center-sec{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    width: calc(100% - 30px);
+    text-align: center;
+    left: 0;
+    right: 0;
+}

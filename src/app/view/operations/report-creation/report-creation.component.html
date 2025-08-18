@@ -1,0 +1,346 @@
+<div class="modal-dialog modal_all" (click)="collapseMatTree()">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">{{title}}
+            </h5>
+            <button type="button" class="btn-close" [mat-dialog-close]="false"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="reportCreationForm" autocomplete="off">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group mb-3 report_crt_dropdwon">
+                            <label class="form-label">Type<span class="requireds"></span></label>
+                            <mat-form-field class="example-full-width w-100">
+                                <input class="form-control" (keydown)="$event.preventDefault()"
+                                    [readonly]="typeNameInput" type="text" placeholder="{{ getSelectedReportType() }}"
+                                    aria-label="Number" [required]="this.typeRequired" [matAutocomplete]="auto"
+                                    formControlName="TYPE_NAME" matInput>
+                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                    <mat-option disabled></mat-option>
+                                    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                                        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                                            <button mat-icon-button matTreeNodeToggle
+                                                [attr.aria-label]="'toggle ' + node.filename">
+                                                <mat-icon class="mat-icon-rtlh-mirror"
+                                                    *ngIf="node.children?.length > 0">
+                                                    {{
+                                                    treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'
+                                                    }}
+                                                </mat-icon>
+                                            </button>
+                                            <span *ngIf="node.children?.length >0">{{ node.display }}</span>
+                                            <mat-radio-button class="radio_cutom_mat" *ngIf="node.children.length == 0"
+                                                (change)="selectDropDownValue(node)"
+                                                [checked]="node.display == typeName">
+                                                {{ node.display }}
+                                            </mat-radio-button>
+                                        </mat-tree-node>
+                                    </mat-tree>
+                                </mat-autocomplete>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Report Name<span class="requireds"></span></label>
+                            <input type="text" formControlName="REPO_NAME" maxlength="50"
+                                placeholder="Enter report name" class="form-control">
+                            <span class="text-danger mat-error"
+                                *ngIf="(reportFormcontrol['REPO_NAME'].touched)&& reportFormcontrol['REPO_NAME'].invalid">
+                                <div *ngIf="reportFormcontrol['REPO_NAME'].errors?.['required']"> Please enter report
+                                    name.
+                                </div>
+                                <div *ngIf="reportFormcontrol['REPO_NAME'].errors?.['pattern']">Please enter only single
+                                    space.
+                                </div>
+
+                                <div *ngIf="reportFormcontrol['REPO_NAME'].errors?.['maxlength']"> Maximun length is
+                                    only 50 characters.</div>
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-4">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Report Header<span class="requireds"></span></label>
+                            <input type="text" formControlName="REPO_HEADER" maxlength="50"
+                                placeholder="Enter report header" class="form-control">
+                            <span class="text-danger mat-error"
+                                *ngIf="(reportFormcontrol['REPO_HEADER'].touched)&& reportFormcontrol['REPO_HEADER'].invalid">
+                                <div *ngIf="reportFormcontrol['REPO_HEADER'].errors?.['required']"> Please enter
+                                    report header.
+                                </div>
+                                <div *ngIf="reportFormcontrol['REPO_HEADER'].errors?.['pattern']">Please enter only
+                                    single space.
+                                </div>
+                                <div *ngIf="reportFormcontrol['REPO_HEADER'].errors?.['maxlength']">Maximun length is
+                                    only 50 characters.</div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- drop down -->
+
+                    <div class="col-sm-4">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Query / Procedure<span class="requireds"></span></label>
+                            <select formControlName="PROCESS_TYPE" class="form-select"
+                                (change)="getFilterQueryBased($event)">
+                                <option value='' disabled selected>Select option</option>
+                                <option value="1">Query</option>
+                                <option value="2">Procedure</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Scheduler / Immediate execute<span
+                                    class="requireds"></span></label>
+                            <select id="2" formControlName="EXECUTION_TYPE" (change)="selectedDrpdwnValue($event)"
+                                class="form-select">
+                                <option value='' disabled selected>Select option</option>
+                                <option *ngFor="let EXECUTION_TYPE of selectedObject" [value]="EXECUTION_TYPE.id">
+                                    {{ EXECUTION_TYPE.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-4"
+                        *ngIf=" this.reportCreationForm.value.EXECUTION_TYPE =='2' && this.reportCreationForm.value.PROCESS_TYPE =='1' ">
+                        <div class=" form-group mb-3 query_radio">
+                            <mat-radio-group class="prov_radio itsm_radio" aria-label="Select an option"
+                                (change)="radioButton($event)" formControlName="FILTER_TYPE">
+                                <label class="label_first">Filter Required <span class="asterisk_red">*</span></label>
+                                <mat-radio-button [disabled]="radioBtnDisable" value=1>Yes</mat-radio-button>
+                                <mat-radio-button [disabled]="radioBtnDisable" value=0>No
+                                </mat-radio-button>
+                            </mat-radio-group>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group"
+                            *ngIf="hideShowCheckbox && this.reportCreationForm.value.EXECUTION_TYPE =='2'">
+                            <label>Select Value</label>
+                            <div class="d-flex reportcreatn_checkbox">
+                                <div class="chekbox_div" *ngIf="hideShowCheckbox">
+                                    <label>Circle</label>
+                                    <input type="checkbox" formControlName="REPORT_CIRCLE" value="1"
+                                        [attr.disabled]="reportCreationForm.value.REPORT_BA === true ? true : null"
+                                        (click)="checkBoxData($event,'circle' )">
+                                </div>
+                                <div class="chekbox_div" *ngIf="hideShowCheckbox">
+                                    <label>BA</label>
+                                    <input type="checkbox" formControlName="REPORT_BA" value="1"
+                                        (click)="checkBoxData($event, 'ba')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- form array -->
+
+                    <div class="col-sm-8"
+                        *ngIf="hideShowCheckbox && this.reportCreationForm.value.EXECUTION_TYPE =='2'">
+                        <div class="form-group mb-3">
+                            <label>Add Filter</label>
+                            <div class="report_filter_field" [formGroup]='filterTypeForm'>
+                                <div style="display: flex; width: 100%; justify-content: space-between;">
+                                    <div class="form-group">
+                                        <select class="form-select" formControlName="type">
+                                            <option value='' disabled selected>Select option</option>
+                                            <option>Date</option>
+                                            <option>String/Number</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group p_relative">
+                                        <input type="text" class="form-control" placeholder="Enter filter variable name"
+                                            formControlName='input' (input)="inputValidation($event)"
+                                            (keydown.space)="$event.preventDefault()" maxlength="20">
+
+                                        <span class="text-danger mat-error" *ngIf="validationInput" touched>
+                                            <div>Keyword not Allowed in input field</div>
+                                        </span>
+
+                                        <span class="text-danger mat-error"
+                                            *ngIf="(filterTypeForm.controls['input'].touched)&& filterTypeForm.controls['input'].invalid">
+                                            <div *ngIf="filterTypeForm.controls['input'].errors?.['pattern']">Please
+                                                enter valid
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div class="form-group btn_create_fltr">
+                                        <button class="btn btn-primary" (click)="onAddTableData()"
+                                            [disabled]="this.filterTypeForm.invalid || !filterTypeForm.dirty || this.disableAddBtn">Add</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="table-responsive listing-table report_cret_table"
+                            *ngIf="this.tableData?.length > 0">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Type</th>
+                                        <th>Filter var</th>
+                                        <th>Remark</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let data of tableData; let i = index">
+                                        <td>{{ i+1 }}</td>
+                                        <td title="{{data.type}}">
+                                            {{data.type?.length>18? (data.type | slice:0:18)+'...':data.type}}
+                                        </td>
+                                        <td title="{{data.input}}">
+                                            {{data.input?.length>18? (data.input | slice:0:18)+'...':data.input}}
+                                        </td>
+                                        <td title="{{data.query}}">
+                                            {{data.query?.length>40? (data.remarks | slice:0:40)+'...':data.remarks}}
+                                        </td>
+                                        <td><button (click)='deleteTableData(i,data)' title="Delete">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- form array  -->
+
+                    <div class="col-sm-12" *ngIf="this.reportCreationForm.get('PROCESS_TYPE')?.value == '1'">
+                        <div class="form-group mb-3 query_textarea">
+                            <label class="form-label">{{queryLabel}}<span class="requireds"></span></label>
+                            <textarea type="text" formControlName="QUERY" [placeholder]="placeholderText"
+                                class="form-control" (input)="inputQueryFunction($event)"
+                                [ngStyle]="{ color: this.misMatchVarArray.length > 0 ? 'red' : 'black' }"> </textarea>
+
+                            <div *ngIf="this.misMatchVarArray.length > 0 && this.reportCreationForm.value.EXECUTION_TYPE =='2'"
+                                touched>
+                                <p class="error_rpot">Filter variable
+                                    keyword is mismatched, you need to remove this words:
+                                    {{this.misMatchVarArray}}
+                                </p>
+                            </div>
+                            <div *ngIf="this.reportCreationForm.value.EXECUTION_TYPE =='2' " touched>
+                                <p *ngIf="this.matchVariableArray.length > 0" class="error_rpot">Filter variable
+                                    keyword is not matched you need to add prefix with
+                                    {{this.matchVariableArray}}
+                                </p>
+
+                            </div>
+                            <div *ngIf="this.reportCreationForm.value.FILTER_TYPE == '1' " touched>
+                                <p class="error_rpot" *ngIf="this.tableDataArray?.length == 0">Please select atleast
+                                    one
+                                    Filter.
+
+                                </p>
+                            </div>
+                            <div *ngIf="validInputQueryField && this.reportCreationForm.get('PROCESS_TYPE')?.value == '2' "
+                                touched>
+                                <p class="error_rpot"> keyword not Allowed in
+                                    input field
+                                </p>
+                            </div>
+
+                            <div *ngIf="(reportFormcontrol['QUERY'].touched)&& reportFormcontrol['QUERY'].invalid">
+                                <p class="error_rpot" *ngIf="reportFormcontrol['QUERY'].errors?.['required'] ">
+                                    Please enter query.
+                                </p>
+                                <p class="error_rpot"
+                                    *ngIf="reportFormcontrol['QUERY'].errors?.['pattern'] && this.reportCreationForm.get('PROCESS_TYPE')?.value == '1'">
+                                    Query must be start with select keyword.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- use for input box for procedure -->
+                    <div class="col-sm-12" *ngIf="this.reportCreationForm.get('PROCESS_TYPE')?.value == '2'">
+                        <div class="form-group mb-3 query_textarea">
+                            <label class="form-label">{{queryLabel}}<span class="requireds"></span></label>
+                            <input type="text" formControlName="QUERY" [placeholder]="placeholderText"
+                                class="form-control" (input)="inputQueryFunction($event)"
+                                [ngStyle]="{ color: this.misMatchVarArray.length > 0 ? 'red' : 'black' }"
+                                (keydown.space)="$event.preventDefault()">
+
+                            <div *ngIf="this.misMatchVarArray.length > 0 && this.reportCreationForm.value.EXECUTION_TYPE =='2'"
+                                touched>
+                                <p class="error_rpot">Filter variable
+                                    keyword is mismatched, you need to remove this words:
+                                    {{this.misMatchVarArray}}
+                                </p>
+                            </div>
+                            <div *ngIf="this.reportCreationForm.value.EXECUTION_TYPE =='2' " touched>
+                                <p *ngIf="this.matchVariableArray.length > 0" class="error_rpot">Filter variable
+                                    keyword is not matched you need to add prefix with
+                                    {{this.matchVariableArray}}
+                                </p>
+
+                            </div>
+                            <div *ngIf="this.reportCreationForm.value.FILTER_TYPE == '1' " touched>
+                                <p class="error_rpot" *ngIf="this.tableDataArray?.length == 0">Please select atleast
+                                    one
+                                    Filter.
+
+                                </p>
+                            </div>
+                            <div *ngIf="validInputQueryField && this.reportCreationForm.get('PROCESS_TYPE')?.value == '2' "
+                                touched>
+                                <p class="error_rpot"> keyword not Allowed in
+                                    input field
+                                </p>
+                            </div>
+
+                            <div *ngIf="(reportFormcontrol['QUERY'].touched)&& reportFormcontrol['QUERY'].invalid">
+                                <p class="error_rpot" *ngIf="reportFormcontrol['QUERY'].errors?.['required'] ">
+                                    Please enter procedure.
+                                </p>
+                                <p class="error_rpot"
+                                    *ngIf="reportFormcontrol['QUERY'].errors?.['pattern'] && this.reportCreationForm.get('PROCESS_TYPE')?.value == '1'">
+                                    Query must be start with select keyword.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- use for input box for procedure -->
+                    <div class="col-sm-12" *ngIf="this.reportCreationForm.get('PROCESS_TYPE')?.value == '2'">
+                        <div class="form-group mb-3 query_textarea">
+                            <label class="form-label">Output
+                                paramater<span></span></label>
+                            <textarea type="text" formControlName="OUTPUT" placeholder="Output"
+                                class="form-control"> </textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 text-center mt-3">
+                        <div class="form-buttons">
+                            <button class="btn btn-primary btn-reset" type="button" (click)="resetReportForm()"
+                                [disabled]="!reportCreationForm.dirty"> Reset</button>
+                            <button class="btn btn-success btn-submit ms-sm-2 mt-2 mt-sm-0" type="submit"
+                                (click)="userReportFormSubmit()"
+                                [disabled]="(reportCreationForm.invalid  || !reportCreationForm.dirty) || (this.misMatchVarArray.length > 0 )|| (this.matchVariableArray.length > 0) || ((this.reportCreationForm.value.FILTER_TYPE == '1') && (this.tableDataArray?.length ==0))">
+                                {{buttonName}} </button>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

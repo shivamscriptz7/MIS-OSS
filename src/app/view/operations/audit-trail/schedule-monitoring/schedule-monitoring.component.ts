@@ -1,0 +1,337 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonHelperService } from 'src/app/services/common-helper.service';
+import { DataTableDirective } from 'angular-datatables';
+import { MatDialog } from '@angular/material/dialog';
+import { CommonService } from 'src/app/services/common.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Router } from '@angular/router';
+import { Subscription, debounceTime, filter } from 'rxjs';
+import { MonitoringDialogBoxComponent } from 'src/app/view/dialogbox/monitoring-dialog-box/monitoring-dialog-box.component';
+import { ExportSlaExcelService } from 'src/app/services/export-sla-excel.service';
+import { ItemsList } from '@ng-select/ng-select/lib/items-list';
+
+@Component({
+  selector: 'app-schedule-monitoring',
+  templateUrl: './schedule-monitoring.component.html',
+  styleUrls: ['./schedule-monitoring.component.scss']
+})
+export class ScheduleMonitoringComponent implements OnInit {
+
+  public loaderdata: boolean = true;
+  public URLSearchParams: any;
+  public page: number | any;
+  public size: any;
+  public pageRecordsTotal: number | any;
+  public getScheduleLogDetails: Subscription | any;
+  public search: string = '';
+  public otherParams: any;
+  public scheduleList: any = [];
+  public logData: any;
+  public moduleId: any;
+  public oldValue: any;
+  public newValue: any;
+  public changesData: any = [];
+  public listView: any = false;
+
+
+  @ViewChild(DataTableDirective, { static: false })
+  datatableElement: DataTableDirective | any;
+  dtOptions: DataTables.Settings = {};
+  columnDefs: any = [
+    { orderable: true, targets: 0 },
+    { orderable: true, targets: 1 },
+    { orderable: true, targets: 2 },
+    { orderable: true, targets: 3 },
+    { orderable: true, targets: 4 },
+    { orderable: true, targets: 5 },
+    { orderable: true, targets: '_all' }
+  ];
+  constructor(public commonService: CommonHelperService,
+    public dialog: MatDialog,
+    public service: CommonService,
+    public slaservice: ExportSlaExcelService,
+    public ngxLoader: NgxUiLoaderService,
+    public route: Router
+  ) { }
+
+
+  ngOnInit(): void {
+    // use for recieve module id from common service
+    this.service.moduleId.subscribe(data => {
+      this.moduleId = data; // Subscribe to service's observable to receive data
+    });
+
+    this.dtOptions = this.commonService.settingDataTableNew(
+      this.columnDefs,
+      [],
+      true,
+      true,
+      true, // x scroll
+      '55vh',// y scroll
+      true, // fixed Columns
+      true //scroll Collapse
+    );
+    this.getUserSchedule();
+  }
+  reDraw(): void {
+    if (this.datatableElement) {
+      this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => { dtInstance.draw(); });
+    }
+  }
+
+  public filterData: any = {};
+  setFilters(item: any) {
+    this.filterData = item;
+    this.listView = false;
+    setTimeout(() => {
+      this.getUserSchedule();
+    }, 100)
+
+  }
+
+  public totalPageShow: any
+
+  //Purpose: fetch user-role listing
+  getUserSchedule() {
+    let filters = { "moduleId": this.moduleId, "fromDate": this.filterData.fromDt, "toDate": this.filterData.toDt, "logAction": this.filterData.logAction, "userId": this.filterData.userId };
+
+    this.totalPageShow = this.pageRecordsTotal;
+    if (this.filterData.fromDt == "") {
+      this.pageRecordsTotal = this.totalPageShow;
+    } else {
+      this.pageRecordsTotal = this.pageRecordsTotal
+    }
+
+    this.listView = true;
+    this.loaderdata = true;
+    this.reDraw();
+    this.dtOptions = {
+      ...this.commonService.settingDataTableServer(), ajax: (dataTablesParameters: any, callback, settings) => {
+        let params;
+        if (this.URLSearchParams) {
+          params = new URLSearchParams(this.URLSearchParams.toString());
+        } else {
+          params = new URLSearchParams();
+        }
+        const defaultOrdering = '-CREATED_DATE';
+        this.commonService.dataTableParams(
+          params,
+          dataTablesParameters,
+          this.page,
+          this.size,
+          this.pageRecordsTotal,
+          this.search,
+          defaultOrdering,
+          filters,
+          this.otherParams = this.moduleId,
+
+        );
+        this.ngxLoader.start();
+        const url = '/getScheduleLogDetails';
+        this.getScheduleLogDetails = this.service.getAPIMethod(url + '?' + params).pipe(debounceTime(500)).subscribe((resp) => {
+
+
+          this.loaderdata = false;
+          this.ngxLoader.stop();
+          if (resp.result) {
+            if (resp.result) {
+              this.scheduleList = resp.result.map((data: any) => {
+                return {
+                  ...data,
+                  checked: false,
+                };
+              });
+
+            } else {
+              this.scheduleList = [];
+            }
+            if (resp.propertyObj[0].COUNT || resp.propertyObj[0].COUNT == 0) {
+              this.pageRecordsTotal = resp.propertyObj[0].COUNT;
+            }
+            callback({
+              recordsTotal: this.pageRecordsTotal,
+              recordsFiltered: this.pageRecordsTotal,
+              data: [],
+            });
+          } else {
+            callback({
+              recordsTotal: 0,
+              recordsFiltered: 0,
+              data: [],
+            });
+            this.scheduleList = [];
+          }
+        },
+          (error) => {
+            this.scheduleList = false;
+            callback({
+              recordsTotal: 0,
+              recordsFiltered: 0,
+              data: [],
+            });
+            this.scheduleList = [];
+          }
+        );
+      },
+
+      columns: [
+        { orderable: false, data: '' },
+        { orderable: true, data: 'LOG_CREATED_BY' },
+        { orderable: true, data: 'LOG_ACTION' },
+        { orderable: true, data: 'MODULE_NAME' },
+        { orderable: true, data: 'LOG_CREATED_DATE' },
+        { orderable: false, data: '' }
+      ],
+    };
+  }
+
+  public logOldValues: any;
+
+
+  dialogBox(item: any) {
+    // let oldValue = JSON.parse(item.SD_OLD_VALUE);
+    if (item.SD_LOG_DEL_REASON == null || item.SD_LOG_DEL_REASON == '') {
+      this.logOldValues = JSON.parse(item.SD_OLD_VALUE);
+    }
+    else {
+      this.logOldValues = JSON.parse(item.SD_OLD_VALUE);
+      const logDelReasonObj = { 'DELETE REASON': item.SD_LOG_DEL_REASON };
+      // Add the new key-value pair to the first object in the array
+      this.logOldValues[0] = { ... this.logOldValues[0], ...logDelReasonObj };
+      // Convert back to JSON string
+      item.SD_OLD_VALUE = JSON.stringify(this.logOldValues);
+    }
+
+    // let oldValue = JSON.parse(item.SD_OLD_VALUE);
+    let newValue = JSON.parse(item.SD_NEW_VALUE);
+    let changesData = this.findChanges(this.logOldValues, newValue);
+    const dialogRef = this.dialog.open(MonitoringDialogBoxComponent,
+      {
+        data: {
+          heading: 'Confirmation',
+          title: 'Schedule Logs',
+          buttonName: 'ok',
+          changesData: changesData,
+          logAction: item.SD_ACTION,
+          logName: item.SD_LOG_NAME,
+          logCreatedBy: item.USER_NAME,
+          logDate: item.SD_CREATED_DATE
+        },
+        width: '667px',
+        height: 'auto'
+      }
+    );
+    dialogRef.afterClosed().subscribe((customResultData: any) => {
+      dialogRef.close();
+    });
+  }
+
+
+  findChanges(oldArray: any = [], newArray: any = []) {
+    let changes = [];
+    const oldValue = oldArray ? oldArray[0] : null;
+    const newValue = newArray ? newArray[0] : null;
+    if (newValue) {
+      for (const key in newValue) {
+        if (!oldValue || (oldValue[key] !== newValue[key])) {
+          changes.push({
+            changeValue: key,
+            oldValue: (oldValue ? oldValue[key] : 'NA') || (oldValue[key] === null ? 'NA' : oldValue[key]),
+            newValue: newValue[key] === null ? 'NA' : newValue[key]
+            //newValue: newValue[key]
+            //newValue[key] ? newValue[key] : '',
+          });
+        }
+      }
+    } else {
+      for (const key in oldValue) {
+        if (!newValue || (oldValue[key] !== newValue[key])) {
+          changes.push({
+            changeValue: key,
+            oldValue: oldValue[key] === null ? 'NA' : oldValue[key],
+            newValue: newValue ? newValue[key] : 'NA'
+            //newValue: newValue[key]
+            //newValue[key] ? newValue[key] : '',
+          });
+        }
+      }
+    }
+    return changes;
+  }
+
+  public customDataObj: any;
+  public customDataObjExel: any;
+  public sendCustomData: any = [];
+  public sendCustomDataExcel: any = [];
+  public listkeys: any
+  ExportPdfClick(data: any) {
+    this.sendCustomData = [];
+    let url = "/getScheduleLogDetails?page=1&size=" + this.pageRecordsTotal + "&search=" + this.search + "&ordering=-CREATED_DATE&moduleId="
+      + this.moduleId + "&logAction=" + data.logAction + "&fromDate=" + data.fromDt + "&toDate=" + data.toDt + "&userId=" + data.userId;
+    this.service.getAPIMethod(url).subscribe(res => {
+
+      let getResult = res.result;
+      getResult.forEach((item: any) => {
+        this.customDataObj = {
+          "S.no": item['RN'],
+          "Action Performed By": item['USER_NAME'],
+          "Log Action": item['SD_ACTION'],
+          "Schedule Name": item['SD_LOG_NAME'],
+          "Action Date": item['SD_CREATED_DATE']
+        }
+
+        this.sendCustomData.push(this.customDataObj)
+      });
+
+
+      if (this.sendCustomData?.length > 0) {
+        this.slaservice.exportAsPdfFileLogs(this.sendCustomData, data, 'Schedule')
+      }
+      else {
+        this.service.sweetAlertMsg('error', 'Data not Found');
+        return;
+      }
+
+
+
+    });
+  }
+
+  ExportExcelClick(data: any) {
+    this.sendCustomDataExcel = [];
+    let url = "/getScheduleLogDetails?page=1&size=" + this.pageRecordsTotal + "&search=" + this.search + "&ordering=-CREATED_DATE&moduleId="
+      + this.moduleId + "&logAction=" + data.logAction + "&fromDate=" + data.fromDt + "&toDate=" + data.toDt + "&userId=" + data.userId;
+    this.service.getAPIMethod(url).subscribe(res => {
+      res.result.forEach((item: any) => {
+        this.listkeys = ["S.no", "Action Performed By", "Log Action", "Schedule Name", "Action Date"];
+        Object.keys(item).forEach(key => {
+          this.customDataObjExel = {
+            "S.no": item['RN'],
+            "Action Performed By": item['USER_NAME'],
+            "Log Action": item['SD_ACTION'],
+            "Schedule Name": item['SD_LOG_NAME'],
+            "Action Date": item['SD_CREATED_DATE']
+          }
+        });
+        this.sendCustomDataExcel.push(this.customDataObjExel)
+      });
+
+      if (this.sendCustomDataExcel?.length > 0) {
+        this.slaservice.exportExcelFileLogs(this.sendCustomDataExcel, this.listkeys, data, 'Schedule')
+      }
+      else {
+        this.service.sweetAlertMsg('error', 'Data not Found');
+        return;
+      }
+
+
+
+
+    });
+  }
+
+
+
+}
+
+

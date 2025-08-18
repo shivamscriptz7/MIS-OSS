@@ -1,0 +1,110 @@
+<!-- <ul *ngFor="let item of data?.changesData">
+    <li>{{item.changeValue}}
+    </li>
+    <li>OLD VALUE : {{item.oldValue}}</li>
+    <li>NEW VALUE : {{item.newValue}}</li>
+</ul> -->
+
+
+<div class="modal-dialog modal_all monitoring_audit_dialog_page">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title">{{data.title}}</h5>
+            <!-- <h5 class="modal-logAction">{{data.logAction}}</h5> -->
+            <!-- <button title="Close" type="button" class="btn-close">
+                <i class="fas fa-times"></i>
+            </button> -->
+            <div class="log_actn">
+                <h6 class="logaction"><span
+                        [ngClass]="data.logAction=='Update'? 'badge bg-success': data.logAction=='Insert' ? 'badge bg-primary':'badge bg-danger'">{{data.logAction}}</span>
+                </h6>
+                <button type="button" class="btn-close" (click)="dialogClose()"><i class="fas fa-times"></i></button>
+            </div>
+            <!-- <button type="button" class="btn-close" (click)="dialogClose()"><i class="fas fa-times"></i></button> -->
+
+        </div>
+
+        <div class="modal-body">
+            <div class="btn_flex">
+                <button type="button" class="btn-pdf" (click)="logPdfDownLoad()"><i class="far fa-file-pdf"></i>
+                    Download</button>
+            </div>
+            <div class="monitoring-dialog" id="contentToConvert">
+                <div class="table-responsive top_audittrail">
+                    <!-- <ul>
+                        <li>
+                            <div class="firt_prt">Action on</div>
+                            <div class="scnd_prt">{{data.logName}}</div>
+                        </li>
+                        <li>
+                            <div class="firt_prt">Action By</div>
+                            <div class="scnd_prt">{{data.logCreatedBy}}</div>
+                        </li>
+                        <li>
+                            <div class="firt_prt">Action Date</div>
+                            <div class="scnd_prt">{{data.logDate}}</div>
+                        </li>
+                    </ul> -->
+                    <table class="table table-striped mb-0">
+                        <tbody>
+                            <tr>
+                                <th>Action on</th>
+                                <td>{{data.logName}}</td>
+                            </tr>
+                            <tr>
+                                <th>Action By</th>
+                                <td>{{data.logCreatedBy}}</td>
+                            </tr>
+                            <tr>
+                                <th>Action Date</th>
+                                <td>{{data.logDate}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <div class="table-responsive">
+                    <table class="user-monitoring-page w-100 table border">
+                        <thead>
+                            <tr>
+                                <th>Action on</th>
+                                <th>Action By</th>
+                                <th>Action Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{data.logName}}</td>
+                                <td>{{data.logCreatedBy}}</td>
+                                <td>{{data.logDate}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> -->
+
+                <div class="table-responsive">
+                    <table class="user-monitoring-page w-100 table mb-0 border">
+                        <thead>
+                            <tr>
+                                <th>Change Value</th>
+                                <th>Old Value</th>
+                                <th>New value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of data?.changesData">
+                                <th>{{item.changeValue}}:</th>
+                                <td>{{item.oldValue}}</td>
+                                <td>{{item.newValue}}</td>
+                            </tr>
+                        </tbody>
+                        <tbody class="withoutdata" *ngIf="data?.changesData.length==0">
+                            <tr>
+                                <td colspan="3" class="text-center">No Data Available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,303 @@
+<!-- <div class="col-sm-2">
+  <label for="start">Circle:</label>
+  <select [(ngModel)]="mainObject.Circle" name="Circle">
+    <option>-select-</option>
+    <option *ngFor="let circle of circleData">
+      {{ circle.value }}</option> -->
+
+<div class="reportpage_section" [ngClass]="classTrue==true?'filter_open':''">
+
+  <div class="filter-sidebar">
+    <button class="close" (click)="filterClose()"><i class="fas fa-times"></i></button>
+    <form [formGroup]="slrDateFilterForm" autocomplete="off">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>Report Filter</h2>
+        </div>
+
+        <div class="col-sm-12" *ngIf="this.filters?.from_dt==true">
+          <div class="form-group">
+            <label class="form-label">From Date <span class="requireds"
+                *ngIf="this.filters_required?.from_required==true"></span></label>
+            <dp-date-picker class="arow_picker form-control report_datepicker" placeholder="Select from date"
+              theme="dp-material" [formControl]="slrDateFilterForm.controls['FromDate']" [config]="config"
+              [required]="this.filters_required?.from_required==true"
+              (onChange)="valueChange(); getmaxDateValueToDate()" [mode]="'day'">
+            </dp-date-picker>
+            <!-- <input type="date" formControlName="From" id="fromDt" name="From_Date" class="form-control"
+              [max]="getToday()" [min]="2023-09-11" (change)="checkMonthValidation()"> -->
+          </div>
+        </div>
+
+        <div class="col-sm-12" *ngIf="this.filters?.to_dt==true">
+          <div class="form-group">
+            <label class="form-label">To Date <span class="requireds" *ngIf="this.filters_required?.to_required
+                ==true"></span></label>
+            <dp-date-picker class="arow_picker form-control report_datepicker" placeholder="Select to date"
+              [formControl]="slrDateFilterForm.controls['ToDate']" theme="dp-material" [config]="configEnd" [required]="this.filters_required?.to_required 
+              ==true" [minDate]="slrDateFilterForm.controls['FromDate'].value" [maxDate]="this.formattedDate"
+              [mode]="'day'">
+            </dp-date-picker>
+            <!-- <input type="date" formControlName="To" name="To_Date" class="form-control" [max]="getToday()"> -->
+          </div>
+        </div>
+
+
+        <div class="col-sm-12" *ngIf="this.filters?.book_period==true">
+          <div class="form-group">
+            <label class="form-label">Booking Period<span class="requireds" *ngIf="this.filters_required?.book_required
+                ==true"></span></label>
+            <dp-date-picker class="form-control report_datepicker arow_picker"
+              [formControl]="slrDateFilterForm.controls['BookingPeriod']" placeholder="Select booking period"
+              theme="dp-material" [config]="configbook" [required]="this.filters_required?.book_required==true"
+              [mode]="'month'">
+            </dp-date-picker>
+            <!-- <input type="date" formControlName="To" name="To_Date" class="form-control" [max]="getToday()"> -->
+          </div>
+        </div>
+
+        <div class="col-sm-12" *ngIf="this.filters?.mkt_code==true">
+          <div class="form-group">
+            <label>Circle <span class="requireds" *ngIf="this.filters_required?.mkt_required
+              ==true"></span></label>
+            <mat-form-field class="custom_matselect arow_picker_mat" floatLabel="never">
+
+
+
+              <!-- <input type="search" name="imsiSearch" class="form-control" [(ngModel)]="searchValue"
+            [ngModelOptions]="{standalone: true}"
+            (keyup)="searchFilter($event)" placeholder="Search Msisdn"
+            (keydown)="$event.stopPropagation()" /> -->
+
+              <mat-select placeholder="CIRCLE" formControlName="Circle"
+                [required]="this.filters_required?.mkt_required==true" multiple
+                (selectionChange)="onItemSelectCircle($event.value,$event,'')">
+                <!-- <input type="text" (keyup)="searchFun($event)" placeholder="please search data" /> -->
+                <mat-select-filter [placeholder]="'Search'" [displayMember]="'CIRCLE_NAME'" [array]="filteredCircle"
+                  (filteredReturn)="resultData =$event">
+                </mat-select-filter>
+
+                <mat-checkbox class="mat-option" [indeterminate]="isIndeterminateCircle()" [checked]="isCheckedCircle()"
+                  (click)="$event.stopPropagation()" (change)="toggleSelectionCircle($event)">
+                  All
+                </mat-checkbox>
+                <!-- <mat-option *ngFor="let circle of resultData" [value]="circle?.CIRCLE_ID" (click)="checkCircle(circle)">
+                {{ circle.CIRCLE_NAME }}</mat-option> -->
+
+                <mat-option *ngFor="let circle of resultData" [value]="circle?.CIRCLE_ID">
+                  {{ circle.CIRCLE_NAME }}</mat-option>
+              </mat-select>
+
+
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-sm-12" *ngIf="this.filters?.sugarcane==true">
+          <div class="form-group">
+            <label class="d-block">Sugarcane <span class="requireds"
+                *ngIf="this.filters_required?.sugarcane_required==true"></span></label>
+            <input type="checkbox" #myCheckbox name="sugarcane" (change)="checkValueSugarcane(myCheckbox.checked)"
+              [disabled]="this.sugarcaneChkBox==true" formControlName="Sugarcane">
+          </div>
+        </div>
+
+        <div class="col-sm-12" *ngIf="this.filters?.ba==true">
+          <div class="form-group">
+            <label>BA <span class="requireds" *ngIf="this.filters_required?.ba_required==true"></span></label>
+            <mat-form-field class="custom_matselect disabled_slr arow_picker_mat" floatLabel="never">
+              <mat-label>BA</mat-label>
+              <mat-select placeholder="BA" [required]="this.filters_required?.ba_required==true" formControlName="SSA"
+                multiple (selectionChange)="onItemSelectBa($event.value,$event,'')">
+                <mat-select-filter [placeholder]="'Search'" [displayMember]="'SC_DESC'" [array]="filteredSSA"
+                  (filteredReturn)="ssaListData =$event">
+                </mat-select-filter>
+                <mat-checkbox class="mat-option" [indeterminate]="isIndeterminate()" [checked]="isChecked()"
+                  (click)="$event.stopPropagation()" (change)="toggleSelection($event)">
+                  All
+                </mat-checkbox>
+                <mat-option [value]="item.SSA_CODE" *ngFor="let item of this.ssaListData">
+                  {{item.SC_DESC}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- <select class="form-select" [required]="this.filters_required?.mkt_required
+            ==true">
+              <option value="">Select circle</option>
+              <option *ngFor="let circle of circleData">
+                {{ circle.value }}
+              </option>
+            </select> -->
+          </div>
+        </div>
+
+
+
+        <div *ngIf="this.extraInputfilters?.length > 0">
+          <div class="col-sm-12" *ngFor="let filter of this.extraInputfilters">
+            <div class="form-group">
+              <label>{{filter}} <span class="requireds"></span></label>
+              <input type="text" required class="form-control" formControlName={{filter}}>
+            </div>
+          </div>
+        </div>
+
+
+        <div class=" col-sm-12">
+          <div class="submit_button-filtr">
+            <button (click)="resetFilters()" type="button" class="btn btn-primary btn-reset">Reset</button>
+            <!-- <button (click)="loadPdfViewer()" [disabled]="this.slrDateFilterForm.invalid || !slrDateFilterForm.dirty "
+              class="btn_create" type="submit">Submit</button> -->
+            <button (click)="loadPdfViewer(endAPI_Point,extParamHtml)" [disabled]="this.slrDateFilterForm.invalid "
+              class="btn_create" type="submit">Submit</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="row align-items-center">
+    <div class="col-sm-12">
+      <div class="title-part">
+        <!-- <h2></h2> -->
+        <ul class="breadcrum" *ngFor="let name of bredCrumParentName">
+          <!-- <li *ngIf="this.bredCrumParentName!='SLR REPORTS'">SLR REPORTS</li> -->
+          <!-- <li *ngIf="name.parent_name!='SLR REPORTS'">SLR REPORTS</li> -->
+          <li>{{name.parent_name}}</li>
+          <li class="active">{{name.value}}</li>
+        </ul>
+
+        <div class="upper_button d-flex">
+
+          <div class="dropdown export-btn d-flex float-end">
+            <!-- <a href="/uploads/SLR_REPORTS/-1/Rep-41-Payments_Summary.pdf" target="_blank">myfiles</a> -->
+            <button [disabled]="exportBtn" type="button" data-bs-toggle="dropdown" aria-expanded="true"
+              class="dropdown-toggle common-btn export_btn show">
+              <i class="fa-regular fa-share-from-square"></i> Export as </button>
+            <div aria-labelledby="dropdownMenuButton1" class="dropdown-menu">
+              <a (click)="loadPdfViewer(endAPI_Point,'PDFDATA')" class="dropdown-item"><i
+                  class="fa-solid fa-file-pdf"></i>
+                PDF file
+              </a>
+              <a (click)="loadPdfViewer(endAPI_Point,'HTML')" class="dropdown-item"><i
+                  class="fa-solid fa-file-lines"></i>
+                HTML file
+              </a>
+              <a (click)="downloadPDF('EXCEL')" class="dropdown-item"><i class="fa-solid fa-file-lines"></i>
+                Excel file</a>
+              <a (click)="downloadPDF('CSV')" class="dropdown-item"><i class="fa-solid fa-file-lines"></i>
+                CSV file</a>
+            </div>
+          </div>
+
+          <button class="filter_icon" (click)="filterClick()" [disabled]="filterBtn">
+            <i class="fas fa-filter"></i> Filter
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row h-100 mt-2">
+
+    <div class="col-sm-3 col-md-2 pe-md-0 mb-sm-0 mb-2">
+      <div class="report_lstng">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+
+            </div>
+            <h4>Reports Listing</h4>
+            <div class="listing_search">
+              <input type="search" [(ngModel)]="searchData" (input)="searchFunction()" placeholder="Search listing"
+                class="form-control">
+            </div>
+            <!-- <ul>
+              <li *ngFor="let reportName of reportArr">               
+                <label title="{{reportName.REPO_NAME}}" class="custom_radio">{{reportName.REPO_NAME}}                 
+                  <input type="radio" [(ngModel)]="radioSelected" value={{reportName.REPO_NAME}} name="report_file"
+                    (click)="getReportName(reportName)">
+                  <span class="checkmark"></span>
+                </label>
+              </li>
+
+            </ul> -->
+            <div class="table-responsive reportleft_responsive">
+              <table class="table">
+                <tbody>
+                  <tr *ngFor="let reportName of reportArr">
+                    <td title="{{reportName.REPO_NAME}}">
+                      <label class="custom_radio">{{reportName.REPO_NAME}}
+                        <input type="radio" [(ngModel)]="radioSelected" value={{reportName.REPO_NAME}}
+                          name="report_file" (click)="getReportName(reportName)">
+                        <span class="checkmark"></span>
+                      </label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-9 col-md-10">
+      <div class="filter_table_design filter_design filter_open">
+        <div class="row align-items-center">
+          <div class="col-sm-12" style="padding: 0px 2px">
+            <div class="title" id="thumbnails">
+
+              <h4>{{this.radioSelected}}
+                <span *ngIf="!radioSelected">Report Data</span>
+
+              </h4>
+
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <div class="placeholder_box text-center" *ngIf="this.placeHolderShown==false">
+              <div class="withoutdata_box">
+                <img src="../../../../assets/images/select_report.svg">
+                <div class="withoutdata_box_inner">
+                  <p>Please select report from report listing.<br />
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="placeholder_box text-center" *ngIf="this.errorShown==true">
+              <div class="without_box_error">
+                <h2>Error</h2>
+                <img src="../../../../assets/images/oops-img.svg" class="mb-2">
+                <div class="withoutdata_box_error_inner">
+                  <p>We have no access of this report</p>
+
+                </div>
+              </div>
+            </div>
+
+            <div style="height: calc(100vh - 190px); " *ngIf="this.tableShown==true">
+
+              <ng2-pdfjs-viewer #pdfViewer></ng2-pdfjs-viewer>
+
+
+              <!-- <div class="loader-outer">
+                <div class="loader" *ngIf="this.load==true"></div>
+              </div> -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

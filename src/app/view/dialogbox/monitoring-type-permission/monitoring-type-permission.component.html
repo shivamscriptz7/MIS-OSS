@@ -1,0 +1,274 @@
+<!-- <ul *ngFor="let item of data?.changesData">
+    <li>{{item.changeValue}}
+    </li>
+    <li>OLD VALUE : {{item.oldValue}}</li>
+    <li>NEW VALUE : {{item.newValue}}</li>
+</ul> -->
+
+
+<div class="modal-dialog modal_all monitoring_report_dialog_page">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title">{{data.title}}</h5>
+            <!-- <h5 class="modal-logAction">{{data.logAction}}</h5> -->
+            <!-- <button title="Close" type="button" class="btn-close">
+                <i class="fas fa-times"></i>
+            </button> -->
+            <div class="log_actn">
+                <h6 class="logaction"><span
+                        [ngClass]="data.logAction=='Update'? 'badge bg-success': data.logAction=='Insert' ? 'badge bg-primary':'badge bg-danger'">{{data.logAction}}</span>
+                </h6>
+                <button type="button" class="btn-close" (click)="dialogClose()"><i class="fas fa-times"></i></button>
+            </div>
+            <!-- <button type="button" class="btn-close" (click)="dialogClose()"><i class="fas fa-times"></i></button> -->
+
+        </div>
+
+        <!-------Type Base Permission----->
+
+        <div class="modal-body">
+            <div class="btn_flex">
+                <button type="button" class="btn-pdf" (click)="logPdfDownLoad()"><i class="far fa-file-pdf"></i>
+                    Download</button>
+                <h4 class="role_name td_capital">User Name<span>{{this.data.headerName}}</span></h4>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="border_box_shadow" id="contentToConvert">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Action By</th>
+                                        <th>Action Date</th>
+                                        <th>Delete Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{data.action_by}}</td>
+                                        <td>{{data.action_date}}</td>
+                                        <td title="{{data.del_reason}}">{{data.del_reason ==null || data.del_reason =='' ?  'NA'  : data.del_reason?.length>18? (data.del_reason |
+                                            slice:0:18)+'...':data.del_reason }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+
+                                <div class="accordion" id="sub-accordionExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="sub-headingOne">
+
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                [attr.data-bs-target]="'#sub-collapseOne'" aria-expanded="true"
+                                                [attr.aria-controls]="'#sub-collapseOne'">
+                                                Old Value
+                                            </button>
+
+                                        </h2>
+                                        <div id="sub-collapseOne" class="accordion-collapse collapse show"
+                                            aria-labelledby="sub-headingOne" data-bs-parent="#sub-accordionExample">
+
+                                            <div class="accordion" id="sub2-accordionExample">
+                                                <div class="accordion-item">
+
+                                                    <!-- <h2 class="accordion-header" id="sub2-headingOne"> -->
+                                                    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl"
+                                                        class="example-tree">
+
+                                                        <ul class="log_reportlisting">
+
+                                                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+
+                                                                <!-- use a disabled button to provide padding for tree leaf -->
+                                                                <!-- <button mat-icon-button disabled></button> -->
+                                                                <mat-checkbox class="me-1"
+                                                                    (change)="selectionToggleLastChilds($event.checked, node)"
+                                                                    [checked]="node.isSelected"
+                                                                    disabled="true"></mat-checkbox>
+                                                                <li class="name2_li"><span
+                                                                        class="nameEE2">{{node.display}}
+                                                                        <!-- <b *ngIf="node.isSelected==true">Yes</b>
+                                                                            <b *ngIf="node.isSelected==false">No</b> -->
+                                                                    </span>
+                                                                </li>
+
+                                                            </mat-tree-node>
+                                                        </ul>
+
+                                                        <div id="sub2-collapseOne" class="accordion-collapse collapse"
+                                                            aria-labelledby="sub2-headingOne"
+                                                            data-bs-parent="#sub2-accordionExample">
+                                                            <div class="accordion-body">
+
+                                                                <mat-nested-tree-node
+                                                                    *matTreeNodeDef="let node; when: hasChild">
+                                                                    <ul class="liststyle-none">
+                                                                        <li>
+                                                                            <div class="mat-tree-node per_type_main">
+                                                                                <button mat-icon-button
+                                                                                    matTreeNodeToggle
+                                                                                    [attr.aria-label]="'toggle ' + node.display">
+                                                                                    <mat-icon
+                                                                                        class="mat-icon-rtl-mirror">
+                                                                                        expand_more
+                                                                                    </mat-icon>
+                                                                                </button>
+                                                                                <mat-checkbox class="me-1"
+                                                                                    (change)="selectionToggle($event.checked, node)"
+                                                                                    [checked]="descendantsAllSelected(node)"
+                                                                                    [indeterminate]="checkDescPartSelection(node)"
+                                                                                    disabled="true"></mat-checkbox>
+                                                                                <span class="nameEE1">{{node.display}}
+                                                                                    <!-- <b
+                                                                                            *ngIf="node.isSelected==true">Yes</b>
+                                                                                        <b
+                                                                                            *ngIf="node.isSelected==false">No</b> -->
+                                                                                </span>
+
+                                                                            </div>
+                                                                            <ul
+                                                                                [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+                                                                                <ng-container
+                                                                                    matTreeNodeOutlet></ng-container>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </mat-nested-tree-node>
+                                                            </div>
+                                                        </div>
+                                                    </mat-tree>
+                                                </div>
+
+                                            </div>
+
+
+                                            <!------>
+
+                                        </div>
+                                    </div>
+
+                                    <!------->
+
+                                </div>
+
+                                <!-----ITEMS----->
+
+                            </div>
+                            <!----------COL-6----------->
+
+                            <div class="col-sm-6">
+
+                                <div class="accordion" id="sub-accordionExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="sub-headingOne">
+
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                [attr.data-bs-target]="'#sub-collapseOne'" aria-expanded="true"
+                                                [attr.aria-controls]="'#sub-collapseOne'">
+                                                New Value
+                                            </button>
+
+                                        </h2>
+                                        <div id="sub-collapseOne" class="accordion-collapse collapse show"
+                                            aria-labelledby="sub-headingOne" data-bs-parent="#sub-accordionExample">
+
+                                            <div class="accordion" id="sub2-accordionExample">
+                                                <div class="accordion-item">
+
+                                                    <!-- <h2 class="accordion-header" id="sub2-headingOne"> -->
+                                                    <mat-tree [dataSource]="dataSourceNew" [treeControl]="treeControl"
+                                                        class="example-tree">
+
+                                                        <ul class="log_reportlisting">
+
+                                                            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+
+                                                                <!-- use a disabled button to provide padding for tree leaf -->
+                                                                <!-- <button mat-icon-button disabled></button> -->
+                                                                <mat-checkbox class="me-1"
+                                                                    (change)="selectionToggleLastChilds($event.checked, node)"
+                                                                    [checked]="node.isSelected"
+                                                                    disabled="true"></mat-checkbox>
+                                                                <li class="name2_li"><span
+                                                                        class="nameEE2">{{node.display}}</span>
+                                                                </li>
+
+                                                            </mat-tree-node>
+                                                        </ul>
+
+
+                                                        <div id="sub2-collapseOne" class="accordion-collapse collapse"
+                                                            aria-labelledby="sub2-headingOne"
+                                                            data-bs-parent="#sub2-accordionExample">
+                                                            <div class="accordion-body">
+
+                                                                <mat-nested-tree-node
+                                                                    *matTreeNodeDef="let node; when: hasChild">
+                                                                    <ul class="liststyle-none">
+                                                                        <li>
+                                                                            <div class="mat-tree-node per_type_main">
+                                                                                <button mat-icon-button
+                                                                                    matTreeNodeToggle
+                                                                                    [attr.aria-label]="'toggle ' + node.display">
+                                                                                    <mat-icon
+                                                                                        class="mat-icon-rtl-mirror">
+                                                                                        expand_more
+                                                                                    </mat-icon>
+                                                                                </button>
+                                                                                <mat-checkbox class="me-1"
+                                                                                    (change)="selectionToggle($event.checked, node)"
+                                                                                    [checked]="descendantsAllSelected(node)"
+                                                                                    [indeterminate]="checkDescPartSelection(node)"
+                                                                                    disabled="true"></mat-checkbox>
+                                                                                <span
+                                                                                    class="nameEE1">{{node.display}}</span>
+
+                                                                            </div>
+                                                                            <ul
+                                                                                [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+                                                                                <ng-container
+                                                                                    matTreeNodeOutlet></ng-container>
+                                                                            </ul>
+                                                                        </li>
+                                                                    </ul>
+                                                                </mat-nested-tree-node>
+
+                                                            </div>
+                                                        </div>
+                                                    </mat-tree>
+                                                </div>
+
+                                            </div>
+
+                                            <!------>
+
+                                        </div>
+                                    </div>
+
+                                    <!------->
+
+                                </div>
+
+                                <!-----ITEMS----->
+                            </div>
+                            <!--------Col-6 2nd---------->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!-------Type Base Permission END----->
+</div>

@@ -1,0 +1,184 @@
+<div class="row align-items-center">
+    <div class="col-sm-12">
+        <div class="title-part">
+            <h2>My Profile</h2>
+        </div>
+    </div>
+    <form [formGroup]="userProfileForm">
+        <div class="col-sm-12 p_relative mt-1">
+            <div class="main-profile">
+                <div class="section-profile">
+                    <div class="top_profile">
+                        <ul>
+                            <li *ngIf="editable===false ||  closebtn===true">
+                                <button (click)="editProfileDetails()" class="p-icon_edit" title="Edit">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                            </li>
+                            <li *ngIf="editable===true ||  closebtn===true">
+                                <button (click)="profileFormSubmit()" class="p-icon_submit" title="Submit"
+                                    [disabled]="submitBtn  || this.userProfileForm.invalid ">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </button>
+                            </li>
+                            <li><button *ngIf="editable===true" (click)="resetForm()" class="p-icon_reset" title="Reset"
+                                    [disabled]="resetbtn">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </button>
+                            </li>
+                            <li><button *ngIf="closebtn===true || editable===true"
+                                    (click)="viewProfileDetails();  isDisabled = true; resetbtn=false"
+                                    class="p-icon_cancel" title="Cancel">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="profile">
+                        <div class="profile_inner">
+                            <div [class]="editable? 'profile_img':'profile_img disable'">
+                                <img [src]="imageUrl" height="200" *ngIf="imageUrl">
+                                <ngx-avatar *ngIf="!imageUrl" size="150" name="{{ngxFirstName}} {{ngxLastName}}">
+                                </ngx-avatar>
+                                <div class="profile_uploadicon">
+                                    <input type='file' accept=" .png , .jpg , .jpeg" (change)="onSelectImage($event)"
+                                        (click)="updateProfilePicture()" *ngIf="selectImage===true">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </div>
+
+                                <!-- <div class="remove_img" (click)="removeImage()">
+                                    <p *ngIf="removeImgBtn===true">
+                                        <i class="fas fa-times"></i> Remove Image
+                                    </p>
+                                </div> -->
+
+                                <div class="remove_img" (click)="removeImage()">
+                                    <p *ngIf="this.imageUrl !=null && editable===true">
+                                        <i class="fas fa-times"></i> Remove Image
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="profile_name">
+                                <!-- concatinate firstname and last name -->
+                                <h4>{{firstName}}
+                                    {{lastName}}
+                                </h4>
+                                <p><i class="far fa-envelope"></i><input type="email" formControlName="user_email"
+                                        readonly>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div [class]="editable? 'profile-detail':'profile-detail view_profile_box'">
+                    <div class="row">
+                        <div class="col-sm-4 profile_tel">
+                            <p><i class="far fa-user-circle"></i> <span>First Name </span> <input type="text"
+                                    class="form-control" formControlName="first_name" placeholder="Enter first name"
+                                    (keyup)="changeProfileValues()" onkeyup="this.value=this.value.replace(/\s+/g, ' ')"
+                                    (keypress)="
+                                    handle_Num_Val_Double_Space($event)" minlength="2">
+                            </p>
+                            <span class="text-danger mat-error"
+                                *ngIf="(userProfileControl['first_name'].touched)&& userProfileControl['first_name'].invalid">
+                                <div *ngIf="userProfileControl['first_name'].errors?.['required']"> First name is
+                                    required.
+                                </div>
+                            </span>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <p>
+                                <i class="far fa-user-circle"></i>
+                                <span>Last Name </span>
+                                <input type="text" class="form-control" formControlName="last_name"
+                                    (keyup)="changeProfileValues()" placeholder="{{ showPlaceholder }}">
+                            </p>
+
+                            <span class="text-danger mat-error"
+                                *ngIf="(userProfileControl['last_name'].touched)&& userProfileControl['last_name'].invalid">
+                                <div *ngIf="userProfileControl['last_name'].errors?.['pattern']"> Please enter alphabets
+                                    only.
+                                </div>
+                            </span>
+                        </div>
+
+                        <div class="col-sm-4 profile_tel">
+                            <p>
+                                <i class="fas fa-phone"></i>
+                                <span>Contact </span>
+                                <input type="tel" class="form-control" formControlName="user_contact" maxlength="10"
+                                    placeholder="Enter contact no."
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"
+                                    (keyup)="changeProfileValues()">
+                            </p>
+
+                            <span class="text-danger mat-error"
+                                *ngIf="(userProfileControl['user_contact'].touched)&& userProfileControl['user_contact'].invalid">
+                                <div *ngIf="userProfileControl['user_contact'].errors?.['required']"> Please enter
+                                    contact no.
+                                </div>
+                                <div *ngIf="userProfileControl['user_contact'].errors?.['pattern']">Enter valid
+                                    contact no.
+                                </div>
+                            </span>
+                        </div>
+                        <div class="col-sm-4">
+                            <p>
+                                <i class="fas fa-user-cog"></i>
+                                <span>Role </span>
+                                <input type=" text" formControlName="user_role" class="form-control" readonly
+                                    style="margin-left: 4px;">
+                            </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p style="justify-content: flex-start;"><i class="fas fa-user-tie"></i> <span>Report Type
+                                </span>
+                                <span style="font-family: 'Poppins-Regular';margin-left: 8px;"
+                                    *ngIf="this.userId == -1">{{"ALL"}}
+                                </span>
+                                <b style="width: 100%;" *ngIf="this.userId != -1">
+                                    <input type="text" formControlName="user_type" class="form-control" readonly>
+                                </b>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="profile_glibl">
+                                <h4><i class="fas fa-globe"></i> <span>Zone</span></h4>
+                                <ul>
+                                    <li *ngFor=" let zone of userZone">{{zone}}</li>
+                                </ul>
+                                <ul>
+
+                                    <li *ngIf="this.userId== -1">{{"ALL"}}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="profile_glibl">
+                                <h4><i class="fas fa-globe"></i> <span>Circle </span></h4>
+                                <ul>
+                                    <li *ngFor="let circle of userCircle">{{circle}}</li>
+                                </ul>
+                                <ul>
+
+                                    <li *ngIf="this.userId== -1">{{"ALL"}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

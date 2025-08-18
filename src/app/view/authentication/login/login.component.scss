@@ -1,0 +1,53 @@
+.orange {
+  border-radius: 10px;
+  color: rgb(230 100 100);
+}
+
+.blue {
+  border-radius: 10px;
+  color: rgba(2, 193, 126, 1);
+}
+
+.reset_passpage .usersec h1 {
+  font-size: 1.5rem;
+}
+
+.reset_passpage .password-hint {
+  padding: 5px;
+  margin: 18px 0 0;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.reset_passpage .password-hint ul {
+  padding: 0px;
+  margin: 0px;
+}
+
+.reset_passpage .password-hint li {
+  display: inline-block;
+  width: 50%;
+  padding: 0;
+  font-size: 12px;
+}
+
+.login-page.reset_passpage .login-inner {
+  height: calc(100vh - 10%);
+}
+
+.login-page.reset_passpage .mat-error {
+  font-size: .6rem;
+  position: absolute;
+  width: max-content;
+  left: 2px;
+  bottom: -16px;
+  color: var(--red);
+}
+
+.login-page.reset_passpage .powerby {
+  margin-top: 20px;
+}
+
+.login-page.reset_passpage .copyright {
+  margin-top: 14px;
+}

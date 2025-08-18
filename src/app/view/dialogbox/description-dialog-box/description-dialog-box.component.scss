@@ -1,0 +1,78 @@
+.discription_dialog.modal_all .modal-body {
+    max-height: 460px;
+}
+
+.discription_dialog ul {
+    padding: 0px;
+    margin: 0px;
+}
+
+.discription_dialog ul {
+    width: 100%;
+    display: inline-block;
+}
+
+.discription_dialog ul li {
+    list-style: none;
+    margin: 3px 0;
+    color: #696f7f;
+    font-size: .8rem;
+    font-family: 'Poppins-Medium';
+}
+
+.discription_dialog .circle_listed h4,
+.discription_dialog .zone_listed h4 {
+    font-family: "Poppins-SemiBold";
+    font-size: 1rem;
+    color: #696f7f;
+}
+
+.discription_dialog .zone_listed {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.discription_dialog .zone_listed ul {
+    display: flex !important;
+    padding-left: 7px !important;
+}
+
+.discription_dialog .zone_listed h4 {
+    margin-bottom: 0px;
+}
+
+.discription_dialog .zone_listed ul li {
+    display: flex !important;
+    width: auto !important;
+    margin: 0px 8px 0px 0px !important;
+    background-color: #182848;
+    color: #fff !important;
+    padding: 4px 10px;
+    border-radius: 5px;
+}
+
+.discription_dialog .circle_listed ul li {
+    width: 33.3%;
+    display: inline-block;
+    position: relative;
+    padding-left: 12px;
+}
+
+.discription_dialog .circle_listed ul li::before {
+    content: '';
+    background-color: #696f7f;
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    border-radius: 100px;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+}
+
+.border_bottom {
+    border-bottom: 1px solid #ccc;
+}

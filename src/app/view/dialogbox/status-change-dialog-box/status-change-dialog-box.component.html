@@ -1,0 +1,32 @@
+<!--
+  * Project Name: MIS.
+* Date: 12/05/2023
+* CreatedBy: Ankush
+* Contact: Echelon Edge MIS Development Team.
+* Copyright: Echelon Edge Pvt. Ltd.
+* Purpose:status change Dialog box -->
+
+<div class="modal-dialog modal_all">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Confirmation</h5>
+      <button class="btn-close ms-auto" mat-dialog-close><i class=" fas fa-times"></i></button>
+
+
+    </div>
+    <div class="modal-body">
+      <!-- <p class="text-center py-4">Do you want to deactivate the user?</p> -->
+      <p class="text-center py-4">{{this.data.title}}</p>
+      <div class="text-center mt-3">
+        <button class="btn btn-primary btn-reset" type="text" (click)="onCancel()">
+          Cancel
+        </button>
+        <button class="btn btn-success btn-submit ms-sm-2 mt-2 mt-sm-0" type="submit" (click)="onSubmit()">
+          Submit
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</div>

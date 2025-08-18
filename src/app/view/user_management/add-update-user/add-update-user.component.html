@@ -1,0 +1,282 @@
+<div class="modal-dialog modal_all">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">{{this.data.title}}</h5>
+            <button type="button" class="btn-close"><i class="fas fa-times" (click)="closeUserDialogRef()"></i></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="userAddUpdateForm" autocomplete="off">
+                <div class="row">
+
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">First Name <span class="requireds"></span></label>
+                            <input type="text" placeholder="Enter first name" formControlName="first_name"
+                                class="form-control" onkeyup="this.value=this.value.replace(/\s+/g, ' ')"
+                                (keypress)="preventNumericInput($event)" [maxLength]="50">
+                            <span class="text-danger mat-error"
+                                *ngIf="(addUserFormcontrol['first_name'].touched)&& addUserFormcontrol['first_name'].invalid">
+                                <div *ngIf="addUserFormcontrol['first_name'].errors?.['required']"> Please enter first
+                                    name.</div>
+                                <div *ngIf="addUserFormcontrol['first_name'].errors?.['pattern']">Please enter alphabets
+                                    only
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" placeholder="Enter last name" formControlName="last_name"
+                                class="form-control" [maxLength]="50">
+                            <span class="text-danger mat-error"
+                                *ngIf="(addUserFormcontrol['last_name'].touched)&& addUserFormcontrol['last_name'].invalid">
+                                <div *ngIf="addUserFormcontrol['last_name'].errors?.['required']"> Please enter last
+                                    name.
+                                </div>
+                                <div *ngIf="addUserFormcontrol['last_name'].errors?.['pattern']">Please enter alphabets
+                                    only
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Username <span class="requireds"></span></label>
+                            <input type="text" placeholder="Enter username" formControlName="user_name"
+                                class="form-control" [readonly]="this.userName"
+                                oninput="this.value = this.value.replace(/[^A-Za-z0-9_-]|^ /g,'')" maxlength="50">
+                            <span class="text-danger mat-error"
+                                *ngIf="(addUserFormcontrol['user_name'].touched)&& addUserFormcontrol['user_name'].invalid">
+                                <div *ngIf="addUserFormcontrol['user_name'].errors?.['required']"> Please enter
+                                    username.
+                                </div>
+                                <div *ngIf="addUserFormcontrol['user_name'].errors?.['pattern']">Please enter lower
+                                    case.
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Contact Number <span class="requireds"></span></label>
+                            <input type="text" formControlName="user_contact" class="form-control"
+                                placeholder="Enter contact no." maxlength="10" min="0"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                            <span class=" text-danger mat-error"
+                                *ngIf="(addUserFormcontrol['user_contact'].touched)&& addUserFormcontrol['user_contact'].invalid">
+                                <div *ngIf="addUserFormcontrol['user_contact'].errors?.['required']">Please enter
+                                    contact no.</div>
+                                <div *ngIf="addUserFormcontrol['user_contact'].errors?.['pattern']">Please enter valid
+                                    contact no.
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Email<span class="requireds"></span></label>
+                            <input type="email" placeholder="Enter email address" formControlName="user_email"
+                                class="form-control" (keydown.space)="$event.preventDefault()"
+                                onkeyup="this.value=this.value.replace(/\s+/g, '')" maxlength="50">
+                            <span class="text-danger mat-error"
+                                *ngIf="(addUserFormcontrol['user_email'].touched)&& addUserFormcontrol['user_email'].invalid">
+                                <div *ngIf="addUserFormcontrol['user_email'].errors?.['required']">Email is required.
+                                </div>
+                                <div *ngIf="addUserFormcontrol['user_email'].errors?.['pattern']">
+                                    <!--&#64 represent @keyword-->
+                                    Please enter only &#64;echelonedge.com email address
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Role <span class="requireds"></span></label>
+                            <mat-form-field class="custom_matselect" floatLabel="never">
+                                <mat-label>Select role</mat-label>
+                                <mat-select class="td_capital" formControlName="user_role">
+
+                                    <mat-option *ngFor=" let role of roleData"
+                                        [value]="role.ROLE_ID">{{role.ROLE_NAME}}</mat-option>
+
+                                </mat-select>
+                            </mat-form-field>
+                            <!-- <select class="form-select" formControlName="user_role">
+                                <option disabled value=''>Select role</option>
+                                <option *ngFor=" let role of roleData" [value]="role.ROLE_ID">{{role.ROLE_NAME}}
+                                </option>
+                            </select> -->
+                            <span class="text-danger mat-error"
+                                *ngIf="(addUserFormcontrol['user_role'].touched)&& addUserFormcontrol['user_role'].invalid">
+                                <div *ngIf="addUserFormcontrol['user_role'].errors?.['required']"> Please select role.
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Type <span class="requireds"></span></label>
+                            <mat-form-field class="custom_matselect" floatLabel="never">
+                                <mat-select disableOptionCentering placeholder="Select type" formControlName="type"
+                                    multiple #select1 (selectionChange)="onSelectType($event.value)">
+
+                                    <mat-select-trigger>
+                                        {{userAddUpdateForm.controls['type'].value ?displayTypeName(userAddUpdateForm.controls['type'].value[0]) : ''}}
+                                        <!-- {{userAddUpdateForm.controls['zone'].value}} -->
+                                        <span *ngIf="userAddUpdateForm.controls['type'].value?.length> 1"
+                                            class="additional-selection">
+                                            (+{{userAddUpdateForm.controls['type'].value?.length-1}}{{userAddUpdateForm.controls['type'].value?.length
+                                            === 2 ? 'other' : 'others'}})
+                                        </span>
+                                        <!-- {{userAddUpdateForm.controls['type'].value == -1}} -->
+                                        <span *ngIf="userAddUpdateForm.controls['type'].value == -1 ">
+                                            All
+                                        </span>
+                                    </mat-select-trigger>
+                                    <mat-option [disabled]="allTypeCheck" value="-1">All</mat-option>
+                                    <mat-option *ngFor="let types of typeData" [value]="types.TYPE_ID"
+                                        [disabled]="typeCheck">{{types.TYPE_NAME}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label>Zone <span class="requireds"></span></label>
+                            <mat-form-field class="custom_matselect" floatLabel="never">
+                                <mat-select disableOptionCentering placeholder="Select zone" formControlName="zone"
+                                    multiple #select1 (selectionChange)="onItemSelectZone($event.value,'')">
+
+                                    <mat-select-trigger>
+                                        {{userAddUpdateForm.controls['zone'].value ?displayZoneName(userAddUpdateForm.controls['zone'].value[0]) : ''}}
+
+                                        <span *ngIf="userAddUpdateForm.controls['zone'].value?.length> 1"
+                                            class="additional-selection">
+                                            (+{{userAddUpdateForm.controls['zone'].value.length-1}}{{userAddUpdateForm.controls['zone'].value.length
+                                            === 2 ? 'other' : 'others'}})
+                                        </span>
+                                        <span *ngIf="userAddUpdateForm.controls['zone'].value == '-1' ">
+                                            All
+                                        </span>
+                                    </mat-select-trigger>
+                                    <mat-option [disabled]="allZoneCheck" value="-1">All</mat-option>
+
+                                    <mat-option *ngFor="let zone of zoneDropDownList" [value]="zone.ZONE_ID"
+                                        [disabled]=" zoneCheck ">{{zone.ZONE_NAME}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label>Circle<span class="requireds"></span></label>
+
+                            <mat-form-field class="custom_matselect" floatLabel="never">
+                                <mat-select disableOptionCentering placeholder="Select circle" formControlName="circle"
+                                    multiple #select1 (selectionChange)="selectionChangeCircle($event.value,'circle')"
+                                    (openedChange)="openChangeCircle($event)">
+                                    <input type="text" class="form-control search_input_filter"
+                                        (keyup)="searchFun($event)" [(ngModel)]='serachCir'
+                                        [ngModelOptions]="{standalone:true}" (keydown)="$event.stopPropagation()"
+                                        placeholder="please search data" />
+
+                                    <mat-select-trigger>
+                                        {{userAddUpdateForm.controls['circle'].value ?displayCircleName(userAddUpdateForm.controls['circle'].value[0]) : ''}}
+                                        <span *ngIf="userAddUpdateForm.controls['circle'].value?.length > 1"
+                                            class="additional-selection">
+                                            (+{{userAddUpdateForm.controls['circle'].value.length-1}}{{userAddUpdateForm.controls['circle'].value.length
+                                            === 2 ? 'other' : 'others'}})
+                                        </span>
+
+                                        <span *ngIf="userAddUpdateForm.controls['circle'].value == '-1' ">
+                                            All
+                                        </span>
+                                    </mat-select-trigger>
+                                    <mat-option [disabled]="allCircleCheck"
+                                        (onSelectionChange)="selectionChangeCircle($event,'circle')"
+                                        *ngIf="this.selectedZone?.length!=0 && serachCir=='' "
+                                        value="-1">All</mat-option>
+                                    <span *ngIf="this.selectedZone?.length!=0 ">
+                                        <mat-option (onSelectionChange)="selectionChangeCircle($event,'circle')"
+                                            *ngFor="let option of circleDropDownList" [value]="option?.CIRCLE_ID"
+                                            [disabled]="circleCheck">
+                                            {{option?.CIRCLE_NAME}}
+                                        </mat-option>
+                                    </span>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <span class=" text-danger mat-error" *ngIf="!this.circleBoolean">
+                                <div>Please select atleast one circle according to each zone
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!--SSA DropDown---->
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label>BA <span class="requireds"></span></label>
+                            <mat-form-field class="custom_matselect" floatLabel="never">
+                                <mat-select disableOptionCentering placeholder="Select BA" formControlName="ssa"
+                                    multiple (openedChange)="openChangeSSA($event)">
+
+                                    <input type="text" class="form-control search_input_filter"
+                                        (keyup)="searchFunSSA($event)" [(ngModel)]='serachSSA'
+                                        [ngModelOptions]="{standalone:true}" placeholder="please search data" />
+
+                                    <mat-select-trigger>
+                                        {{userAddUpdateForm.controls['ssa'].value ?displaySsaName(userAddUpdateForm.controls['ssa'].value[0]) : ''}}
+
+                                        <span *ngIf="userAddUpdateForm.controls['ssa'].value?.length > 1"
+                                            class="additional-selection">
+                                            (+{{userAddUpdateForm.controls['ssa'].value.length-1}}{{userAddUpdateForm.controls['ssa'].value.length
+                                            === 2 ? 'other' : 'others'}})
+                                        </span>
+
+                                        <span *ngIf="userAddUpdateForm.controls['ssa'].value == '-1' ">
+                                            All
+                                        </span>
+                                    </mat-select-trigger>
+                                    <mat-option [disabled]="allssaCheck"
+                                        (onSelectionChange)="selectionChangeSSA($event,'ssa')"
+                                        *ngIf="this.selectedCircle.length!=0  && serachSSA==''"
+                                        value="-1">All</mat-option>
+
+                                    <mat-option (onSelectionChange)="selectionChangeSSA($event,'ssa')"
+                                        [disabled]="ssaCheck" *ngFor="let option of ssaDropDownList"
+                                        [value]="option?.SSA_CODE">
+                                        {{option?.SC_DESC}}
+                                    </mat-option>
+
+
+                                </mat-select>
+                            </mat-form-field>
+
+                            <span class=" text-danger mat-error" *ngIf="!this.ssaBoolean">
+                                <div>Please select atleast one ssa according to each circle
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <!--ssa dropdown-->
+                    <div class="col-sm-12 text-center mt-3">
+                        <div class="form-buttons">
+                            <button class="btn btn-primary btn-reset" [disabled]="!userAddUpdateForm.dirty"
+                                (click)="onReset()">Reset</button>
+                            <button class="btn btn-success btn-submit ms-sm-2 mt-2 mt-sm-0"
+                                [disabled]="this.userAddUpdateForm.invalid || !circleBoolean ||  !ssaBoolean || !userAddUpdateForm.dirty"
+                                (click)="userFormSubmit()">{{this.data.buttonName}}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

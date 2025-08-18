@@ -1,0 +1,736 @@
+<div class="adminx-main-content permission-page-main" *ngIf="module">
+
+    <div class="row align-items-center">
+        <div class="col-sm-12">
+            <div class="title-part">
+                <h2>Permission Management</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center po_relative">
+        <div class="col-sm-12 mt-3">
+            <ul class="nav nav-tabs" id="myTab1" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="Role-tab1" data-bs-toggle="tab" data-bs-target="#roletab1"
+                        type="button" role="tab" aria-selected="true" (click)="refreshSearch('role')">Role
+                        Permission</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="Type-tab2" data-bs-toggle="tab" data-bs-target="#typetab2"
+                        type="button" role="tab" aria-selected="true" (click)="refreshSearch('type')">Type
+                        Permission</button>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="tab-content" id="myTabContent1">
+            <div class=" tab-pane fade show active" id="roletab1" role="tabpanel" aria-labelledby="Role-tab1">
+                <div class="row">
+                    <div class="col-sm-12" *ngIf="viewpermission">
+                        <form class="create_permission">
+                            <div class="form-group" *ngIf="!editPermissions && this.module">
+                                <button class="btn btn-create" [disabled]="module[0].CREATE_ACCESS==0"
+                                    (click)="view_edit_permission()">Create</button>
+                            </div>
+                        </form>
+
+                        <div class="accordion-permision view_rol_permission mt-3"
+                            *ngIf="!createPermissions && this.module">
+                            <!-- <div class="no_datapermission" *ngIf="this.rolePermList.length===0">
+                                <div class="img_place">
+                                    <img src="../../../../assets/images/placeholder.svg">
+                                    <p>No data found</p>
+                                </div>
+                            </div> -->
+
+                            <div *ngIf="roleDataTableRefresh" class="accordion listing-table" id="accordionExample1">
+                                <table datatable [dtOptions]="roledtOptions" class="table resize common-table mb-0"
+                                    style="width:100%" [ngClass]="{ datatable_noRecord: rolePermList?.length != 0 }"
+                                    style="width: 100%">
+                                    <tbody>
+                                        <tr *ngFor="let rolePerm of this.rolePermList;let i=index;">
+                                            <td class="p-0 border-0 bg-transparent">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" [id]="'heading'+i">
+                                                        <button class="accordion-button collapsed " type="button"
+                                                            data-bs-toggle="collapse"
+                                                            [attr.data-bs-target]="'#collapse'+i" aria-expanded="false"
+                                                            [attr.aria-controls]="'collapse'+i"
+                                                            (click)="getRolePermissions(rolePerm)">
+
+                                                            {{rolePerm.ROLE_NAME}}
+                                                        </button>
+                                                        <button class="role_edit" (click)="getRoleId(rolePerm)" *ngIf="
+                                                userDetails.USER_ROLE!=rolePerm.ROLE_ID" [disabled]="
+                                               module[0].EDIT_ACCESS==0">
+                                                            <i class=" far fa-edit"></i></button>
+                                                        <button class="role_delete" (click)="deleteRolePerm(rolePerm)"
+                                                            *ngIf="
+                                                userDetails.USER_ROLE!=rolePerm.ROLE_ID"
+                                                            [disabled]="module[0].DELETE_ACCESS==0">
+                                                            <i class="fa-regular fa-trash-can"></i></button>
+                                                    </h2>
+                                                    <div [id]="'collapse'+i" class="accordion-collapse collapse"
+                                                        [attr.aria-labelledby]="'heading'+i"
+                                                        data-bs-parent="#accordionExample1">
+                                                        <div class="accordion-body">
+                                                            <div class="userpermission-page">
+                                                                <div class="table-responsive userpermissionmodule">
+                                                                    <table
+                                                                        class="table table-bordered table-striped expand-table table-fixed">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Module Name</th>
+                                                                                <th style="width: 20%;">
+                                                                                    <div class="main_check">
+                                                                                        <label>View</label>
+                                                                                    </div>
+                                                                                </th>
+                                                                                <th style="width: 20%;">
+                                                                                    <div class="main_check">
+                                                                                        <label>Create</label>
+                                                                                    </div>
+                                                                                </th>
+                                                                                <th style="width: 20%;">
+                                                                                    <div class="main_check">
+                                                                                        <label>Edit</label>
+                                                                                    </div>
+                                                                                </th>
+                                                                                <th style="width: 20%;">
+                                                                                    <div class="main_check">
+                                                                                        <label>Delete</label>
+                                                                                    </div>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody class="firstlevel">
+                                                                            <tr>
+                                                                                <td colspan="5" class="p-0"><!---->
+
+                                                                                    <div>
+                                                                                        <table
+                                                                                            class="table table-striped">
+                                                                                            <tbody
+                                                                                                *ngFor="let module of this.moduleList; let i=index">
+                                                                                                <tr
+                                                                                                    [id]="'panelsStayOpen-Insight'+i">
+                                                                                                    <th data-bs-toggle="collapse"
+                                                                                                        aria-expanded="false"
+                                                                                                        class="accordion-button bottom-arrow collapsed"
+                                                                                                        [attr.data-bs-target]="'#panelsStayOpen-'+i"
+                                                                                                        [attr.aria-controls]="'panelsStayOpen-'+i">
+                                                                                                        <i
+                                                                                                            class="fas fa-angle-down unknown-color"></i><!----><span
+                                                                                                            class="moduleName">
+                                                                                                            {{module.MODULES_NAME}}</span>
+                                                                                                    </th>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td colspan="5"
+                                                                                                        class="p-0">
+                                                                                                        <div class="accordion-collapse collapse-content collapse"
+                                                                                                            [id]="'panelsStayOpen-'+i"
+                                                                                                            [attr.aria-labelledby]="'panelsStayOpen-Insight'+i">
+                                                                                                            <div
+                                                                                                                class="secondlevel">
+                                                                                                                <table
+                                                                                                                    class="table table-striped mb-1">
+                                                                                                                    <tbody
+                                                                                                                        *ngFor="let subModules of module.SUB_MODULES">
+                                                                                                                        <tr
+                                                                                                                            id="panelsStayOpen-Host &amp; Service Trends">
+                                                                                                                            <th data-bs-toggle="'collapse'"
+                                                                                                                                aria-expanded="false"
+                                                                                                                                class="accordion-button collapsed bottom-arrow"
+                                                                                                                                data-bs-target="'#panelsStayOpen-67'"
+                                                                                                                                [attr.aria-controls]="'panelsStayOpen-67'+i">
+                                                                                                                                <!----><span
+                                                                                                                                    class="moduleName">
+                                                                                                                                    {{subModules.module}}</span>
+                                                                                                                            </th>
+                                                                                                                            <td
+                                                                                                                                class="text-center">
+                                                                                                                                <input
+                                                                                                                                    type="checkbox"
+                                                                                                                                    *ngIf="checkboxShown">
+                                                                                                                                <i
+                                                                                                                                    [ngClass]="subModules.READ_ACCESS==1?'fas fa-check':'fas fa-times'"></i>
+                                                                                                                            </td>
+                                                                                                                            <td
+                                                                                                                                class="text-center">
+                                                                                                                                <input
+                                                                                                                                    type="checkbox"
+                                                                                                                                    *ngIf="checkboxShown">
+                                                                                                                                <i
+                                                                                                                                    [ngClass]="subModules.CREATE_ACCESS==1?'fas fa-check':'fas fa-times'"></i>
+                                                                                                                            </td>
+                                                                                                                            <td
+                                                                                                                                class="text-center">
+                                                                                                                                <input
+                                                                                                                                    type="checkbox"
+                                                                                                                                    *ngIf="checkboxShown">
+                                                                                                                                <i
+                                                                                                                                    [ngClass]="subModules.EDIT_ACCESS==1?'fas fa-check':'fas fa-times'"></i>
+                                                                                                                            </td>
+                                                                                                                            <td
+                                                                                                                                class="text-center">
+                                                                                                                                <input
+                                                                                                                                    type="checkbox"
+                                                                                                                                    *ngIf="checkboxShown">
+                                                                                                                                <i
+                                                                                                                                    [ngClass]="subModules.DELETE_ACCESS==1?'fas fa-check':'fas fa-times'"></i>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                        <tr>
+                                                                                                                            <td colspan="5"
+                                                                                                                                class="p-0">
+                                                                                                                                <div class="accordion-collapse collapse collapse-content"
+                                                                                                                                    id="panelsStayOpen-67"
+                                                                                                                                    aria-labelledby="panelsStayOpen-Host &amp; Service Trends">
+                                                                                                                                    <!---->
+                                                                                                                                </div>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                    </tbody>
+                                                                                                                </table>
+                                                                                                            </div>
+                                                                                                            <!---->
+
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- <div class="bottom-btns">
+                            <button class="btn btn-reset" disabled>Reset</button>
+                            <button class="btn btn-submit ms-2" (click)="addUpdatepermissions()"
+                                disabled>Submit</button>
+                        </div> -->
+                    </div><!----Acordion-Section---->
+
+                    <!-----Create Role Permission-------->
+                    <div class="col-sm-12" *ngIf="createPermissions">
+
+                        <form [formGroup]="permissionForm" class="select_absolute">
+                            <button class="btn back_btn_permission" (click)="backToViewPage()">
+                                <i class="fas fa-long-arrow-left"></i> Back</button>
+                            <div class="form-group" *ngIf="!editPermissions">
+                                <mat-form-field class="typ_prmsn_slect">
+                                    <mat-select class="form-select td_capital" disableOptionCentering
+                                        (openedChange)="$event?'':filterRole('')" formControlName="role_id"
+                                        panelClass="typ_prmsn_slect_pnl" placeholder="Select Role"
+                                        (selectionChange)="ShowModuleList()">
+                                        <input class="form-control" placeholder="Search Role"
+                                            (keyup)="filterRole($event)" formControlName="serachInputRole">
+                                        <!-- <mat-option>User </mat-option> -->
+                                        <mat-option *ngFor=" let roleData of filteredRoleList"
+                                            [value]="roleData.ROLE_ID">
+                                            {{roleData.ROLE_NAME}}</mat-option>
+                                    </mat-select>
+                                    <span class="text-danger mat-error"
+                                        *ngIf="(permissionForm.controls['role_id'].touched)&& permissionForm.controls['role_id'].invalid">
+                                        <div *ngIf="permissionForm.controls['role_id'].errors?.['required']"> Please
+                                            select
+                                            role.
+                                        </div>
+                                    </span>
+                                </mat-form-field>
+                            </div>
+
+                            <div *ngIf="editPermissions">
+                                <!-- <ng-template #other_content> -->
+                                <p class="permissions_selected-user">{{this.selectedRole1}}</p>
+                                <!-- </ng-template> -->
+                            </div>
+                        </form>
+                        <div class="accordion-permision mt-3">
+                            <div class="accordion-item no-shadow">
+                                <div class="table-responsive userpermissionmodule"
+                                    style="height: 100%;max-height: calc(100vh - 260px);">
+                                    <table class="table table-bordered table-striped expand-table table-fixed">
+                                        <thead>
+                                            <tr>
+                                                <th>Module Name</th>
+                                                <th style="width: 20%;">
+                                                    <div class="main_check">
+                                                        <label>View</label>
+                                                    </div>
+                                                </th>
+                                                <th style="width: 20%;">
+                                                    <div class="main_check">
+                                                        <label>Create</label>
+                                                    </div>
+                                                </th>
+                                                <th style="width: 20%;">
+                                                    <div class="main_check">
+                                                        <label>Edit</label>
+                                                    </div>
+                                                </th>
+                                                <th style="width: 20%;">
+                                                    <div class="main_check">
+                                                        <label>Delete</label>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="firstlevel"
+                                            *ngIf="this.selectedRole!=''?this.showModuleList:this.showModuleList">
+                                            <tr>
+                                                <td colspan="5" class="p-0"><!---->
+
+                                                    <div>
+                                                        <table class="table table-striped">
+                                                            <tbody *ngFor="let module of this.moduleList; let i=index">
+                                                                <tr [id]="'panelsStayOpen-Insight'+i">
+                                                                    <th data-bs-toggle="collapse" aria-expanded="false"
+                                                                        class="accordion-button bottom-arrow collapsed"
+                                                                        [attr.data-bs-target]="'#panelsStayOpen-'+i"
+                                                                        [attr.aria-controls]="'panelsStayOpen-'+i">
+                                                                        <i
+                                                                            class="fas fa-angle-down unknown-color"></i><!----><span
+                                                                            class="moduleName font-boldd">
+                                                                            {{module.MODULES_NAME}}</span>
+                                                                    </th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="5" class="p-0">
+                                                                        <div class="accordion-collapse collapse-content collapse"
+                                                                            [id]="'panelsStayOpen-'+i"
+                                                                            [attr.aria-labelledby]="'panelsStayOpen-Insight'+i">
+                                                                            <div class="secondlevel">
+                                                                                <table class="table table-striped mb-1">
+                                                                                    <tbody
+                                                                                        *ngFor="let subModules of module.SUB_MODULES; let j=index">
+                                                                                        <tr
+                                                                                            id="panelsStayOpen-Host &amp; Service Trends">
+
+                                                                                            <th data-bs-toggle="'collapse'"
+                                                                                                aria-expanded="false"
+                                                                                                class="accordion-button collapsed bottom-arrow font-flex font-normal"
+                                                                                                data-bs-target="'#panelsStayOpen-67'"
+                                                                                                [attr.aria-controls]="'panelsStayOpen-67'+i">
+                                                                                                <!----><span
+                                                                                                    class="moduleName">
+                                                                                                    <input
+                                                                                                        type="checkbox"
+                                                                                                        [(ngModel)]="subModules.READ_ACCESS"
+                                                                                                        (change)="handleCheckboxChange(subModules)">
+                                                                                                    {{subModules.module}}</span>
+
+                                                                                            </th>
+                                                                                            <td class="text-center">
+                                                                                                <input type="checkbox"
+                                                                                                    [(ngModel)]="subModules.READ_ACCESS"
+                                                                                                    [disabled]="true"
+                                                                                                    (change)="handleCheckboxChange(subModules)">
+                                                                                            </td>
+                                                                                            <td class="text-center">
+                                                                                                <input type="checkbox"
+                                                                                                    [(ngModel)]="subModules.CREATE_ACCESS"
+                                                                                                    [disabled]="!subModules.READ_ACCESS"
+                                                                                                    (change)="handleCheckboxChange(subModules)">
+
+                                                                                            </td>
+                                                                                            <td class="text-center">
+                                                                                                <input type="checkbox"
+                                                                                                    [(ngModel)]="subModules.EDIT_ACCESS"
+                                                                                                    [disabled]="!subModules.READ_ACCESS"
+                                                                                                    (change)="handleCheckboxChange(subModules)">
+
+
+                                                                                            </td>
+                                                                                            <td class="text-center">
+                                                                                                <input type="checkbox"
+                                                                                                    [(ngModel)]="subModules.DELETE_ACCESS"
+                                                                                                    [disabled]="!subModules.READ_ACCESS"
+                                                                                                    (change)="handleCheckboxChange(subModules)">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td colspan="5" class="p-0">
+                                                                                                <div class="accordion-collapse collapse collapse-content"
+                                                                                                    id="panelsStayOpen-67"
+                                                                                                    aria-labelledby="panelsStayOpen-Host &amp; Service Trends">
+                                                                                                    <!---->
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div><!---->
+
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bottom-btns">
+                            <button class="btn btn-reset" (click)="resetForm()"
+                                [disabled]="!permissionForm.valid   || this.reset_btn_disabled==false">Reset</button>
+                            <button class="btn btn-submit ms-2" (click)="addUpdatepermissions()" [disabled]="!anyCheckboxSelected() || !permissionForm.valid
+                            || this.btnEnable==false">Submit</button>
+                        </div>
+                    </div>
+
+                    <!--------END Create Role Permission-------->
+
+                </div>
+
+
+
+                <!-- </div> -->
+            </div><!----First TAB END-->
+
+
+
+            <!--------Create Type Based Permission Second tab------>
+            <div class="tab-pane fade" id="typetab2" role="tabpanel" aria-labelledby="Type-tab2">
+                <!-------View Type Tab--------->
+                <div class="row" *ngIf="this.viewTypeDiv==true">
+                    <div class="col-sm-12"> <!---*ngFor=" let user of selectedUserListData"-->
+                        <form class="create_permission">
+                            <button (click)="createTypePerm()" [disabled]="module[0].CREATE_ACCESS==0"
+                                class="btn btn-create">Create</button>
+                        </form>
+                        <!-- <p>{{user.NAME}} <i class="far fa-edit"></i></p> -->
+                        <div *ngIf="typeDataTableRefresh" class="accordion-permision view_prmissiontab mt-3">
+                            <div class="accordion listing-table" id="accordionExample2" *ngIf="tableDataLoadTypePerm">
+                                <table datatable [dtOptions]="dtOptions" class="table resize common-table mb-0"
+                                    style="width:100%"
+                                    [ngClass]="{ datatable_noRecord: selectedUserListData?.length != 0 }"
+                                    style="width: 100%">
+                                    <tbody>
+                                        <tr *ngFor=" let user of selectedUserListData ; let i=index">
+                                            <td>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" [id]="'headingnewOne'+i">
+                                                        <!-- <button (click)="editTypePerm(user.USER_ID)" class="accordion-button collapsed"
+                                                            type="button" data-bs-toggle="collapse"
+                                                            [attr.data-target]="'#flush-collapseOne'+i" aria-expanded="false"
+                                                            [attr.aria-controls]="'flush-collapseOne'+i">
+                                                            {{user.NAME}}
+                                                        </button> -->
+
+                                                        <button (click)="showUserViseTypeData(user.USER_ID)"
+                                                            class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            [attr.data-bs-target]="'#collapsenewOne'+i"
+                                                            aria-expanded="true"
+                                                            [attr.aria-controls]="'collapsenewOne'+i">
+                                                            {{user.NAME}}
+                                                        </button>
+
+
+                                                        <button class="role_edit" [disabled]="module[0].EDIT_ACCESS==0"
+                                                            (click)="editTypePerm(user.USER_ID)" *ngIf="
+                                                            userDetails.USER_ID!=user.USER_ID">
+                                                            <i class=" far fa-edit"></i></button>
+                                                        <button class="role_delete" *ngIf="
+                                                        userDetails.USER_ID!=user.USER_ID" [disabled]="
+                                                        module[0].DELETE_ACCESS==0" (click)="deleteTypePerm(user)">
+                                                            <i class="fa-regular fa-trash-can"></i></button>
+
+
+                                                    </h2>
+
+
+                                                    <div [id]="'collapsenewOne'+i" class="accordion-collapse collapse"
+                                                        [attr.aria-labelledby]="'headingnewOne'+i"
+                                                        data-bs-parent="#accordionExample2">
+                                                        <div class="accordion-body">
+
+                                                            <div class="table-responsive user_type_permissionmodule">
+                                                                <table
+                                                                    class="table table-bordered table-striped expand-table table-fixed">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th width="252px">Module Name</th>
+                                                                            <th>
+                                                                                <div class="main_check">
+                                                                                    <label>View</label>
+                                                                                </div>
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody class="firstlevel">
+                                                                        <!-- Define the recursive template. -->
+
+                                                                        <tr>
+                                                                            <td colspan="2" class="p-0">
+                                                                                <mat-tree [dataSource]="dataSource"
+                                                                                    [treeControl]="treeControl"
+                                                                                    class="example-tree">
+
+                                                                                    <!-- This is the tree node template for leaf nodes -->
+                                                                        <tr>
+                                                                            <td colspan="2">
+                                                                                <mat-tree-node
+                                                                                    *matTreeNodeDef="let node"
+                                                                                    matTreeNodeToggle>
+                                                                                    <li
+                                                                                        class="mat-tree-node per_type_main_2">
+                                                                                        <!-- use a disabled button to provide padding for tree leaf -->
+                                                                                        <!-- <button mat-icon-button disabled></button> -->
+                                                                                        <span
+                                                                                            class="nameEE2">{{node.display}}</span>
+                                                                                        <mat-checkbox
+                                                                                            (change)="selectionToggleLastChilds($event.checked, node)"
+                                                                                            [checked]="node.isSelected"
+                                                                                            disabled="true"></mat-checkbox>
+                                                                                    </li>
+                                                                                </mat-tree-node>
+
+                                                                                <!-- This is the tree node template for expandable nodes -->
+
+                                                                                <mat-nested-tree-node
+                                                                                    *matTreeNodeDef="let node; when: hasChild">
+                                                                                    <li>
+                                                                                        <div
+                                                                                            class="mat-tree-node per_type_main">
+                                                                                            <button mat-icon-button
+                                                                                                matTreeNodeToggle
+                                                                                                [attr.aria-label]="'toggle ' + node.display">
+                                                                                                <mat-icon
+                                                                                                    class="mat-icon-rtl-mirror">
+                                                                                                    expand_more
+                                                                                                </mat-icon>
+                                                                                            </button>
+                                                                                            <span
+                                                                                                class="nameEE1">{{node.display}}</span>
+                                                                                            <mat-checkbox
+                                                                                                (change)="selectionToggle($event.checked, node)"
+                                                                                                [checked]="descendantsAllSelected(node)"
+                                                                                                [indeterminate]="checkDescPartSelection(node)"
+                                                                                                disabled="true"></mat-checkbox>
+                                                                                        </div>
+                                                                                        <ul
+                                                                                            [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+                                                                                            <ng-container
+                                                                                                matTreeNodeOutlet></ng-container>
+                                                                                        </ul>
+                                                                                    </li>
+                                                                                </mat-nested-tree-node>
+
+                                                                            </td>
+                                                                        </tr>
+                                                                        </mat-tree>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Define the recursive template. -->
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!------Custom Pagination--->
+        <div class="custompagination mt-2">
+
+            <!-- <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <a class="page-link" (click)="nextPage(navCurrent-1)" tabindex="-1">Previous</a>
+                    </li>
+
+                    <ng-container *ngFor="let page of navPage; ">
+                        <li class="page-item " [ngClass]="page==navCurrent?'active':''">
+                            <a class="page-link" (click)="nextPage(page)">{{page}} </a>
+                        </li>
+                    </ng-container>
+
+                    <li class="page-item">
+                        <a class="page-link" (click)="nextPage(navCurrent+1)">Next</a>
+                    </li>
+                </ul>
+            </nav> -->
+
+
+            <!-- <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                                <a class="paginate_button previous disabled"
+                                    id="DataTables_Table_0_previous">Previous</a>
+                                <span>
+                                    <a class="paginate_button current">1</a>
+                                    <a class="paginate_button">2</a>
+                                </span>
+                                <a class="paginate_button next" id="DataTables_Table_0_next">Next</a>
+                            </div> -->
+        </div>
+        <!----END Custom Pagination-->
+
+    </div>
+</div>
+<!--------View Type Tabs End----->
+
+<div class="row align-items-center mt-3" *ngIf="this.createTypeDiv==true">
+    <div class="col-sm-12">
+        <div class="background-type">
+            <form [formGroup]="typePermissionForm" class="select_absolute">
+                <button (click)="backBtnTypePerm()" class="btn back_btn_permission"><i
+                        class="fas fa-long-arrow-left"></i> Back</button>
+                <div *ngIf="this.userTypeDropDown==true">
+                    <!-- <mat-form-field class="width">
+                                        <input matInput placeholder="select user" aria-label="select user"
+                                            (keyup)="filterUsers($event)" />
+                                        <mat-select formControlName="userId">
+                                            <mat-option *ngFor=" let list of filteredList" [value]="list.FULL_NAME">
+                                                <span>{{ list.FULL_NAME }}</span>
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field> -->
+
+                    <mat-form-field class="typ_prmsn_slect">
+                        <mat-select class="form-select" disableOptionCentering
+                            (openedChange)="$event?'':filterUsers('')"
+                            (selectionChange)="getReportListData($event,this.listingFlag)" formControlName="userId"
+                            panelClass="typ_prmsn_slect_pnl" placeholder="Select user">
+                            <div class="typ_prmsn_slect_pnl_div">
+                                <input class="form-control" placeholder="Search user" (keyup)="filterUsers($event)"
+                                    formControlName="serachInput" (keydown)="$event.stopPropagation()">
+                            </div>
+                            <!-- <mat-option>User </mat-option> -->
+                            <mat-option *ngFor=" let list of filteredList"
+                                [value]="list.USER_ID">{{ list.FULL_NAME }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- <input type="text" (keyup)="filterUsers($event)"> -->
+
+                    <!-- <select class="form-select" (change)="getReportListData($event,this.listingFlag)"
+                                        formControlName="userId">
+
+                                        <option selected disabled value=''>Select User</option>
+                                        <option *ngFor=" let list of userList" [value]="list.USER_ID">{{list.FULL_NAME}}
+                                        </option>
+
+
+
+                                    </select> -->
+                </div>
+            </form>
+
+            <!-- </form> -->
+
+
+            <div class="table-responsive user_type_permissionmodule">
+                <table class="table table-bordered table-striped expand-table table-fixed">
+                    <thead>
+                        <tr>
+                            <th width="252px">Module Name</th>
+                            <th>
+                                <div class="main_check">
+                                    <label>View</label>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="firstlevel"
+                        *ngIf="this.userId!=''? this.createTreeView==true:this.createTreeView==false">
+                        <!-- Define the recursive template. -->
+
+                        <tr>
+                            <td colspan="2" class="p-0">
+                                <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+
+                                    <!-- This is the tree node template for leaf nodes -->
+                        <tr>
+                            <td colspan="2">
+                                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                                    <li class="mat-tree-node per_type_main_2">
+                                        <!-- use a disabled button to provide padding for tree leaf -->
+                                        <!-- <button mat-icon-button disabled></button> -->
+                                        <span class="nameEE2">{{node.display}}</span>
+                                        <mat-checkbox (change)="selectionToggleLastChilds($event.checked, node)"
+                                            [checked]="node.isSelected"></mat-checkbox>
+                                    </li>
+                                </mat-tree-node>
+
+                                <!-- This is the tree node template for expandable nodes -->
+
+                                <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                                    <li>
+                                        <div class="mat-tree-node per_type_main">
+                                            <button mat-icon-button matTreeNodeToggle
+                                                [attr.aria-label]="'toggle ' + node.display">
+                                                <mat-icon class="mat-icon-rtl-mirror">
+                                                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                </mat-icon>
+                                            </button>
+                                            <span class="nameEE1">{{node.display}}</span>
+                                            <mat-checkbox (change)="selectionToggle($event.checked, node)"
+                                                [checked]="descendantsAllSelected(node)"
+                                                [indeterminate]="checkDescPartSelection(node)"></mat-checkbox>
+                                        </div>
+                                        <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+                                            <ng-container matTreeNodeOutlet></ng-container>
+                                        </ul>
+                                    </li>
+                                </mat-nested-tree-node>
+
+                            </td>
+                        </tr>
+                        </mat-tree>
+                        </td>
+                        </tr>
+
+                        <!-- Define the recursive template. -->
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-btns">
+        <button [disabled]="this.typePermResetBtn==true" (click)="resetBtnTypePerm(this.userId)"
+            class="btn btn-reset">Reset</button>
+        <button [disabled]="this.typePermBtnForSubmit==true" class="btn btn-submit ms-2"
+            (click)="addUpdateType_Permission()">Submit</button>
+    </div>
+
+</div>
+</div><!----Second TAB END-->
+
+<!------Type Permission Tab Code End-------->
+
+</div><!----Tab Content END-->
+
+</div>
+
+</div><!----Main Div close-->

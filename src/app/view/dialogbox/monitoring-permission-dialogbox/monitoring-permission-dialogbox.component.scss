@@ -1,0 +1,187 @@
+.monitoring_permissiondialog_page .modal-body {
+    max-height: 100%;
+}
+
+.monitoring_permissiondialog_page .table-responsive {
+    height: 100%;
+    max-height: calc(100vh - 280px);
+}
+
+.monitoring_permissiondialog_page .table-responsive::-webkit-scrollbar {
+    width: 5px;
+    padding: 2px;
+    height: 6px;
+}
+
+/* Track */
+.monitoring_permissiondialog_page .table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.monitoring_permissiondialog_page .table-responsive::-webkit-scrollbar-thumb {
+    background: #4b6cb7;
+}
+
+/* Handle on hover */
+.monitoring_permissiondialog_page .table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #4b6cb7;
+}
+
+.monitoring_permissiondialog_page .table-responsive thead tr th {
+    position: sticky;
+    top: -1px;
+    background-color: #4b6cb7;
+    z-index: 7;
+    color: #fff !important;
+}
+
+.monitoring_permissiondialog_page table tr th {
+    color: #696f7f;
+    font-size: .8rem;
+    font-family: "Poppins-Bold";
+    font-weight: 300;
+}
+
+.monitoring_permissiondialog_page table tr td {
+    color: #696f7f;
+    font-size: .75rem;
+    font-family: 'Poppins-Medium';
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    vertical-align: middle;
+}
+
+.monitoring_permissiondialog_page .withoutdata {
+    height: 110px;
+}
+
+.monitoring_permissiondialog_page .withoutdata tr td {
+    margin: 0;
+    font-family: "Poppins-SemiBold";
+    font-size: 1rem;
+    padding: 20px 0;
+}
+
+.monitoring_permissiondialog_page .modal-body {
+    height: 430px;
+}
+
+.monitoring_permissiondialog_page .accordion-item h2 {
+    margin: 0px;
+}
+
+.monitoring_permissiondialog_page .accordion-item {
+    margin-bottom: 8px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px #0003;
+}
+
+.monitoring_permissiondialog_page .accordion-item .accordion-button.collapsed {
+    border-radius: 8px !important;
+}
+
+.monitoring_permissiondialog_page .accordion-item .accordion-button {
+    color: #696f7f;
+    font-size: 0.8rem;
+    padding: 8px 15px;
+    font-family: "Poppins-Bold";
+    text-transform: capitalize;
+    border-radius: 8px 8px 0px 0px;
+    outline: none;
+    box-shadow: none;
+}
+
+.monitoring_permissiondialog_page .accordion-item .accordion-button::after {
+    background-size: 16px;
+    height: 16px;
+    width: 16px;
+}
+
+.monitoring_permissiondialog_page .accordion-item .accordion-button:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.monitoring_permissiondialog_page .accordion-body {
+    padding: 10px;
+}
+
+.monitoring_permissiondialog_page .btn_flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    margin-bottom: 13px;
+}
+
+.monitoring_permissiondialog_page h4.role_name {
+    color: #726f6f;
+    font-size: 0.8rem;
+    font-family: "Poppins-SemiBold";
+    margin: 0;
+    background-color: #e5e5e5;
+    border-radius: 20px;
+    padding: 4px 6px 4px 15px;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+    box-shadow: 0 0px 2px #0003;
+}
+
+.monitoring_permissiondialog_page h4.role_name span {
+    background-color: #fff;
+    padding: 6px 26px;
+    border-radius: 15px;
+    font-family: "Poppins-Regular";
+    text-align: center;
+    background: transparent linear-gradient(180deg, #4B6CB7 0%, #182848 100%) 0% 0% no-repeat padding-box;
+    color: #fff;
+    min-width: 150px;
+}
+
+.monitoring_permissiondialog_page .btn_flex button {
+    background: transparent linear-gradient(180deg, #4B6CB7 0%, #182848 100%) 0% 0% no-repeat padding-box;
+    border-radius: 6px;
+    color: #fff;
+    min-width: 115px;
+    border: 1px solid #4B6CB7;
+    font-size: 0.8rem;
+    letter-spacing: 0px;
+    padding: 6px 2px;
+    line-height: 1.1;
+}
+
+.monitoring_permissiondialog_page .border_box_shadow {
+    border-radius: 8px;
+    box-shadow: 0 1px 4px #0003;
+    padding: 12px 10px 10px;
+}
+
+.monitoring_permissiondialog_page .border_box_shadow .table-responsive {
+    height: auto;
+    max-height: 100%;
+}
+
+.monitoring_permissiondialog_page .border_box_shadow table {
+    border: 2px solid rgba(105, 111, 127, .2);
+}
+
+.monitoring_permissiondialog_page .border_box_shadow th:first-child,
+.monitoring_permissiondialog_page .border_box_shadow td:first-child {
+    padding-left: .8rem;
+}
+
+#contentToConvert {
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+#pdf-content img {
+    box-shadow: none !important;
+    /* Ensure no shadow */
+    border: none !important;
+    /* Ensure no border */
+}

@@ -1,0 +1,328 @@
+<div class="adminx-main-content" *ngIf="chartShow">
+    <div class="dasboard-main">
+
+        <div class="grid grid-cols-12 gap-6">
+            <div class="grid col-span-12 md:col-span-4">
+                <div class="text-card-foreground shadow-sm">
+                    <div class="d-flex flex-col space-y-1.5 p-1 mb-2">
+                        <div class="d-flex items-center gap-2 flex-wrap">
+                            <div class="flex-1">
+                                <div class="text-xl font-semibold text-default-900 whitespace-nowrap">Reports Graph
+                                </div>
+                                <span class="text-xs text-default-600">Details of active reports</span>
+                            </div>
+
+                            <div class="flex-none">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="p-1 md:p-5">
+                        <div dir="ltr" data-orientation="horizontal">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item bg-primary-background" role="presentation">
+                                    <button (click)="clicks(1)" class="nav-link gap-1\.5 active" id="contact-tab"
+                                        data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab"
+                                        aria-controls="contact-tab-pane" aria-selected="false">
+                                        <span
+                                            class="h-10 w-10 rounded-full absolute -top-3 -right-3 ring-primary-background"></span>
+                                        <span class="text-sm text-sameclr font-semibold capitalize">
+                                            SLR Reports</span>
+                                        <span class="text-lg font-semibold text-primary">{{totalSlrReports}}</span>
+                                    </button>
+                                </li>
+                                <li class="nav-item bg-orange-background" role="presentation">
+                                    <button (click)="clicks(2)" class="nav-link gap-1\.5 " id="profile-tab"
+                                        data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                        aria-controls="profile-tab-pane" aria-selected="false">
+                                        <span
+                                            class="h-10 w-10 rounded-full absolute -top-3 -right-3 ring-orange-background"></span>
+                                        <span class="text-sm text-sameclr font-semibold capitalize">
+                                            Prepaid Reports</span>
+                                        <span class="text-lg font-semibold text-orange">{{totalPrepaidReports}}</span>
+                                    </button>
+                                </li>
+
+                                <li class="nav-item bg-cyan-background" role="presentation">
+                                    <button (click)="clicks(3)" class="nav-link gap-1\.5" id="disabled-tab"
+                                        data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button"
+                                        role="tab" aria-controls="disabled-tab-pane" aria-selected="false">
+                                        <span
+                                            class="h-10 w-10 rounded-full absolute -top-3 -right-3 ring-cyan-background"></span>
+                                        <span class="text-sm text-sameclr font-semibold capitalize">
+                                            BSS Reports</span>
+                                        <span class="text-lg font-semibold text-cyan">{{totalBssReports}}</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col-span-12 md:col-span-8">
+                <div class="text-card-foreground shadow-sm">
+                    <div class="d-flex flex-col space-y-1.5 p-1 mb-2">
+                        <div class="d-lg-flex items-center gap-1">
+                            <div class="flex-1">
+                                <div class="text-xl font-semibold text-default-900 whitespace-nowrap">Monitoring
+                                    Records
+                                </div>
+                                <span class="text-xs text-default-600">Details of monitoring records</span>
+                            </div>
+                            <div class="chart_top flex-none d-flex items-center gap-1">
+                                <ul>
+                                    <li><span class="dot_success"></span> Success</li>
+                                    <li><span class="dot_waiting"></span> Waiting</li>
+                                    <li><span class="dot_process"></span> Progress</li>
+                                    <li><span class="dot_fail"></span> Failed</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 pt-0 pb-0">
+                        <div class="graph_round text-center">
+
+                            <div class="table-responsive monitoring_custm_graph">
+                                <ul>
+                                    <li *ngFor="let allJobsData of allJobData">
+                                        <h4>{{allJobsData.JOB_NAME}}</h4>
+                                        <div *ngFor="let detail of allJobsData.DETAILS;" class="line_graph" [ngClass]="{
+                                                 'dot_success_gra' : detail.STATUS==='Success' ,
+                                                 'dot_fail_gra' :  detail.STATUS==='Failed' ,
+                                                 'dot_waiting_gra' : detail.STATUS==='Waiting' ,
+                                                 'dot_process_gra' : detail.STATUS==='InProgress' }"
+                                            matTooltipPosition="above" matTooltipClass="allow-cr"
+                                            [matTooltip]="tooltipContent(detail)">
+                                            <div class="graph_monito"></div><!---let i = index T{{i+1}}--->
+                                            <h5>{{detail.STEP_NAME?.length>12? (detail.STEP_NAME | slice:0:12)+'...':detail.STEP_NAME}}
+                                            </h5>
+                                        </div>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!---------Section------------>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="text-card-foreground shadow-sm">
+                    <div class="d-flex space-y-1.5 flex-col-reverse sm:flex-row flex-wrap gap-2">
+                        <span class="text-sm font-medium text-default-900 flex-1">Total Zone</span>
+                        <span
+                            class="flex-none h-9 w-9 d-flex justify-content-center align-items-center rounded-full bg-info bg-opacity-10 text-info">
+
+                            <i class="fa-solid fa-globe"></i>
+                        </span>
+                    </div>
+                    <div class="pb-2">
+                        <div class="text-2xl font-semibold text-default-900 mb-2.5">{{totalZone}}</div>
+                        <div class="d-flex align-items-center font-semibold gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                aria-hidden="true" role="img" class="text-success text-xl iconify iconify--heroicons"
+                                width="1em" height="1em" viewBox="0 0 16 16">
+                                <path fill="currentColor" fill-rule="evenodd"
+                                    d="M9.808 4.057a.75.75 0 0 1 .92-.527l3.116.849a.75.75 0 0 1 .528.915l-.823 3.121a.75.75 0 0 1-1.45-.382l.337-1.281a23.5 23.5 0 0 0-3.609 3.056a.75.75 0 0 1-1.07.01L6 8.06l-3.72 3.72a.75.75 0 1 1-1.06-1.061l4.25-4.25a.75.75 0 0 1 1.06 0l1.756 1.755a25 25 0 0 1 3.508-2.85l-1.46-.398a.75.75 0 0 1-.526-.92"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="mt-1 text-xs text-default-600">Latest record</div>
+                    </div>
+                </div>
+                <!------->
+
+                <div class="text-card-foreground shadow-sm">
+                    <div class="d-flex space-y-1.5 flex-col-reverse sm:flex-row flex-wrap gap-2">
+                        <span class="text-sm font-medium text-default-900 flex-1">Total Circle</span>
+                        <span
+                            class="flex-none h-9 w-9 d-flex justify-content-center align-items-center rounded-full bg-primary bg-opacity-10 text-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" class="h-4 w-4">
+                                <path fill="#3B82F6" fill-rule="evenodd"
+                                    d="M1.5 9A5.5 5.5 0 0 1 7 3.5a.5.5 0 0 1 .5.5v4.5H12a.5.5 0 0 1 .5.5 5.5 5.5 0 0 1-11 0"
+                                    clip-rule="evenodd"></path>
+                                <path fill="#3B82F6" fill-rule="evenodd"
+                                    d="M8.5 2a.5.5 0 0 1 .5-.5A5.5 5.5 0 0 1 14.5 7a.5.5 0 0 1-.5.5H9a.5.5 0 0 1-.5-.5z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="pb-2">
+                        <div class="text-2xl font-semibold text-default-900 mb-2.5">{{totalCircle}}</div>
+                        <div class="d-flex align-items-center font-semibold gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                aria-hidden="true" role="img" class="text-success text-xl iconify iconify--heroicons"
+                                width="1em" height="1em" viewBox="0 0 16 16">
+                                <path fill="currentColor" fill-rule="evenodd"
+                                    d="M9.808 4.057a.75.75 0 0 1 .92-.527l3.116.849a.75.75 0 0 1 .528.915l-.823 3.121a.75.75 0 0 1-1.45-.382l.337-1.281a23.5 23.5 0 0 0-3.609 3.056a.75.75 0 0 1-1.07.01L6 8.06l-3.72 3.72a.75.75 0 1 1-1.06-1.061l4.25-4.25a.75.75 0 0 1 1.06 0l1.756 1.755a25 25 0 0 1 3.508-2.85l-1.46-.398a.75.75 0 0 1-.526-.92"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="mt-1 text-xs text-default-600">Latest record</div>
+                    </div>
+                </div>
+
+                <!----->
+                <div class="text-card-foreground shadow-sm">
+                    <div class="d-flex space-y-1.5 flex-col-reverse sm:flex-row flex-wrap gap-2">
+                        <span class="text-sm font-medium text-default-900 flex-1">Total BA</span>
+                        <span
+                            class="flex-none h-9 w-9 d-flex justify-content-center align-items-center rounded-full bg-destructive bg-opacity-10 text-destructive">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </span>
+                    </div>
+                    <div class="pb-2">
+                        <div class="text-2xl font-semibold text-default-900 mb-2.5">{{totalBa}}</div>
+                        <div class="d-flex align-items-center font-semibold gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                aria-hidden="true" role="img" class="text-success text-xl iconify iconify--heroicons"
+                                width="1em" height="1em" viewBox="0 0 16 16">
+                                <path fill="currentColor" fill-rule="evenodd"
+                                    d="M9.808 4.057a.75.75 0 0 1 .92-.527l3.116.849a.75.75 0 0 1 .528.915l-.823 3.121a.75.75 0 0 1-1.45-.382l.337-1.281a23.5 23.5 0 0 0-3.609 3.056a.75.75 0 0 1-1.07.01L6 8.06l-3.72 3.72a.75.75 0 1 1-1.06-1.061l4.25-4.25a.75.75 0 0 1 1.06 0l1.756 1.755a25 25 0 0 1 3.508-2.85l-1.46-.398a.75.75 0 0 1-.526-.92"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="mt-1 text-xs text-default-600">Latest record</div>
+                    </div>
+                </div>
+                <!------->
+                <!----->
+                <div class="text-card-foreground shadow-sm">
+                    <div class="d-flex space-y-1.5 flex-col-reverse sm:flex-row flex-wrap gap-2">
+                        <span class="text-sm font-medium text-default-900 flex-1">Total Assign
+                            Reports</span>
+                        <span
+                            class="flex-none h-9 w-9 d-flex justify-content-center align-items-center rounded-full bg-warning bg-opacity-10 text-warning">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" class="h-4 w-4">
+                                <path fill="#F97316" fill-rule="evenodd"
+                                    d="M3.75 1H6a2.5 2.5 0 0 1 2.5 2.5v1.25C8.5 5.44 9.06 6 9.75 6H11a2.5 2.5 0 0 1 2.5 2.5v5.25c0 .69-.56 1.25-1.25 1.25h-8.5a1.25 1.25 0 0 1-1.25-1.25V2.25C2.5 1.56 3.06 1 3.75 1M6.5 11.5a.5.5 0 0 0-1 0v.5a.5.5 0 0 0 1 0zm1.5-2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2a.5.5 0 0 1 .5-.5m2.5-1a.5.5 0 0 0-1 0V12a.5.5 0 0 0 1 0z"
+                                    clip-rule="evenodd"></path>
+                                <path fill="#F97316"
+                                    d="M9.5 3.5a3.5 3.5 0 0 0-.853-2.29 6.51 6.51 0 0 1 4.643 4.643A3.5 3.5 0 0 0 11 5H9.75a.25.25 0 0 1-.25-.25z">
+                                </path>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="pb-2">
+                        <div class="text-2xl font-semibold text-default-900 mb-2.5">{{totalReport}}</div>
+                        <div class="d-flex align-items-center font-semibold gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                aria-hidden="true" role="img" class="text-success text-xl iconify iconify--heroicons"
+                                width="1em" height="1em" viewBox="0 0 16 16">
+                                <path fill="currentColor" fill-rule="evenodd"
+                                    d="M9.808 4.057a.75.75 0 0 1 .92-.527l3.116.849a.75.75 0 0 1 .528.915l-.823 3.121a.75.75 0 0 1-1.45-.382l.337-1.281a23.5 23.5 0 0 0-3.609 3.056a.75.75 0 0 1-1.07.01L6 8.06l-3.72 3.72a.75.75 0 1 1-1.06-1.061l4.25-4.25a.75.75 0 0 1 1.06 0l1.756 1.755a25 25 0 0 1 3.508-2.85l-1.46-.398a.75.75 0 0 1-.526-.92"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="mt-1 text-xs text-default-600">Latest record</div>
+                    </div>
+                </div>
+                <!------->
+            </div>
+
+            <!------>
+            <div class="rounded-md bg-card text-card-foreground shadow-sm">
+                <div class="flex flex-col space-y-1.5">
+                    <h3 class="text-xl font-semibold text-default-900 whitespace-nowrap">Users Count</h3>
+                </div>
+                <div class="graph_round">
+                    <div id="chart">
+                        <apx-chart [series]="userModuleChart?.series" [chart]="userModuleChart?.chart"
+                            [plotOptions]="userModuleChart?.plotOptions" [labels]="userModuleChart?.labels"
+                            [legend]="userModuleChart?.legend" [colors]="userModuleChart?.colors"></apx-chart>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rounded-md bg-card text-card-foreground shadow-sm">
+                <div class="flex flex-col space-y-1.5">
+                    <h3 class="text-xl font-semibold text-default-900 whitespace-nowrap">Scheduler </h3>
+                </div>
+                <div class="graph_round">
+                    <div id="chart">
+                        <apx-chart [series]="schedulerChart?.series" [chart]="schedulerChart?.chart"
+                            [plotOptions]="schedulerChart?.plotOptions" [labels]="schedulerChart?.labels"
+                            [legend]="schedulerChart?.legend" [colors]="schedulerChart?.colors"></apx-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!----------------------------->
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-3">
+            <div class="rounded-md bg-card text-card-foreground shadow-sm">
+                <div class="d-flex flex-row space-y-1.5 mb-2 justify-content-between">
+                    <h3 class="text-xl font-semibold text-default-900 whitespace-nowrap">Circle Wise
+                        OutStanding(Inactive Customers)</h3>
+                    <select name="pie" id="chart_1" class="dasbord_select" (change)="onChangeCharts($event)">
+                        <option value="select" disabled>Select option</option>
+                        <option value="pie" [selected]="selectedChart_1 =='pie'">Pie
+                        </option>
+                        <option value="lineChart" [selected]="selectedChart_1 =='lineChart'">Line
+                            chart
+                        </option>
+                    </select>
+                </div>
+                <div class="graph_round">
+                    <div id="chart"
+                        *ngIf="arrcircleCount.length !==0 && pieChartVar!='bar' && pieChartVar !='lineChart'">
+                        <apx-chart [series]="pieChart.series" [chart]="pieChart.chart"
+                            [responsive]="pieChart.responsive" style="margin: 0 auto;"
+                            [labels]="pieChart.labels"></apx-chart>
+                    </div>
+                    <div id="chart" *ngIf="pieChartVar ==='lineChart'">
+                        <apx-chart [series]="lineChartOptions.series" [chart]="lineChartOptions.chart"
+                            [dataLabels]="lineChartOptions.dataLabels" [plotOptions]="lineChartOptions.plotOptions"
+                            [responsive]="lineChartOptions.responsive" [xaxis]="lineChartOptions.xaxis"
+                            [legend]="lineChartOptions.legend" [fill]="lineChartOptions.fill">
+                        </apx-chart>
+                    </div>
+                </div>
+            </div>
+            <!-- multiple -->
+
+            <!--pie chart  of Active Postpaid Customer Base -->
+
+            <!-- multiple -->
+
+            <div class="rounded-md bg-card text-card-foreground shadow-sm">
+                <div class="d-flex flex-row space-y-1.5 mb-2 justify-content-between">
+                    <h3 class="text-xl font-semibold text-default-900 whitespace-nowrap">Active Postpaid Customer Base
+                    </h3>
+                    <select name="pie" id="chart_2" class="dasbord_select" (change)="onChangeCharts($event)">
+                        <option value="option" disabled>Select option</option>
+                        <option value="barChart" [selected]="selectedChart_2=='barChart'">Bar</option>
+                        <option value="donutChart" [selected]="selectedChart_2 =='donutChart'">Donut</option>
+                    </select>
+                </div>
+                <div class="graph_round">
+                    <div id="chart"
+                        *ngIf="arrcircleCount1.length!==0 && pieChartVarAciveUser!='donutChart' && pieChartVarAciveUser==='barChart'">
+                        <apx-chart [series]="ActivePostpaidCustomerChart.series"
+                            [chart]="ActivePostpaidCustomerChart.chart"
+                            [dataLabels]="ActivePostpaidCustomerChart.dataLabels"
+                            [plotOptions]="ActivePostpaidCustomerChart.plotOptions"
+                            [yaxis]="ActivePostpaidCustomerChart.yaxis" [xaxis]="ActivePostpaidCustomerChart.xaxis"
+                            [stroke]="ActivePostpaidCustomerChart.stroke" [grid]="ActivePostpaidCustomerChart.grid"
+                            [fill]="ActivePostpaidCustomerChart.fill"
+                            [annotations]="ActivePostpaidCustomerChart.annotations"></apx-chart>
+                    </div>
+                    <div id="chart" *ngIf="arrcircleCount1.length!==0 && pieChartVarAciveUser==='donutChart'">
+                        <apx-chart [series]="donutChart.series" [chart]="donutChart.chart"
+                            [responsive]="donutChart.responsive" [labels]="donutChart.labels"></apx-chart>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

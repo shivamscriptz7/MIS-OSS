@@ -1,0 +1,395 @@
+.monitoringpage_section .reportleft_responsive {
+    height: calc(100vh - 245px);
+    min-height: calc(100vh - 245px);
+}
+
+/***************Left Sidebar Listing***************/
+.monitoringpage_section .report_lstng .row .col-sm-12 {
+    padding: 0px 2px;
+}
+
+.monitoringpage_section .report_lstng h4 {
+    color: #696f7f;
+    font-size: 1rem;
+    font-family: "Poppins-SemiBold";
+    position: relative;
+    padding: 0 10px;
+}
+
+.monitoringpage_section .report_lstng h4::before {
+    content: '';
+    background-color: #696f7f;
+    width: 100%;
+    position: absolute;
+    height: 1px;
+    bottom: -7px;
+    left: 0px;
+    opacity: 0.4;
+}
+
+/**************Custome Check box*****************/
+.monitoringpage_section .custom_radio {
+    display: block;
+    position: relative;
+    padding-left: 23px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #696f7f;
+    font-size: 13px;
+    font-family: 'Poppins-Medium';
+    display: flex;
+    align-items: center;
+}
+
+/* Hide the browser's default radio button */
+.monitoringpage_section .custom_radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    left: 0;
+    top: 2px;
+}
+
+/* Create a custom radio button */
+.monitoringpage_section .custom_radio .checkmark {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+    border-radius: 50%;
+    border: 1px solid #18284880;
+}
+
+/* On mouse-over, add a grey background color */
+.monitoringpage_section .custom_radio:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.monitoringpage_section .custom_radio input:checked~.checkmark {
+    background-color: #182848;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.monitoringpage_section .custom_radio .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.monitoringpage_section .custom_radio input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.monitoringpage_section .custom_radio .checkmark:after {
+    top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+/***************END Left Sidebar Listing***************/
+
+/***************Ride Side Box Query Editor********************/
+.monitoringpage_section .filter_table_design .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.monitoringpage_section .filter_table_design .title h4 {
+    color: #696f7f;
+    font-size: 1rem;
+    font-family: "Poppins-SemiBold";
+    position: relative;
+    padding: 0 10px;
+}
+
+.monitoringpage_section .filter_table_design .title:before {
+    content: "";
+    background-color: #696f7f;
+    width: 100%;
+    position: absolute;
+    height: 1px;
+    bottom: 2px;
+    left: 0;
+    opacity: .4;
+}
+
+/************No Data Placeholder*************/
+.monitoringpage_section .placeholder_box {
+    position: relative;
+    height: calc(100vh - 200px);
+}
+
+.monitoringpage_section .placeholder_box .without_box_error {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.monitoringpage_section .placeholder_box .without_box_error h2 {
+    color: #cc2a2a;
+    font-size: 34px;
+    margin-bottom: 5px;
+    font-family: "Poppins-SemiBold";
+    text-transform: uppercase;
+}
+
+.monitoringpage_section .placeholder_box .without_box_error img {
+    width: 280px;
+}
+
+.monitoringpage_section .placeholder_box .withoutdata_box {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.monitoringpage_section .placeholder_box .withoutdata_box img {
+    max-width: 420px;
+    width: 100%;
+}
+
+.monitoringpage_section .placeholder_box .withoutdata_box .withoutdata_box_inner {
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    left: 0;
+}
+
+.monitoringpage_section .placeholder_box .withoutdata_box p,
+.monitoringpage_section .placeholder_box .without_box_error p {
+    color: #696f7f;
+    font-family: 'Poppins-Medium';
+    font-size: 14px;
+}
+
+
+/***************END Ride Side Box Query Editor********************/
+
+/****************Sidebar Filter Start*******************/
+.monitoringpage_section .filter_icon {
+    text-align: right;
+    padding: 2px 7px;
+    margin: 0px 0px 0px 8px;
+    color: #fff;
+    font-family: 'Poppins-Medium';
+    background-color: #182848;
+    border-radius: 8px;
+    font-size: .9rem;
+    cursor: pointer;
+
+}
+
+.monitoringpage_section .filter_icon:disabled,
+.monitoringpage_section .export-btn button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.monitoringpage_section .filter_icon i.fas.fa-filter {
+    margin-right: 2px;
+    padding: 4px 0px 0px;
+}
+
+.monitoringpage_section .filter_table_design .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.monitoringpage_section .filter_table_design .title h4 {
+    color: #696f7f;
+    font-size: 1rem;
+    font-family: "Poppins-SemiBold";
+    position: relative;
+    padding: 0 10px;
+}
+
+.monitoringpage_section .filter_table_design .title:before {
+    content: "";
+    background-color: #696f7f;
+    width: 100%;
+    position: absolute;
+    height: 1px;
+    bottom: 2px;
+    left: 0;
+    opacity: .4;
+}
+
+.monitoringpage_section .filter-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 999;
+    padding: 10px 20px;
+    box-shadow: 0 3px 10px #4b6cb733;
+    width: 270px;
+    height: 100%;
+    background-color: #fff;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    visibility: visible;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+}
+
+.monitoringpage_section.filter_open::before {
+    content: '';
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 5;
+}
+
+.monitoringpage_section.filter_open .filter-sidebar {
+    visibility: visible;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.monitoringpage_section .filter-sidebar h2 {
+    margin-bottom: 20px;
+    color: #4b6cb7;
+    font-family: "Poppins-SemiBold";
+    font-size: 1.2rem;
+}
+
+.monitoringpage_section .filter-sidebar button.close {
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    border: none;
+    background-color: transparent;
+    color: #696f7f;
+    font-size: 1.4rem;
+}
+
+.monitoringpage_section .filter-sidebar .form-group {
+    margin-bottom: 14px;
+}
+
+.monitoringpage_section .filter-sidebar .form-group .form-control,
+.monitoringpage_section .filter-sidebar .form-group .form-select {
+    height: 34px;
+    font-size: 13px;
+    border-radius: 10px;
+}
+
+.monitoringpage_section .filter-sidebar .form-group label {
+    margin-bottom: 2px;
+    color: #4f4a3f;
+    font-size: 13px;
+}
+
+.monitoringpage_section .filter-sidebar .submit_button-filtr {
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 30px);
+    left: 15px;
+}
+
+.monitoringpage_section .filter-sidebar .submit_button-filtr button {
+    width: 100%;
+    min-width: auto !important;
+    margin: 0 2px;
+}
+
+.monitoringpage_section .filter-sidebar .submit_button-filtr .btn-reset {
+    border: 1px solid var(--blue2);
+    border-radius: 8px;
+    color: var(--blue2);
+    min-width: 120px;
+    background-color: transparent;
+    font-size: 14px;
+    letter-spacing: 0px;
+    box-shadow: 0 12px 24px #0000000d;
+}
+
+.monitoringpage_section .filter-sidebar .submit_button-filtr .btn-submit {
+    background: transparent linear-gradient(180deg, #4B6CB7 0%, #182848 100%) 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    color: #fff;
+    min-width: 120px;
+    border: 1px solid #4B6CB7;
+    font-size: 14px;
+    letter-spacing: 0px;
+    box-shadow: 7px 7px 20px #4b6cb766;
+}
+
+.monitoringpage_section .filter-sidebar .form-group input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+}
+
+/***************Sidebar Filter END****************/
+
+.monitoringpage_section .report_datepicker ::ng-deep.dp-picker-input {
+    border: none;
+    /* display: none; */
+    width: 100%;
+    margin-top: -4px;
+    padding: 0px;
+}
+
+::ng-deep.dp-material .dp-calendar-weekday {
+    font-size: 12px;
+}
+
+::ng-deep.dp-material .dp-calendar-month,
+::ng-deep.dp-material .dp-calendar-day {
+    font-size: 14px;
+}
+
+::ng-deep.dp-material .dp-selected {
+    background-color: #182848 !important;
+    border-color: #182848 !important;
+}
+
+::ng-deep.dp-material .dp-current-day {
+    border-color: #182848 !important;
+}
+
+::ng-deep.dp-material .dp-nav-header-btn {
+    text-align: left;
+}
+
+@media screen and (max-width: 1440px) {
+
+    .monitoringpage_section .custom_radio .checkmark {
+        width: 16px;
+        height: 16px;
+    }
+
+    .monitoringpage_section .custom_radio .checkmark:after {
+        top: 3px;
+        left: 3px;
+    }
+}

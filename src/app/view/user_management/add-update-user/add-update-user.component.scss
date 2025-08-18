@@ -1,0 +1,31 @@
+.orange {
+    border-radius: 10px;
+    color: rgb(230 100 100);
+}
+
+.blue {
+    border-radius: 10px;
+    color: rgba(2, 193, 126, 1);
+}
+
+::ng-deep.mat-select-panel .mat-optgroup-label,
+::ng-deep.mat-select-panel .mat-option {
+    font-size: 12px !important;
+}
+
+::ng-deep.mat-select-panel .mat-option {
+    font-family: 'Poppins-Medium';
+}
+
+.search_input_filter {
+    font-size: 12px;
+    margin: 6px;
+    width: calc(100% - 12px);
+}
+
+.search_input_filter:hover,
+.search_input_filter:focus {
+    box-shadow: none;
+    outline: none;
+    border-color: #ced4da;
+}

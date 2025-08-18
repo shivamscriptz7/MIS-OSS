@@ -1,0 +1,63 @@
+.delete-modal .modal-header {
+    border: none;
+    padding: 15px 20px 0px 0px;
+}
+
+.delete-modal .modal-header button {
+    font-size: 24px;
+    color: #758FA1;
+}
+
+.modal-dialog.modal_all.delete-modal .modal-body {
+    padding-top: 8px;
+}
+
+.delete-modal .modal-body img {
+    max-width: 60px;
+    margin-bottom: 15px;
+}
+
+.modal-dialog.delete-modal {
+    overflow: hidden;
+    padding-bottom: 40px;
+}
+
+.modal-dialog.modal_all.delete-modal .modal-body h4 {
+    color: #FD3F3F;
+    font-weight: 600;
+    font-size: 22px;
+    margin-bottom: 6px;
+}
+
+.modal-dialog.modal_all.delete-modal .modal-body p {
+    color: #707070;
+    font-size: 14px;
+}
+
+button.yesdelete:focus {
+    border-color: #FD3F3F;
+}
+
+.delete_new_dialog .modal-body img {
+    max-width: 60px;
+    margin-bottom: 15px;
+}
+
+.delete_new_dialog .modal-body p {
+    color: #707070;
+    font-size: 14px;
+    padding: 6px 10px 15px;
+}
+
+.delete_new_dialog button.yesdelete {
+    padding: 7px 2px;
+    font-weight: 400;
+    background: transparent linear-gradient(180deg, #fd3f3f 0%, #fd3f3f 100%) 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    color: #fff;
+    min-width: 120px;
+    border: 1px solid #fd3f3f;
+    font-size: 14px;
+    letter-spacing: 0px;
+    box-shadow: 0px 3px 7px #f18c8c;
+}

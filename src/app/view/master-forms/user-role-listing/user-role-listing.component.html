@@ -1,0 +1,68 @@
+<div class="row align-items-center userrolepage_listing" *ngIf="this.module">
+    <div class="col-sm-12">
+        <div class="title-part">
+            <h2>Role Management</h2>
+
+            <div class="upper_button">
+                <button class=" btn btn_create" [disabled]="module[0].CREATE_ACCESS==0" (click)="addUpdateRole('')"><i
+                        class="fa-solid fa-plus"></i>
+                    Create</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 p_relative mt-2">
+        <div class="table-responsive listing-table">
+            <table datatable [dtOptions]="dtOptions" class="table resize common-table mb-0"
+                [ngClass]="{ datatable_noRecord: roleList?.length != 0 }" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Role Name</th>
+                        <th>Role Description</th>
+                        <th class="text-center">Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor=" let item of roleList ; let i=index">
+                        <td>{{item.RN}}</td>
+                        <td class="td_capital td_rolename">{{item.ROLE_NAME}}</td>
+                        <td>{{item.ROLE_DESC}}</td>
+                        <td class="text-center acqui_status">
+                            <label class="switch">
+                                <input type="checkbox" [checked]="item.IS_ACTIVE=='0'?true:false"
+                                    (change)="onToggleChangeRole(item,$event)" title="DeActive"
+                                    [disabled]="userDetails.USER_ROLE==item.ROLE_ID || module[0].EDIT_ACCESS==0">
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                        <td class="text-left action_td">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <button title="Edit" (click)="addUpdateRole(item)" class="edit_green ml-0"
+                                            title="Edit"
+                                            [disabled]="userDetails.USER_ROLE==item.ROLE_ID || module[0].EDIT_ACCESS==0 || item.IS_ACTIVE==1">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </button>
+
+                                    </td>
+
+
+                                    <td>
+                                        <button class="trash_red" title="Delete" (click)="deleteUserRole(item)"
+                                            [disabled]="userDetails.USER_ROLE==item.ROLE_ID || module[0].DELETE_ACCESS==0">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,225 @@
+<div class="modal-dialog modal_all create_schedulerpage">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">{{title}}</h5>
+            <button type="button" class="btn-close" (click)="closeDialogBox()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="scheduleCreationForm" autocomplete="off">
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Scheduler Name <span class="requireds"></span></label>
+                            <input type="text" maxlength="50" placeholder="Enter scheduler name"
+                                formControlName="schedular_name" class="form-control" [readonly]="editSchedularField">
+                            <span class="text-danger mat-error"
+                                *ngIf="(scheduleFormcontrol['schedular_name'].touched)&& scheduleFormcontrol['schedular_name'].invalid">
+                                <div *ngIf="scheduleFormcontrol['schedular_name'].errors?.['required']"> Please enter
+                                    scheduler name.
+                                </div>
+                                <div *ngIf="scheduleFormcontrol['schedular_name'].errors?.['pattern']">please enter
+                                    valid
+                                    scheduler name.
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Report Name <span class="requireds"></span></label>
+
+                            <mat-form-field class="typ_schudle_slect">
+                                <mat-select [disableOptionCentering]="true" #select1 placeholder="Select report"
+                                    formControlName="report_name" class="form-select" panelClass="typ_schudle_slect_pnl"
+                                    [disabled]="editSchedularField">
+                                    <mat-select-filter *ngIf="select1.focused" [array]="reportList"
+                                        [displayMember]="'REPO_NAME'"
+                                        (filteredReturn)="filteredReport =$event"></mat-select-filter>
+                                    <mat-option *ngFor="let item of filteredReport" [value]="item.REPOID">
+                                        {{item.REPO_NAME}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Report Format<span class="requireds"></span></label>
+                            <ng-select class="ng_cutomselect" [multiple]="true" placeholder="Select report format"
+                                [items]="reportFormat" bindLabel="name" bindValue="id" formControlName="report_format">
+                            </ng-select>
+                            <span class="text-danger mat-error"
+                                *ngIf="(scheduleFormcontrol['report_format'].touched)&& scheduleFormcontrol['report_format'].invalid">
+                                <div *ngIf="scheduleFormcontrol['report_format'].errors?.['required']"> Please select
+                                    report format.
+                                </div>
+                            </span>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Minute(s)</label>
+                            <ng-select class="ng_cutomselect cutom_select_number" placeholder="Select minute(s)"
+                                [items]="minutesData" bindLabel="name" bindValue="id" formControlName="minutes"
+                                (change)="checkselectedfield(1)">
+                            </ng-select>
+                            <span class=" text-danger mat-error" *ngIf="scheduleFormcontrol['minutes'].value==0">
+                                <div
+                                    *ngIf="scheduleFormcontrol['hour'].value==null && scheduleFormcontrol['minutes'].value==0 ">
+                                    Can not select 0 value of
+                                    minutes,Please select hour.
+                                </div>
+                            </span>
+                            <span class=" text-danger mat-error"
+                                *ngIf="(scheduleCreationForm.dirty || scheduleCreationForm.touched) && selectedID==1">
+                                <div *ngIf="!this.selectedCheck">
+                                    At least one of the fields (Minutes, Hour, Days of Week, Days of Month, Month of
+                                    Year)
+                                    is
+                                    required.
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Hour(s)</label>
+                            <ng-select class="ng_cutomselect cutom_select_number" placeholder="Select hour(s)"
+                                [items]="hourData" bindLabel="name" bindValue="id" formControlName="hour"
+                                (change)="checkselectedfield(2)">
+                            </ng-select>
+                            <span class=" text-danger mat-error" *ngIf="scheduleFormcontrol['hour'].value==0">
+                                <div
+                                    *ngIf="scheduleFormcontrol['hour'].value==0 && this.scheduleCreationForm.get('minutes').value ==0 && scheduleFormcontrol['days_week'].value==null && scheduleFormcontrol['days_month'].value==null && scheduleFormcontrol['month_name'].value==null ">
+                                    Can not select 0 value of
+                                    hour.
+                                </div>
+                            </span>
+                            <span class="text-danger mat-error"
+                                *ngIf="(scheduleCreationForm.dirty || scheduleCreationForm.touched) && selectedID==2">
+                                <div *ngIf="!this.selectedCheck">
+                                    At least one of the fields (Minutes, Hour, Days of Week, Days of Month, Month of
+                                    Year)
+                                    is
+                                    required.
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Day(s) of Week</label>
+                            <ng-select class="ng_cutomselect" [items]="daysWeek" placeholder="Select day(s) of week"
+                                bindLabel="name" bindValue="id" formControlName="days_week" [multiple]="true"
+                                (change)="checkselectedfield(3)">
+                            </ng-select>
+                            <span class="text-danger mat-error"
+                                *ngIf="(scheduleCreationForm.dirty || scheduleCreationForm.touched) && selectedID==3">
+                                <div *ngIf="!this.selectedCheck">
+                                    At least one of the fields (Minutes, Hour, Days of Week, Days of Month, Month of
+                                    Year)
+                                    is
+                                    required.
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Day(s) of Month</label>
+                            <ng-select class="ng_cutomselect cutom_select_number" placeholder="Select day(s) of month"
+                                [items]="daysData" bindLabel="name" bindValue="id" formControlName="days_month"
+                                [multiple]="true" (change)="checkselectedfield(4)">
+                            </ng-select>
+                            <span class="text-danger mat-error"
+                                *ngIf="(scheduleCreationForm.dirty || scheduleCreationForm.touched) && selectedID==4">
+                                <div *ngIf="!this.selectedCheck">
+                                    At least one of the fields (Minutes, Hour, Days of Week, Days of Month, Month of
+                                    Year)
+                                    is
+                                    required.
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="form-label">Month(s) of year</label>
+                            <ng-select class="ng_cutomselect" placeholder="Select month(s) of year" [items]="monthData"
+                                bindLabel="name" bindValue="id" formControlName="month_name" [multiple]="true"
+                                (change)="checkselectedfield(5)">
+                            </ng-select>
+                        </div>
+                        <span class="text-danger mat-error"
+                            *ngIf="(scheduleCreationForm.dirty || scheduleCreationForm.touched) && selectedID==5">
+                            <div *ngIf="!this.selectedCheck">
+                                At least one of the fields (Minutes, Hour, Days of Week, Days of Month, Month of
+                                Year)
+                                is
+                                required.
+                            </div>
+                        </span>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group mb-1">
+                            <label class="form-label">Email Config</label>
+                            <mat-checkbox formControlName="emailSend" class="schdulemail_checkbox"
+                                (change)="onCheckboxClick($event.checked)"></mat-checkbox>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12" *ngIf=" this.scheduleCreationForm.value.emailSend">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Email </label>
+                            <mat-form-field class="scheduld_email">
+                                <mat-chip-list #chipList [formControl]="senderEmailsControl">
+                                    <mat-chip class="typ_email_chip_pnl"
+                                        [color]="(senderEmailsControl.value.invalid)?'warn':''" selected
+                                        *ngFor="let email of senderEmailsControl.value; let i=index" [selectable]="true"
+                                        [removable]="removable" (removed)="removeEmail(email)" required>{{email}}
+                                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+
+                                    </mat-chip>
+                                    <input class="enter_email_chip" placeholder="Enter email address"
+                                        [matChipInputFor]="chipList"
+                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes "
+                                        [matChipInputAddOnBlur]="true " (matChipInputTokenEnd)="add($event) "
+                                        (input)="emailValidation($event)">
+
+                                </mat-chip-list>
+
+                            </mat-form-field>
+                            <span class="text-danger mat-error"
+                                *ngIf="senderEmailsControl.hasError('invalidEmail') && this.emailValidLength!=0">
+                                Please enter a valid &#64;echelonedge.com email.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 text-center mt-3">
+                        <div class="form-buttons">
+                            <button class="btn btn-primary btn-reset" (click)="editViewSchedule()"
+                                [disabled]="!scheduleCreationForm.dirty">Reset</button>
+                            <button (click)="submitSchedularForm()"
+                                [disabled]="this.scheduleCreationForm.invalid   || !scheduleCreationForm.dirty || !this.selectedCheck"
+                                class="btn btn-success btn-submit ms-sm-2 mt-2 mt-sm-0">{{buttonName}}</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

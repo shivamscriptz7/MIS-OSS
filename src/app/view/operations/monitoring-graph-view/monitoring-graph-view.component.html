@@ -1,0 +1,52 @@
+<div class="modal-dialog modal_all monitoring_graph_view">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Monitoring Process</h5>
+            <button type="button" class="btn-close" [mat-dialog-close]="false"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="colorcode_chart">
+                <ul>
+                    <li><span class="dot_success circle"></span> Success</li>
+                    <li><span class="dot_fail circle"></span> Failed</li>
+                    <li><span class="dot_process circle"></span> In Progress</li>
+                    <li><span class="dot_waiting circle"></span> Waiting</li>
+                </ul>
+            </div>
+
+            <div class="job_flowchart">
+                <ul *ngFor="let group of this.data.statusData ; let groupIndex = index ">
+                    <!-- Show jobName only once before the steps -->
+                    <li *ngFor=" let item of group ; let itemIndex = index" [ngClass]=" { 'success_process' :
+                        item.status==='Success' , 'failed_process' : item.status==='Failed' , 'waiting_process' :
+                        item.status==='Waiting' , 'progress_process' : item.status==='InProgress' }">
+                        <div class="steps_flow tooltip-container">
+                            <!-- Compute the global index -->
+                            <span class="number" *ngIf="(groupIndex!=0 || itemIndex!=0)">{{item.count}}</span>
+                            <!-- <h4>{{ item.stepName }}</h4> -->
+                            <h4 matTooltipClass="allow-cr"
+                                [matTooltip]="(groupIndex!=0 || itemIndex!=0)?tooltipContent(item):item.stepName"
+                                matTooltipPosition="above">
+                                {{ item.stepName?.length > 15 ? (item.stepName | slice:0:15) + '...' : item.stepName }}
+                            </h4>
+                        </div>
+                        <!-- <ng-template class="tooltip-text" #tooltipTemplate>
+                            <div class="tooltip-content">
+                                <h5>{{ item.stepName }}</h5>
+                                <p><span>No of tasks:</span> {{ item.noOfProcess }}</p>
+                                <p><span>Completed tasks:</span>
+                                    {{ item.completeProcess == null ? 'NA' : item.completeProcess }}
+                                </p>
+                                <p><span>Start time:</span> {{ item.startTime == null ? 'NA' : item.startTime }}</p>
+                                <p><span>End time:</span> {{ item.endTime == null ? 'NA' : item.endTime }}</p>
+                                <p><span>Last turnover time:</span>
+                                    {{ item.expectedTime == null ? 'NA' : item.expectedTime }}
+                                </p>
+                            </div>
+                        </ng-template> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

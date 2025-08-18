@@ -1,0 +1,518 @@
+.schedule_page .switch {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 20px;
+    margin: 0;
+    border: 2px solid #dadee1;
+    border-radius: 38px;
+}
+
+.schedule_page .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.schedule_page .switch input:disabled~span {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+.schedule_page .switch .slider.round {
+    border-radius: 34px;
+}
+
+.schedule_page .switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    opacity: .5;
+}
+
+.schedule_page .switch .slider.round:before {
+    border-radius: 50%;
+}
+
+.schedule_page .switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 10px;
+    width: 10px;
+    left: 4px;
+    bottom: 3px;
+    background-color: #ffffff;
+    transition: .4s;
+}
+
+.schedule_page .switch input:checked+.slider:before {
+    transform: translate(16px);
+}
+
+.schedule_page .switch input:checked+.slider {
+    background-color: #182848;
+    opacity: 1;
+}
+
+.schedule_page .schedule_status img {
+    width: 20px;
+    cursor: pointer;
+}
+
+.schedule_page i.fas.fa-exclamation-circle {
+    font-size: 19px;
+    cursor: pointer;
+    margin-top: 2px;
+}
+
+.schedule_page i.fa-regular.fa-circle-stop {
+    color: #CC2A2A;
+    font-size: 19px;
+    margin-top: 2px;
+}
+
+.schedule_page .listing-table table tr td table tr td {
+    padding: 0 2px !important;
+}
+
+.schedule_page span.schedule_status {
+    background-color: red;
+    width: 17px;
+    height: auto;
+    display: inline-block;
+    color: #fff;
+    line-height: 1.4;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: context-menu;
+}
+
+.schedule_page span.schedule_status.empty_status {
+    background-color: #8d8a8a;
+}
+
+.schedule_page span.schedule_status.suces_status {
+    background-color: #13c774;
+}
+
+.schedule_page span.schedule_status.pending_status {
+    background-color: #87CEEB;
+}
+
+.schedule_page span.schedule_status.reExeSuccess_status {
+    background-color: #663399;
+}
+
+.schedule_page span.schedule_status.reExeError_status {
+    background-color: #663399;
+}
+
+img.execute_img {
+    max-width: 18px;
+}
+
+button:disabled img.execute_img {
+    opacity: 0.6;
+    filter: grayscale(10);
+}
+
+/*******************/
+.schedule_page nav {
+    margin: 12px 0px;
+}
+
+.schedule_page .nav.nav-tabs {
+    border-bottom: none;
+    border: none;
+}
+
+.schedule_page .nav.nav-tabs button {
+    margin: 0 6px;
+    background-color: #0000000d;
+    color: #696f7f;
+    border: none;
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: 14px;
+    min-width: 160px;
+}
+
+.schedule_page .nav.nav-tabs button:first-child {
+    margin-left: 0px;
+}
+
+.schedule_page .nav.nav-tabs button.active {
+    background-color: #182848;
+    color: #fff !important;
+}
+
+.create_part_align {
+    position: relative;
+}
+
+.create_part_align .title-part {
+    position: absolute;
+    right: 15px;
+    top: -42px;
+}
+
+.schedule_page #nav-schedule .listing-table ::ng-deep.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
+    max-height: calc(100vh - 322px) !important;
+    min-height: calc(100vh - 322px);
+}
+
+.schedule_page #nav-email .listing-table ::ng-deep.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody {
+    max-height: calc(100vh - 388px) !important;
+    min-height: calc(100vh - 388px);
+}
+
+/**************Custome Check box*****************/
+.schedule_page .custom_checkbox {
+    display: block;
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #696f7f;
+    font-size: .9rem;
+    font-family: 'Poppins-Medium';
+    display: flex;
+    align-items: center;
+}
+
+/* Hide the browser's default radio button */
+.schedule_page .custom_checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    left: 0;
+    top: 2px;
+}
+
+/* Create a custom radio button */
+.schedule_page .custom_checkbox .checkmark {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    background-color: #eee;
+    border: 1px solid #18284880;
+}
+
+/* On mouse-over, add a grey background color */
+.schedule_page .custom_checkbox:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.schedule_page .custom_checkbox input:checked~.checkmark {
+    background-color: #182848;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.schedule_page .custom_checkbox .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.schedule_page .custom_checkbox input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.schedule_page .custom_checkbox .checkmark:after {
+    left: 4px;
+    top: 0px;
+    width: 6px;
+    height: 11px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/******************************/
+
+.emailchip_section {
+    box-shadow: 0 3px 10px #4b6cb733;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.emailchip_section .email-chip {
+    max-height: 78px;
+    overflow: auto;
+    margin-top: 10px;
+}
+
+.email_mailchamp .emailmailchamp_select {
+    position: absolute;
+    bottom: -30px;
+    visibility: hidden;
+}
+
+.email_mailchamp ::ng-deep.mat-select-arrow-wrapper {
+    position: absolute;
+    top: -36px;
+    right: 3px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.email_mailchamp ::ng-deep.mat-form-field-ripple {
+    opacity: 0;
+    height: 0px;
+}
+
+.email_mailchamp.mat-form-field-invalid:not(.mat-focused) ::ng-deep.mat-form-field-ripple {
+    height: 0px;
+}
+
+.emailchip_section .email-chip::-webkit-scrollbar {
+    width: 5px;
+    padding: 2px;
+    height: 7px;
+}
+
+/* Track */
+.emailchip_section .email-chip::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.emailchip_section .email-chip::-webkit-scrollbar-thumb {
+    background: #4b6cb7;
+}
+
+/* Handle on hover */
+.emailchip_section .email-chip::-webkit-scrollbar-thumb:hover {
+    background: #4b6cb7;
+}
+
+.emailchip_section .mt-mnual_2 {
+    margin-top: 15px;
+}
+
+.emailchip_section .form-label {
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+
+.emailchip_section ::ng-deep.mat-form-field-appearance-legacy .mat-form-field-infix {
+    border-top: none;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.emailchip_section ::ng-deep.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 8px;
+}
+
+.emailchip_section ::ng-deep.mat-standard-chip.mat-chip-with-trailing-icon {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    padding-left: 8px;
+    margin-right: 6px;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.emailchip_section ::ng-deep.mat-form-field-appearance-legacy .mat-form-field-infix input {
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    padding: 8px 10px;
+    width: calc(100% - 30px);
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.emailchip_section ::ng-deep.mat-form-field-label-wrapper label {
+    padding: 3px 10px;
+    font: 12px/1.9 Poppins, sans-serif !important;
+}
+
+.emailchip_section .email_mailchamp ::ng-deep.mat-form-field-infix input {
+    margin-top: 3px;
+}
+
+.emailchip_section ::ng-deep.mat-form-field.mat-focused .mat-form-field-ripple {
+    opacity: 0;
+}
+
+.emailchip_section ::ng-deep.mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 0px;
+}
+
+.emailchip_section .btn-reset {
+    border: 1px solid var(--blue2);
+    border-radius: 8px;
+    color: var(--blue2);
+    min-width: 120px;
+    background-color: transparent;
+    font-size: 14px;
+    letter-spacing: 0px;
+    box-shadow: 0 12px 24px #0000000d;
+}
+
+.emailchip_section button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.mat-option.mat-option-disabled {
+    display: none;
+}
+
+.mat-tree-node,
+.mat-nested-tree-node {
+    color: #4f4a3f;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked ::ng-deep.mat-radio-outer-circle {
+    border-color: #4b6cb7 !important;
+}
+
+.scheduld_type_plc.mat-focused ::ng-deep.mat-form-field-label-wrapper label {
+    display: none;
+}
+
+.scheduld_type_plc ::ng-deep.mat-form-field-label-wrapper label {
+    color: #4f4a3f;
+    font-size: 14px;
+}
+
+.schedule-email-table {
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.blured-area {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #fff;
+    padding: 20px;
+}
+
+.blured-area::before {
+    border: 2px dashed #fff;
+    padding: 10px;
+    margin: 0;
+    content: '';
+    width: calc(100% - 10px);
+    position: absolute;
+    top: 5px;
+    height: calc(100% - 10px);
+    border-radius: 8px;
+}
+
+.blured-area p {
+    color: #fff;
+    font-size: 30px;
+    font-family: "Poppins-Bold";
+}
+
+.blured-area button {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    color: #fff;
+    font-size: 30px;
+    position: absolute;
+    right: 10px;
+    top: 6px;
+}
+
+.email_mailchamp .mat-error {
+    font-size: .6rem;
+    position: absolute;
+    width: max-content;
+    left: 2px;
+    bottom: -16px;
+    color: var(--red);
+}
+
+.emailmailchamp_select ::ng-deep.mat-select-value-text {
+    display: none;
+}
+
+.removeError.mat-form-field-invalid ::ng-deep.mat-form-field-label {
+    color: #4f4a3f;
+}
+
+/*****************************/
+.report_crt_dropdwon ::ng-deep.mat-form-field-wrapper {
+    padding-bottom: 0px !important;
+}
+
+::ng-deep.mat-autocomplete-panel .mat-tree-node {
+    min-height: auto;
+    font-family: 'Poppins-Medium';
+    padding: 3px 0px;
+}
+
+::ng-deep.mat-autocomplete-panel button.mat-icon-button {
+    height: 22px;
+    line-height: 0.1;
+}
+
+.report_crt_dropdwon ::ng-deep.mat-form-field-infix {
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+
+::ng-deep.mat-autocomplete-panel::-webkit-scrollbar {
+    width: 5px;
+    padding: 2px;
+    height: 7px;
+}
+
+/* Track */
+::ng-deep.mat-autocomplete-panel::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::ng-deep.mat-autocomplete-panel::-webkit-scrollbar-thumb {
+    background: #4b6cb7;
+}
+
+/* Handle on hover */
+::ng-deep.mat-autocomplete-panel::-webkit-scrollbar-thumb:hover {
+    background: #4b6cb7;
+}
+
+/*******************************************/
+
+::ng-deep.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+::ng-deep.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #3f51b5 !important;
+}
+
+//added by shivam use for email suggestion in lower case
+.email_lowercase {
+    text-transform: none !important;
+}

@@ -1,0 +1,74 @@
+<!--
+  * Project Name: MIS.
+* Date: 04/04/2024
+* CreatedBy: Shivam Shakya
+* Contact: Echelon Edge MIS Development Team.
+* Copyright: Echelon Edge Pvt. Ltd.
+* Purpose:custom pdf download Dialog box -->
+
+<div class="modal-dialog modal_all">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">{{this.data.title}}</h5>
+            <button type="button" class="btn-close ms-auto" (click)="onCancel()" mat-dialog-close><i class=" fas
+                fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                        aria-selected="true">Default</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                        aria-selected="false">Custom</button>
+                </li>
+
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <p class="text-center py-4 mb-0">Do you want to Download the <b>{{this.data.selectedReport}}</b>.
+                        <br />
+                        Please
+                        click
+                        on
+                        <button type="submit" class="btntext" (click)="onDefaultClick()">Download Report</button>
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class=" mt-3 mb-0 text-danger ng-star-inserted"><i class="fa-solid fa-circle-info"></i>
+                                You can select only
+                                11 columns
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row mt-2 scroll_sc">
+                        <div class="col-sm-6 mb-2" *ngFor="let header of this.data.customData">
+                            <div class="custm_downlod">
+                                <input type="checkbox" value="{{header}}" (change)="selectColumn($event)">
+                                <label>{{header}}</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary btn-reset" type="text" (click)="onCancel()">
+                            Cancel
+                        </button>
+                        <button class="btn btn-success btn-submit ms-sm-2 mt-2 mt-sm-0" type="submit"
+                            (click)="onSubmit()" [disabled]="customDataKeysArray == 0">
+                            Submit
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

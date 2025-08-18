@@ -1,0 +1,56 @@
+<!--
+  * Project Name: MIS.
+* Date: 12/05/2023
+* CreatedBy: Ankush
+* Contact: Echelon Edge MIS Development Team.
+* Copyright: Echelon Edge Pvt. Ltd.
+* Purpose: Delete Dialog box -->
+
+<div class="modal-dialog modal_all delete_new_dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <!-- <h5 class="modal-title">{{this.data.heading}}loooooooo</h5> -->
+      <h5 class="modal-title" title="{{this.data.heading}}">
+        {{this.data.heading?.length>35? (this.data.heading |
+                                    slice:0:35)+'...':this.data.heading}}
+      </h5>
+      <button type="button" class="btn-close ms-auto" [mat-dialog-close]="false"><i class="fas fa-times"></i></button>
+    </div>
+
+    <form [formGroup]="deleteForm">
+
+      <div class="modal-body text-center">
+        <img src="../../../assets/images/delete-icon.png">
+        <!-- <h4 matDialogTitle>{{this.data.heading}}</h4> -->
+        <p class="mb-0">{{this.data.title}}</p>
+        <!-- <p class="mb-0" title="{{this.data.title}}"> {{this.data.title?.length>70? (this.data.title |
+          slice:0:70)+'...':this.data.title}}</p> -->
+        <div class="form-group text-start p_relative">
+          <label>Reason <span class="requireds"></span></label>
+
+          <input class="form-control" formControlName="reason" maxlength="256" placeholder="Please enter reason">
+          <span class="text-danger mat-error"
+            *ngIf="(deleteControls['reason'].touched)||(deleteControls['reason'].dirty)&& deleteControls['reason'].invalid">
+            <div *ngIf="deleteControls['reason'].errors?.['required']"> Reason is
+              required.</div>
+            <div *ngIf="deleteControls['reason'].errors?.['pattern']">Please enter valid reason.</div>
+            <div *ngIf="deleteControls['reason'].errors?.['maxlength']"> Maximun length is only 255 characters.</div>
+          </span>
+        </div>
+
+        <div class="text-center mt-4">
+          <button class="btn btn-primary btn-reset" type="button" (click)="onCancel()">
+            Cancel
+          </button>
+          <button class="btn yesdelete ms-sm-2 mt-2 mt-sm-0" type="submit" (click)="onSubmit()"
+            [disabled]="this.deleteForm.invalid">
+            Delete
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

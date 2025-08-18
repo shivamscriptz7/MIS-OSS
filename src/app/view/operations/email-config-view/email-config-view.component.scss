@@ -1,0 +1,59 @@
+.email_confi_view_template .table-responsive {
+    border: 2px solid rgba(0, 0, 0, .1);
+    border-radius: 8px;
+}
+
+.email_confi_view_template .table-responsive table {
+    margin-bottom: 0px;
+}
+
+.email_confi_view_template table tr td {
+    font-size: 0.8rem;
+    font-family: "Poppins-Regular";
+    padding-left: 15px;
+}
+
+.email_confi_view_template table tr td ul {
+    padding-left: 0px;
+    margin-bottom: 0px;
+    max-height: 140px;
+    overflow: auto;
+}
+
+.email_confi_view_template table tr td ul::-webkit-scrollbar {
+    width: 5px;
+    padding: 2px;
+    height: 6px;
+}
+
+/* Track */
+.email_confi_view_template table tr td ul::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.email_confi_view_template table tr td ul::-webkit-scrollbar-thumb {
+    background: #4b6cb7;
+}
+
+/* Handle on hover */
+.email_confi_view_template table tr td ul::-webkit-scrollbar-thumb:hover {
+    background: #4b6cb7;
+}
+
+.email_confi_view_template table tr td ul li {
+    display: inline-block;
+    margin-right: 8px;
+    position: relative;
+}
+
+.email_confi_view_template table tr td ul li:after {
+    content: ',';
+}
+
+.email_confi_view_template table tr th {
+    font-family: "Poppins-SemiBold";
+    font-size: 0.8rem;
+    width: 170px;
+    border-right: 1px solid rgba(0, 0, 0, .1);
+}

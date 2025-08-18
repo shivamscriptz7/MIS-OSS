@@ -1,0 +1,593 @@
+<div class="row align-items-center schedule_page" *ngIf="module">
+
+    <div class="col-sm-12">
+        <div class="title-part">
+            <h2>Schedule Config</h2>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-schedule-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-schedule" type="button" role="tab" aria-controls="nav-schedule"
+                    aria-selected="true" (click)="onClickTabs('Schedule')">Schedule Creation</button>
+                <button class="nav-link" id="nav-email-tab" data-bs-toggle="tab" data-bs-target="#nav-email"
+                    type="button" role="tab" aria-controls="nav-email" aria-selected="false"
+                    (click)="getEmailConfigReportList('');onClickTabs('emailConfig')">Email
+                    Config</button>
+            </div>
+        </nav>
+
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-schedule" role="tabpanel" aria-labelledby="nav-schedule-tab"
+                tabindex="0">
+
+                <div class="row">
+
+                    <div class="col-sm-12 create_part_align">
+                        <div class="title-part">
+                            <div class="upper_button">
+                                <button class="btn btn_create" [disabled]="module[0].CREATE_ACCESS==0"
+                                    (click)="addUpdateSchedule('','add')"><i class="fa-solid fa-plus"></i>
+                                    Create</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 p_relative">
+                        <div class="table-responsive listing-table lastchild_fix">
+                            <table *ngIf="this.loaderdata && this.tabFlag=='Schedule'" datatable [dtOptions]="dtOptions"
+                                class="table resize common-table mb-0"
+                                [ngClass]="{ datatable_noRecord: repoList?.length != 0 }" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Scheduler Name</th>
+                                        <th>Type Name</th>
+                                        <th>Report Name</th>
+                                        <th>Frequency</th>
+                                        <th>Report Format</th>
+                                        <th class="text-center">Off/On</th>
+                                        <th>Last Run</th>
+                                        <th>Recent Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor=" let item of repoList ; let i=index">
+                                        <td>{{item.RN}}</td>
+                                        <td title="{{item.SCHEDULE_NAME}}">
+                                            {{item.SCHEDULE_NAME?.length>14? (item.SCHEDULE_NAME | slice:0:14)+'...':item.SCHEDULE_NAME}}
+                                        </td>
+                                        <td title="{{item.TYPE_NAME}}">
+                                            {{item.TYPE_NAME?.length>15? (item.TYPE_NAME | slice:0:15)+'...':item.TYPE_NAME}}
+                                        </td>
+                                        <td title="{{item.REPO_NAME}}">
+                                            {{item.REPO_NAME?.length>14? (item.REPO_NAME | slice:0:14)+'...':item.REPO_NAME}}
+                                        </td>
+                                        <td title="{{item.SCHEDULE_TIME_SHOWN}}">
+                                            {{item.SCHEDULE_TIME_SHOWN?.length>14? (item.SCHEDULE_TIME_SHOWN | slice:0:14)+'...':item.SCHEDULE_TIME_SHOWN}}
+                                        </td>
+                                        <td title="{{item.SCH_REPO_FORMAT}}">
+                                            {{item.SCH_REPO_FORMAT?.length>14? (item.SCH_REPO_FORMAT | slice:0:14)+'...':item.SCH_REPO_FORMAT}}
+                                        </td>
+                                        <td class="text-center acqui_status">
+                                            <label class="switch">
+                                                <input type="checkbox" [disabled]="module[0].EDIT_ACCESS==0"
+                                                    [checked]="item.STATUS=='0'?true:false" title="DeActive"
+                                                    (change)="onToggleChangeSchedule(item,$event)">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
+                                        <td title="{{item.RUN_TIME_SCHEDULED | date:'medium'}}">
+                                            {{item.RUN_TIME_SCHEDULED ? (item.RUN_TIME_SCHEDULED | date:'dd/MM/yy HH:mm') : ''}}
+                                        </td>
+                                        <td class="text-center">
+                                            <table>
+                                                <tr>
+                                                    <!-- ... other table cells ... -->
+                                                    <td *ngFor="let i of [0,1,2,3,4];">
+
+                                                        <!-- <span
+                                                                    *ngIf=" item.RECENT_STATUS?.split(',')[i]=='Ready' && (i!=4 || item.CURRENT_STATUS=='stop') "
+                                                                    class="schedule_status suces_status" title="Success">{{i+1}}</span>
+                                                                <span
+                                                                    *ngIf="item.RECENT_STATUS?.split(',')[i]=='Error'&& (i!=4 || item.CURRENT_STATUS=='stop')"
+                                                                    class="schedule_status error_status" title={{item.ERROR_MSG}}>{{i+1}}</span>
+                                                                <span
+                                                                    *ngIf=" (item.CURRENT_STATUS=='Ready') && (i==4 || item.RECENT_STATUS?.split(',')[i]!='Ready' && item.RECENT_STATUS?.split(',')[i]!='Error' && item.RECENT_STATUS?.split(',')[i]!='stop') 
+                                                                    && (item.RECENT_STATUS?.split(',')[i-1]=='Ready' || item.RECENT_STATUS?.split(',')[i-1]=='Error') "
+                                                                    class="schedule_status pending_status" title="In Progress">{{i+1}}</span>
+                                                                <span *ngIf="item.RECENT_STATUS?.split(',')[i]=='stop'"
+                                                                    class="schedule_status stop_status" title="Stop">{{i+1}}</span>
+                                                                <span
+                                                                    *ngIf="!item.RECENT_STATUS?.split(',')[i] && (item.CURRENT_STATUS=='stop'|| !item.RECENT_STATUS?.split(',')[i-1])"
+                                                                    class="schedule_status empty_status" title="Empty">
+                                                                    {{i+1}}
+                                                                </span> -->
+                                                        <span *ngIf=" item.RECENT_STATUS?.split(',')[i]=='Ready' "
+                                                            class="schedule_status suces_status"
+                                                            title="Success">{{i+1}}</span>
+                                                        <span *ngIf="item.RECENT_STATUS?.split(',')[i]=='Error'"
+                                                            class="schedule_status error_status"
+                                                            title={{item.ERROR_MSG}}>{{i+1}}</span>
+                                                        <span *ngIf=" 
+                                                                item.RECENT_STATUS?.split(',')[i]=='In Progress'"
+                                                            class=" schedule_status pending_status"
+                                                            title="In Progress">{{i+1}}</span>
+                                                        <span *ngIf="item.RECENT_STATUS?.split(',')[i]=='stop'"
+                                                            class="schedule_status stop_status"
+                                                            title="Stop">{{i+1}}</span>
+                                                        <span *ngIf="!item.RECENT_STATUS?.split(',')[i]"
+                                                            class="schedule_status empty_status" title="Empty">
+                                                            {{i+1}}
+                                                        </span>
+                                                        <!-- for Re-Execution  -->
+                                                        <span *ngIf=" item.RECENT_STATUS?.split(',')[i]=='ReExeReady'"
+                                                            class="schedule_status reExeSuccess_status"
+                                                            title="Re-Execution Success">{{i+1}}</span>
+                                                        <span *ngIf="item.RECENT_STATUS?.split(',')[i]=='ReExeError'"
+                                                            class="schedule_status reExeSuccess_status"
+                                                            title="{{item.ERROR_MSG}}">{{i+1}}
+                                                        </span>
+
+                                                    </td>
+                                                    <!-- ... other table cells ... -->
+                                                </tr>
+                                            </table>
+                                        </td>
+
+
+                                        <td class="text-left action_td">
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <button title="Edit" class="edit_green ml-0" title="Edit"
+                                                            [disabled]="module[0].EDIT_ACCESS==0 || item.STATUS==0"
+                                                            (click)="addUpdateSchedule(item,'edit')">
+                                                            <i class="fa-solid fa-pencil"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <button class="trash_red"
+                                                            title="{{item.EXECUTION_STATUS?.split(',')[4]=='1' ?'Scheduler already executed':'ReExecute'}}"
+                                                            [disabled]="module[0].EDIT_ACCESS==0 || item.STATUS==1  || item.EXECUTION_STATUS?.split(',')[4]=='1' || item.EXECUTION_STATUS?.split(',')[0]=='1' "
+                                                            (click)=" executeScheduleManually(item)">
+                                                            <!-- <i class="fa-solid fa-rotate-right"></i> -->
+                                                            <img class="execute_img"
+                                                                src="../../../../assets/images/execute-icon.png">
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <button class="trash_red" title="Delete"
+                                                            [disabled]="module[0].DELETE_ACCESS==0"
+                                                            (click)="deleteSchdule(item)">
+                                                            <i class=" fa-regular fa-trash-can"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- <a id="downloadLink" href="http://localhost:4075/uploads/excelReport.xlsx"
+                                    download="http://localhost:4075/uploads/excelReport.xlsx">Download</a> -->
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="tab-pane fade" id="nav-email" role="tabpanel" aria-labelledby="nav-email-tab" tabindex="0">
+
+                <div class="row">
+                    <div class="col-sm-12 mb-2">
+                        <div class="emailchip_section">
+                            <div class="row align-items-center">
+                                <div class="col-sm-8 d-flex gap-2">
+                                    <div class="form-group w-100 report_crt_dropdwon">
+                                        <label class="form-label w-100">Type<span class="requireds"></span></label>
+                                        <mat-form-field class="example-full-width w-100 scheduld_type_plc">
+                                            <input class="form-control arow_picker" (keydown)="$event.preventDefault()"
+                                                placeholder="{{ getSelectedReportType() }}" type="text"
+                                                aria-label=" Number" [required]="this.typeRequired"
+                                                [matAutocomplete]="auto" matInput>
+                                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                                                classList="test-class">
+                                                <mat-option disabled></mat-option>
+                                                <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                                                    <ng-container *matTreeNodeDef="let node; when: hasChild">
+
+                                                        <ng-container>
+                                                            <mat-tree-node
+                                                                [ngClass]="{ blankNodeHide: node.children?.length == 0 && node.value=='TYPE'}"
+                                                                matTreeNodePadding>
+
+                                                                <button mat-icon-button matTreeNodeToggle
+                                                                    [attr.aria-label]="'toggle ' + node.filename"
+                                                                    *ngIf=" node.value=='TYPE' && node.children.length > 0 ">
+                                                                    <mat-icon class="mat-icon-rtlh-mirror"
+                                                                        *ngIf="node.children?.length > 0">
+                                                                        {{
+                                                                treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'
+                                                                }}
+                                                                    </mat-icon>
+                                                                </button>
+                                                                <span
+                                                                    *ngIf="node.children?.length >0 ">{{ node.display }}</span>
+
+                                                                <mat-checkbox class="radio_cutom_mat"
+                                                                    *ngIf=" node.value=='REPORT' && node.children.length == 0 "
+                                                                    (change)="selectionToggle($event.checked, node)"
+                                                                    [checked]="descendantsAllSelected(node)">
+                                                                    {{ node.display }}
+                                                                </mat-checkbox>
+                                                            </mat-tree-node>
+                                                        </ng-container>
+                                                    </ng-container>
+
+                                                </mat-tree>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                        <!-- <mat-error>Please
+                                                Enter
+                                                Email</mat-error> -->
+
+                                    </div>
+
+                                    <div class="form-group w-100">
+                                        <label class="form-label w-100">Email<span class="requireds"></span></label>
+                                        <mat-form-field [floatLabel]="'never'"
+                                            class="email_mailchamp removeError w-100">
+                                            <mat-chip-list #chipList [formControl]="senderEmailsControl">
+                                                <input (blur)="handleInputEvent($event)"
+                                                    (keydown)="handleInputEvent($event)"
+                                                    placeholder="Enter email address" [matChipInputFor]="chipList"
+                                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes "
+                                                    [matChipInputAddOnBlur]="true "
+                                                    (matChipInputTokenEnd)="add($event) " maxlength="500"
+                                                    (input)="filterEmail($event)" #input1 autocomplete="off">
+                                                <mat-select (selectionChange)="suggestionMail($event)"
+                                                    class="emailmailchamp_select" #mySelect>
+                                                    <mat-option class="email_lowercase"
+                                                        *ngFor="let item of searchEmails" [value]="item.USER_EMAIL">
+                                                        {{item.USER_EMAIL}}</mat-option>
+                                                </mat-select>
+                                            </mat-chip-list>
+                                            <!-- Error message for invalid email -->
+                                            <!-- <mat-error *ngIf="senderEmailsControl.hasError('invalidEmail')">Please
+                                                enter a valid @echelonedge.com email</mat-error> -->
+
+                                            <span class="text-danger mat-error"
+                                                *ngIf="senderEmailsControl.hasError('invalidEmail') && this.emailValidDsblBtn!=0">
+                                                Please enter a valid &#64;echelonedge.com email or use ( ; ) when
+                                                adding
+                                                more
+                                                than one email.
+                                            </span>
+                                        </mat-form-field>
+
+
+                                    </div>
+
+                                </div>
+
+                                <!-- <div class="form-group w-100">
+                                    <label class="form-label w-100">Email<span class="requireds"></span></label>
+                                    <mat-form-field [floatLabel]="'never'" class="email_mailchamp w-100">
+                                        <mat-chip-list #chipList [formControl]="senderEmailsControl">
+                                            <input placeholder="Enter email address" maxlength="50"
+                                                [matChipInputFor]="chipList"
+                                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes "
+                                                [matChipInputAddOnBlur]="true " (matChipInputTokenEnd)="add($event) ">
+                                        </mat-chip-list>
+
+
+                                    </mat-form-field>
+
+
+                                </div> -->
+
+                                <!-- Email List -->
+
+                                <div class="col-sm-4 text-end">
+                                    <div class="form-group d-flex gap-2 justify-content-end mt-mnual_2">
+                                        <button type="reset" [disabled]="resetBtn==true"
+                                            class="btn btn-primary btn-reset" (click)="resetfunc()">Reset</button>
+                                        <button class="btn_create" (click)="addUpdateEmailConfig()"
+                                            [disabled]='this.submitBtn==true ||  this.emailValidDsblBtn!=0'>Submit</button>
+                                    </div>
+                                </div>
+
+                            </div><!-------Row Div------>
+
+                            <div class="col-md-12 email-chip">
+                                <mat-chip *ngFor="let email of senderEmailsControl.value ;let i=index"
+                                    [selectable]="true" [removable]="removable" (removed)="removeEmail(email)"
+                                    name="chips">{{email}}
+                                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                </mat-chip>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- <div class="report_lstng">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>Reports Listing</h4>
+                                    <div class="listing_search">
+                                        <input type="search" placeholder="Search listing" class="form-control">
+                                    </div>
+
+                                    <div class="table-responsive reportleft_responsive">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td title="">
+                                                        <label class="custom_checkbox">
+                                                            REP-54C- List of all oustanding bills
+                                                            <input type="checkbox" value="">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="table-responsive listing-table lastchild_fix schedule-email-table">
+                        <table *ngIf=" this.loaderdata && this.tabFlag=='emailConfig'" datatable [dtOptions]="dtOptions"
+                            [ngClass]="{ datatable_noRecord: repoList?.length != 0 }"
+                            class="table resize common-table mb-0" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Group</th>
+                                    <th>Report Name</th>
+                                    <th>Email</th>
+                                    <th>Action Performed By</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <!-- <tr *ngFor=" let item of repoList ; let i=index">
+                                    <td>{{item.RN}}</td>
+                                    <td>{{item.GROUP_NAME}}</td>
+                                    <td title="{{item.REPORT_NAME}}">
+                                        {{item.REPORT_NAME?.length>18? (item.REPORT_NAME | slice:0:18)+'...':item.REPORT_NAME}}
+                                    </td>
+                                    <td title="{{item.EMAIL}}">
+                                        {{item.EMAIL?.length>18? (item.EMAIL | slice:0:18)+'...':item.EMAIL}}
+                                    </td>
+                                    <td> {{item.CREATED_BY}}</td>
+                                    <td class="text-left action_td">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <button (click)="viewEmailConfig(item);" title="View"
+                                                        class="edit_green ml-0">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                </td>
+                                                <td *ngIf="this.editbuttons==false">
+                                                    <button (click)="updateEmailConfig(item)" title="Edit"
+                                                        [disabled]="module[0].EDIT_ACCESS==0" class="edit_green">
+                                                        <i class="fa-solid fa-pencil"></i>
+                                                    </button>
+                                                </td>
+                                                <td *ngIf="this.editbuttons==false">
+                                                    <button (click)="deleteSchduleEmailConfig(item)"
+                                                        [disabled]="module[0].DELETE_ACCESS==0" class="trash_red"
+                                                        title="Delete">
+                                                        <i class=" fa-regular fa-trash-can"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr> -->
+
+
+                                <tr *ngFor=" let item of repoList ; let i=index">
+                                    <td>{{item.RN}}</td>
+                                    <td>{{item.GROUP_NAME}}</td>
+                                    <td title="{{item.REPORT_NAME}}">
+                                        {{item.REPORT_NAME?.length>18? (item.REPORT_NAME | slice:0:18)+'...':item.REPORT_NAME}}
+                                    </td>
+                                    <td title="{{item.EMAIL}}">
+                                        {{item.EMAIL?.length>18? (item.EMAIL | slice:0:18)+'...':item.EMAIL}}
+                                    </td>
+                                    <td> {{item.CREATED_BY}}</td>
+                                    <td class="text-left action_td">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <button (click)="viewEmailConfig(item);" title="View"
+                                                        class="edit_green ml-0">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                </td>
+                                                <td *ngIf="this.editbuttons==false">
+                                                    <button (click)="updateEmailConfig(item)" title="Edit"
+                                                        [disabled]="module[0].EDIT_ACCESS==0" class="edit_green">
+                                                        <i class="fa-solid fa-pencil"></i>
+                                                    </button>
+                                                </td>
+                                                <td *ngIf="this.editbuttons==false">
+                                                    <button (click)="deleteSchduleEmailConfig(item)"
+                                                        [disabled]="module[0].DELETE_ACCESS==0" class="trash_red"
+                                                        title="Delete">
+                                                        <i class=" fa-regular fa-trash-can"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                        <div *ngIf="editAtreBlur==true" class="blured-area">
+                            <button (click)="closeEditMode()"><i class="fa-solid fa-xmark"></i></button>
+                            <p>Email Configuration Edit Mode</p>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

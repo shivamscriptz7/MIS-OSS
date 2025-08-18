@@ -1,0 +1,124 @@
+.monitoring_audit_dialog_page .modal-body {
+    max-height: 100%;
+}
+
+.monitoring_audit_dialog_page .table-responsive {
+    height: 100%;
+    max-height: calc(100vh - 280px);
+}
+
+.monitoring_audit_dialog_page .table-responsive::-webkit-scrollbar {
+    width: 5px;
+    padding: 2px;
+    height: 6px;
+}
+
+/* Track */
+.monitoring_audit_dialog_page .table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.monitoring_audit_dialog_page .table-responsive::-webkit-scrollbar-thumb {
+    background: #4b6cb7;
+}
+
+/* Handle on hover */
+.monitoring_audit_dialog_page .table-responsive::-webkit-scrollbar-thumb:hover {
+    background: #4b6cb7;
+}
+
+.monitoring_audit_dialog_page .table-responsive thead tr th {
+    position: sticky;
+    top: -1px;
+    background-color: #4b6cb7;
+    z-index: 7;
+    color: #fff !important;
+}
+
+.monitoring_audit_dialog_page .monitoring-dialog table tr th {
+    color: #696f7f;
+    font-size: .8rem;
+    font-family: "Poppins-Bold";
+    font-weight: 300;
+}
+
+.monitoring_audit_dialog_page .monitoring-dialog table tbody tr th {
+    font-family: 'Poppins-SemiBold' !important;
+}
+
+.monitoring_audit_dialog_page .monitoring-dialog table tr td {
+    color: #696f7f;
+    font-size: .75rem;
+    font-family: 'Poppins-Medium';
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    vertical-align: middle;
+}
+
+.monitoring_audit_dialog_page .monitoring-dialog .withoutdata {
+    height: 110px;
+}
+
+.monitoring_audit_dialog_page .monitoring-dialog .withoutdata tr td {
+    margin: 0;
+    font-family: "Poppins-SemiBold";
+    font-size: 1rem;
+    padding: 20px 0;
+}
+
+.monitoring_audit_dialog_page .user-monitoring-page thead tr th:nth-child(2),
+.monitoring_audit_dialog_page .user-monitoring-page thead tr th:nth-child(3) {
+    min-width: 223px;
+}
+
+.monitoring_audit_dialog_page .user-monitoring-page thead tr th:first-child {
+    min-width: 120px;
+}
+
+
+.monitoring_audit_dialog_page .btn_flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    margin-bottom: 13px;
+    position: absolute;
+    right: 20px;
+}
+
+
+.monitoring_audit_dialog_page .btn_flex button {
+    background: transparent linear-gradient(180deg, #4B6CB7 0%, #182848 100%) 0% 0% no-repeat padding-box;
+    border-radius: 6px;
+    color: #fff;
+    min-width: 115px;
+    border: 1px solid #4B6CB7;
+    font-size: 0.8rem;
+    letter-spacing: 0px;
+    padding: 6px 2px;
+    line-height: 1.1;
+}
+
+.monitoring_audit_dialog_page .top_audittrail {
+    width: 80%;
+    border: 1px solid rgba(105, 111, 127, .2);
+    margin-bottom: 10px;
+}
+
+.monitoring_audit_dialog_page .top_audittrail {
+    border: 2px solid rgba(0, 0, 0, .1);
+    border-radius: 8px;
+}
+
+.monitoring_audit_dialog_page .top_audittrail table tr th {
+    font-family: 'Poppins-SemiBold';
+    font-size: .8rem;
+    width: 170px;
+    border-right: 1px solid rgba(0, 0, 0, .1);
+}
+
+.monitoring_audit_dialog_page .top_audittrail table tr td {
+    font-size: .8rem;
+    font-family: 'Poppins-Regular';
+    padding-left: 15px;
+}

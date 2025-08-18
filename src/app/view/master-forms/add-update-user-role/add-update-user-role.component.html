@@ -1,0 +1,55 @@
+<div class="modal-dialog modal_all">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">{{title}}</h5>
+            <button type="button" class="btn-close" [mat-dialog-close]="false"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="userRoleForm" autocomplete="off">
+                <div class="row">
+
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">User Role<span class="requireds"></span></label>
+                            <input type="text" placeholder="Enter role" formControlName="role_name" class="form-control"
+                                maxlength="25">
+                            <span class="text-danger mat-error"
+                                *ngIf="userRoleFormcontrol['role_name'].touched || userRoleFormcontrol['role_name'].dirty && userRoleFormcontrol['role_name'].invalid">
+                                <div *ngIf="userRoleFormcontrol['role_name'].errors?.['required']"> Please enter role.
+                                </div>
+                                <div *ngIf="userRoleFormcontrol['role_name'].errors?.['pattern']">please enter valid
+                                    Role.
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Role Description</label>
+                            <input type="text" placeholder="Enter role description" formControlName="role_desc"
+                                class="form-control" maxlength="50">
+                            <span class="text-danger mat-error"
+                                *ngIf="(userRoleFormcontrol['role_desc'].touched)&& userRoleFormcontrol['role_desc'].invalid">
+                                <div *ngIf="userRoleFormcontrol['role_desc'].errors?.['required']">Please enter role
+                                    description.</div>
+                                <div *ngIf="userRoleFormcontrol['role_desc'].errors?.['pattern']">Please enter valid
+                                    description
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 text-center mt-3">
+                        <div class="form-buttons">
+                            <button class="btn btn-primary btn-reset" type="button" [disabled]="!userRoleForm.dirty"
+                                (click)="resetForm()">Reset</button>
+                            <button class="btn btn-success btn-submit ms-sm-2 mt-2 mt-sm-0" type="submit"
+                                [disabled]="this.userRoleForm.invalid || !userRoleForm.dirty"
+                                (click)="userRoleFormSubmit()">{{buttonName}}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

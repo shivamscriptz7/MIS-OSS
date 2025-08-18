@@ -1,0 +1,1096 @@
+.userpermission-page::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+/* Track */
+.userpermission-page::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.userpermission-page::-webkit-scrollbar-thumb {
+    background: var(--blue);
+}
+
+/* Handle on hover */
+.userpermission-page::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.userpermission-page {
+    border: 2px solid rgba(78, 125, 143, 0.0509803922);
+    border-radius: 6px;
+    background-color: #FCFDFE;
+    box-shadow: 0px 12px 24px rgb(0 0 0 / 5%);
+    height: calc(100vh - 240px);
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.userpermission-page .nav.nav-tabs {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 6px 0px 0px 6px;
+    height: calc(100vh - 244px);
+    display: block;
+    position: sticky;
+    z-index: 1;
+    top: 0;
+}
+
+.userpermission-page .nav.nav-tabs li {
+    width: 100%;
+}
+
+.userpermission-page .nav.nav-tabs li button {
+    width: 100%;
+    color: #696F7F;
+    border: none;
+    box-shadow: none;
+    border-left: 4px solid transparent;
+    padding: 14px 2px;
+    font-size: 13px;
+    text-align: left;
+    padding-left: 14px;
+    font-family: "Poppins-SemiBold";
+}
+
+.userpermission-page .nav.nav-tabs li button.active {
+    background-color: #FCFDFE;
+    border-radius: 0px;
+    border-left: 4px solid #182848;
+}
+
+.userpermission-page .tab-pane table tbody tr td {
+    color: #696F7F;
+    font-size: 14px;
+    position: relative;
+}
+
+.userpermission-page .tab-pane table tbody tr td input[type="checkbox"] {
+    width: 30px;
+    cursor: pointer;
+}
+
+.userpermission-page .tab-pane table tbody tr td button {
+    background-color: var(--blue);
+    color: #fff;
+    border: none;
+    width: 25px;
+    position: absolute;
+    font-size: 10px;
+    height: 16px;
+    top: 9px;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.userpermission-page .tab-pane table thead tr th {
+    font-size: 14px;
+    position: relative
+}
+
+.userpermission-page .tab-pane table thead tr th span {
+    position: absolute;
+}
+
+.userpermission-page .tab-pane table thead tr th input {
+    width: 30px;
+    cursor: pointer;
+}
+
+.userpermission-page .tab-content tr.transitionclass {
+    background-color: #E5ECF4;
+}
+
+.userpermission-page .tab-pane table tbody tr td:first-child {
+    width: 36%;
+}
+
+.permission-page-main .btn-reset {
+    border: 1px solid var(--blue2);
+    border-radius: 8px;
+    color: var(--blue2);
+    min-width: 120px;
+    background-color: transparent;
+    font-size: 14px;
+    letter-spacing: 0px;
+    box-shadow: 0 12px 24px #0000000d;
+}
+
+.permission-page-main .btn-reset:focus,
+.permission-page-main .btn-reset:active {
+    background-color: transparent;
+    color: var(--blue2);
+}
+
+.permission-page-main .btn-submit {
+    background: transparent linear-gradient(180deg, #4B6CB7 0%, #182848 100%) 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    color: #fff;
+    min-width: 120px;
+    border: 1px solid #4B6CB7;
+    font-size: 14px;
+    letter-spacing: 0px;
+    box-shadow: 7px 7px 20px #4b6cb766;
+}
+
+.bottom-btns {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.permision_menu {
+    max-height: 224px;
+}
+
+.permision_menu table thead {
+    position: sticky;
+    width: 100%;
+    top: 0;
+    background-color: rgb(229 236 244);
+    z-index: 1;
+    box-shadow: 0px 0px 6px rgb(0 0 0 / 10%);
+}
+
+.permision_menu::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+/* Track */
+.permision_menu::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.permision_menu::-webkit-scrollbar-thumb {
+    background: var(--blue);
+}
+
+/* Handle on hover */
+.permision_menu::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.mat-head {
+    display: flex;
+    align-items: center;
+    border-bottom: none;
+}
+
+.mat-head ::ng-deep .mat-checkbox {
+    margin-right: 5px;
+    margin-top: -2px;
+}
+
+.permission-page-main .table>:not(:first-child) {
+    border-top: 2px solid #DADEE1 !important;
+}
+
+.permission-page-main select.form-select {
+    height: 32px;
+    font-size: 12px;
+    border-radius: 8px !important;
+    width: 176px;
+    line-height: 1.2;
+}
+
+.permission-page-main .select_absolute {
+    position: absolute;
+    right: 15px;
+    top: 17px;
+    display: flex;
+    align-items: center;
+}
+
+.permission-page-main .select_absolute button.btn-back {
+    background-color: #182848;
+    color: #fff;
+    border-radius: 8px;
+    font-size: .8rem;
+    min-width: 95px;
+    padding: 8px 10px;
+    border: none;
+    height: 30px;
+    line-height: 1.2;
+    margin-right: 10px;
+}
+
+.userpermission-page input[type="checkbox"] {
+    height: 17px;
+}
+
+
+/**********************/
+.po_relative {
+    position: relative;
+}
+
+ul#myTab1 {
+    margin-bottom: 5px;
+    border: none;
+}
+
+ul#myTab1 button {
+    background-color: #0000000d;
+    color: #696f7f;
+    border: none;
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: 14px;
+    margin-right: 14px;
+}
+
+ul#myTab1 button.active {
+    background-color: #182848;
+    color: #ffffff;
+}
+
+.accordion-permision::-webkit-scrollbar,
+.userpermissionmodule::-webkit-scrollbar,
+.user_type_permissionmodule::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+/* Track */
+.accordion-permision::-webkit-scrollbar-track,
+.userpermissionmodule::-webkit-scrollbar-track,
+.user_type_permissionmodule::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.accordion-permision::-webkit-scrollbar-thumb,
+.userpermissionmodule::-webkit-scrollbar-thumb,
+.user_type_permissionmodule::-webkit-scrollbar-thumb {
+    background: var(--blue);
+}
+
+/* Handle on hover */
+.accordion-permision::-webkit-scrollbar-thumb:hover,
+.userpermissionmodule::-webkit-scrollbar-thumb:hover,
+.user_type_permissionmodule::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.accordion-permision {
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 6px;
+}
+
+.accordion-permision.view_rol_permission #accordionExample1 .accordion-collapse table td .collapse:not(.show) {
+    display: block;
+}
+
+.accordion-permision.view_rol_permission #accordionExample1 table tr th {
+    pointer-events: none;
+    font-size: 14px;
+}
+
+.userpermission-page .collapse-content .table tbody tr th {
+    font-family: 'Poppins-Medium';
+    font-weight: 500;
+}
+
+.accordion-permision .userpermission-page {
+    height: auto;
+    border: none;
+}
+
+.accordion-permision .accordion-header {
+    position: relative;
+    border-radius: 8px;
+}
+
+.accordion-permision .accordion-header button.role_edit {
+    padding: 0 !important;
+    border: none;
+    position: absolute;
+    right: 76px;
+    top: 50%;
+    height: auto;
+    transform: translateY(-50%);
+    line-height: 0;
+    z-index: 9;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.accordion-permision .accordion-header button.role_edit:disabled,
+.accordion-permision .accordion-header button.role_delete:disabled {
+    opacity: .5;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.accordion-permision .accordion-header button.role_delete {
+    padding: 0 !important;
+    border: none;
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    height: auto;
+    transform: translateY(-50%);
+    line-height: 0;
+    z-index: 9;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.accordion-permision .accordion-header button.role_delete .fa-trash-can {
+    color: var(--red);
+}
+
+.accordion-permision .no-shadow {
+    box-shadow: none !important;
+}
+
+.accordion-permision .accordion-header button.role_edit i {
+    font-size: 14px;
+    color: #182848;
+}
+
+.accordion-permision .accordion-header button:hover,
+.accordion-permision .accordion-header button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.accordion-permision .accordion-header button {
+    color: #696f7f;
+    font-size: 14px;
+    padding: 10px 15px;
+    font-family: "Poppins-SemiBold";
+    text-transform: capitalize;
+    border-radius: 8px;
+    outline: none;
+    box-shadow: none;
+}
+
+.accordion-permision .accordion-header button::after {
+    content: '';
+    background-size: 16px;
+    background-position: 50% 50%;
+}
+
+.accordion-permision .userpermission-page .tab-pane table tbody tr td i.fas.fa-check {
+    color: var(--bs-green);
+    font-size: 18px;
+    padding-left: 15px;
+    font-weight: 700;
+}
+
+.accordion-permision .userpermission-page .tab-pane table tbody tr td i.fas.fa-times {
+    color: var(--bs-danger);
+    font-size: 18px;
+    padding-left: 15px;
+    font-weight: 700;
+}
+
+.accordion-permision .userpermission-page .tab-pane table thead tr th:last-child {
+    text-align: right;
+    padding-right: 15px;
+}
+
+.accordion-permision .userpermission-page .tab-pane table thead tr th i.fas.fa-edit {
+    color: #4b6cb7;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.accordion-permision .userpermission-page .tab-pane table thead tr th i.fa-trash-alt {
+    color: var(--bs-danger);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+form.create_permission button {
+    background: transparent linear-gradient(180deg, #4B6CB7 0%, #182848 100%) 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    color: #fff;
+    min-width: 120px;
+    border: 1px solid #4B6CB7;
+    font-size: 14px;
+    letter-spacing: 0px;
+    box-shadow: 7px 7px 20px #4b6cb766;
+    position: absolute;
+    right: 15px;
+    top: 16px;
+    padding: 8px 2px;
+    line-height: 1.1;
+}
+
+tr.submenuclass .permision_menu tr td:first-child {
+    padding-left: 25px;
+}
+
+/*********************/
+
+.userpermissionmodule td {
+    max-width: 6px;
+}
+
+.userpermissionmodule td i.fas.fa-check {
+    color: var(--bs-green);
+    font-size: 1.1rem;
+}
+
+.userpermissionmodule td i.fas.fa-times {
+    color: var(--red);
+    font-size: 1.1rem;
+}
+
+.expand-table .accordion-button {
+    width: 252px;
+    cursor: pointer;
+    display: revert;
+    background-color: #e5ecf4 !important;
+    font-weight: 500;
+}
+
+.accordion-button:hover {
+    z-index: auto;
+}
+
+table>:not(caption)>*>* {
+    box-shadow: none;
+    background-color: #3b363605;
+}
+
+.custom-table .table-striped tbody tr.accordion-button.collapsed:nth-child(4n + 1) {
+    background-color: var(--table-tbody-tr-even) !important;
+    border-radius: 20px 0px 0px 20px !important;
+}
+
+.role-head {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid var(--bordercolor);
+    padding: 10px;
+    border-radius: 10px;
+    width: 16em;
+    margin: 0 auto;
+}
+
+.fill-stripes ul {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin: 0px;
+}
+
+.fill-stripes.low ul li {
+    height: 14px;
+    border-radius: 10px;
+}
+
+.fill-stripes.medium ul li {
+    border: 2px solid var(--lightblue);
+    height: 14px;
+    border-radius: 10px;
+}
+
+.fill-stripes.high ul li {
+    height: 14px;
+    border-radius: 10px;
+}
+
+.fill-stripes {
+    display: flex;
+    gap: 4px;
+}
+
+.firstlevel td,
+.secondlevel td,
+.levelthree td,
+.fourthlevel td {
+    text-align: center;
+}
+
+.secondlevel>td>div {
+    padding-left: calc(1em * var(--depth, 1));
+}
+
+.secondlevel td {
+    text-align: center;
+}
+
+.levelthree>td>div {
+    padding-left: calc(2em * var(--depth, 1));
+}
+
+.fourthlevel>td>div {
+    padding-left: calc(3em * var(--depth, 1));
+}
+
+.secondlevel>td div table tr th:first-child {
+    max-width: 233px;
+    width: 233px;
+    text-align: left;
+}
+
+.levelthree>td div table tr th:first-child {
+    text-align: left;
+    max-width: 207px;
+    width: 207px;
+}
+
+.fourthlevel>td div table tr th:first-child {
+    text-align: left;
+    max-width: 171px;
+    width: 171px;
+}
+
+.firstlevel>td div table tr th:first-child,
+.firstlevel>th {
+    max-width: 348px;
+    width: 348px;
+}
+
+.accordion-button:not(.collapsed) {
+    background: none;
+}
+
+#accordionHide {
+    display: none;
+}
+
+.custom-table .table td,
+.custom-table .table th {
+    display: revert;
+}
+
+
+.searchup-down {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-color);
+}
+
+.searchup-down span a {
+    color: var(--text-color);
+}
+
+.searchup-down .input-wrap>input,
+.searchup-down .input-wrap-one>input {
+    max-width: 10rem;
+}
+
+.searchup-down span a.disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}
+
+.secondlevel,
+.thirdlevel,
+.fourthlevel {
+    padding-left: 30px;
+}
+
+.secondlevel .accordion-button {
+    font-family: 'Poppins-Medium';
+    font-size: 14px;
+    font-weight: 400;
+    width: 19%;
+}
+
+.thirdlevel .accordion-button {
+    width: 19%;
+}
+
+.fourthlevel .accordion-button {
+    width: 19%;
+}
+
+.accordion-button.collapsed.bottom-arrow i {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    transition: all .5s ease;
+}
+
+.accordion-button.bottom-arrow i {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+    transition: all .5s ease;
+}
+
+.firstlevel tr td div:nth-child(odd) {
+    background-color: transparent;
+}
+
+.firstlevel tr td div:nth-child(even) {
+    background-color: var(--table-tbody-tr-even);
+}
+
+.userpermissionmodule {
+    overflow: auto;
+}
+
+.userpermissionmodule>table>thead {
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+}
+
+.userpermissionmodule>table>thead th {
+    background-color: #182848;
+    color: #fff;
+    font-family: "Poppins-SemiBold";
+}
+
+.userpermissionmodule table tbody table tbody th {
+    font-family: "Poppins-SemiBold";
+    font-size: 14px;
+}
+
+.userpermissionmodule table tbody table tbody th.font-normal {
+    font-family: 'Poppins-Medium';
+}
+
+.userpermissionmodule table tbody table tbody th.font-flex span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.main_check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+table {
+    margin-bottom: 0px;
+}
+
+.accordion-body {
+    padding: 10px;
+}
+
+.accordion-item {
+    margin-bottom: 8px;
+    border-radius: 8px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.collapse-content table {
+    border-collapse: separate;
+    border-spacing: 0 2px;
+    margin-bottom: 0px !important;
+}
+
+.collapse-content tbody {
+    border-color: transparent;
+}
+
+td.text-center input {
+    height: 18px;
+    width: 16px;
+    cursor: pointer;
+}
+
+td.text-center input:disabled {
+    cursor: no-drop;
+}
+
+button.back_btn_permission {
+    color: #fff;
+    padding: 5px 10px;
+    margin-right: 13px;
+    font-size: 13px;
+    height: 29px;
+    line-height: 1.2;
+    min-width: 80px;
+    border-radius: 8px;
+    background: transparent linear-gradient(180deg, #4B6CB7 0%, #182848 100%) 0% 0% no-repeat padding-box;
+    border: 1px solid #4B6CB7;
+}
+
+button.back_btn_permission:hover,
+button.back_btn_permission:focus {
+    background: transparent linear-gradient(180deg, #4B6CB7 0%, #182848 100%) 0% 0% no-repeat padding-box;
+    border: 1px solid #4B6CB7;
+    color: #ffffff;
+}
+
+.permissions_selected-user {
+    margin: 0px;
+    font-size: 15px;
+    font-family: "Poppins-SemiBold";
+    color: #696f7f;
+    text-decoration: underline;
+}
+
+.no_datapermission {
+    text-align: center;
+    position: relative;
+    height: 100%;
+}
+
+.no_datapermission .img_place {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.no_datapermission .img_place img {
+    max-width: 360px;
+}
+
+.no_datapermission p {
+    text-transform: capitalize;
+    color: #696f7f;
+    font-size: 1.2rem;
+    font-family: "Poppins-SemiBold";
+    margin: 0;
+    margin-top: -80px;
+}
+
+/***** Tree Structure**************/
+
+
+
+.node__label {
+    cursor: pointer;
+}
+
+.node__children {
+    margin: 5px 0px 5px 30px;
+    padding-left: 10px;
+}
+
+.node--selected>.node__label {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+}
+
+.note {
+    color: #999;
+    font-size: 15px;
+    font-style: italic;
+}
+
+.icon-expand::after {
+    content: '\002B';
+}
+
+.icon-collapse::after {
+    content: '\2212';
+}
+
+.example-tree-invisible {
+    display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+/***********UserType Permission*************/
+.background-type {
+    overflow-y: auto;
+    max-height: calc(100vh - 240px);
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 6px;
+}
+
+.user_type_permissionmodule {
+    overflow: auto;
+    max-height: calc(100vh - 260px);
+    height: calc(100vh - 260px);
+}
+
+.user_type_permissionmodule table thead tr th:nth-child(1) {
+    width: calc(100% - 34%);
+}
+
+.user_type_permissionmodule table thead tr th:nth-child(2) .main_check {
+    justify-content: flex-start;
+}
+
+span.nameEE1 {
+    width: calc(100% - 34.5%);
+    text-align: left;
+    font-family: "Poppins-SemiBold";
+}
+
+li ul .mat-tree-node.per_type_main span.nameEE1 {
+    display: block;
+    width: calc(100% - 35.5%);
+}
+
+li ul li ul .mat-tree-node.per_type_main mat-checkbox {
+    margin-left: -10px;
+}
+
+li ul li ul li ul .mat-tree-node.per_type_main span.nameEE1 {
+    margin-right: -45px;
+}
+
+li ul li ul li ul .mat-tree-node.per_type_main mat-checkbox {
+    margin-left: 23px;
+}
+
+/************************/
+li ul .mat-tree-node span.nameEE2 {
+    width: calc(100% - 35%);
+}
+
+li ul li ul .mat-tree-node .mat-checkbox {
+    margin-left: 12px;
+}
+
+li ul li ul li ul .mat-tree-node.per_type_main_2 .mat-checkbox {
+    margin-left: 6px;
+}
+
+li ul li ul li ul li ul .mat-tree-node.per_type_main_2 .mat-checkbox {
+    margin-left: -8px;
+}
+
+.user_type_permissionmodule thead tr th {
+    background-color: #182848;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+}
+
+li .mat-tree-node.per_type_main {
+    background: #e5ecf4 !important;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #dee2e6;
+    color: #212529;
+    font-weight: 700;
+}
+
+ul .mat-tree-node.per_type_main {
+    background-color: #ccc !important;
+}
+
+.mat-tree {
+    background: #3b363605;
+}
+
+.mat-tree-node {
+    min-height: auto;
+    margin-top: 2px;
+    background-color: #F0F1F2;
+    border-radius: 0px;
+}
+
+.example-tree li ul li .mat-tree-node.per_type_main {
+    border-radius: 8px 8px 0px 0px;
+    margin-top: 3px;
+}
+
+span.nameEE2 {
+    background-color: #e5ecf4;
+    padding: 8px 15px;
+    margin-right: 7px;
+    border-radius: 8px;
+    min-width: 200px;
+    text-align: left;
+    color: #212529;
+    width: calc(100% - 37%);
+    margin-top: 4px;
+    margin-left: 3px;
+    margin-bottom: 4px;
+    font-family: 'Poppins-Medium';
+}
+
+::ng-deep.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
+::ng-deep.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #182848;
+}
+
+.view_prmissiontab .example-tree-invisible {
+    display: block;
+}
+
+.view_prmissiontab .example-tree-invisible button,
+.view_prmissiontab .per_type_main button {
+    pointer-events: none;
+}
+
+.custompagination .dataTables_paginate {
+    float: right;
+    text-align: right;
+    padding-top: .25em;
+}
+
+.custompagination .dataTables_paginate .paginate_button.disabled,
+.custompagination .dataTables_paginate .paginate_button.disabled:hover,
+.custompagination .dataTables_paginate .paginate_button.disabled:active {
+    cursor: default;
+    color: #666 !important;
+    border: 1px solid transparent;
+    background: transparent;
+    box-shadow: none;
+}
+
+.custompagination .dataTables_paginate .paginate_button {
+    padding: 2px 3px !important;
+    font-size: 14px;
+    border-radius: 6px !important;
+    box-sizing: border-box;
+    display: inline-block;
+    min-width: 1.5em;
+    padding: .5em 1em;
+    margin-left: 2px;
+    text-align: center;
+    text-decoration: none !important;
+    cursor: pointer;
+    color: inherit !important;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    background: transparent;
+}
+
+.custompagination .dataTables_paginate span a.paginate_button.current {
+    background-color: #6941c633;
+    border-color: #6941c633;
+    color: #5f4788 !important;
+    border-radius: 2px;
+}
+
+/*****************/
+.accordion-permision.view_prmissiontab {
+    height: auto;
+}
+
+.accordion-permision.view_prmissiontab .listing-table,
+.accordion-permision.view_rol_permission .listing-table {
+    box-shadow: none;
+    padding: 0px;
+    height: 100%;
+}
+
+.accordion-permision.view_prmissiontab .user_type_permissionmodule,
+.accordion-permision.view_rol_permission .user_type_permissionmodule {
+    height: auto;
+    max-height: max-content;
+}
+
+.accordion-permision.view_prmissiontab ::ng-deep.dataTables_wrapper .dataTables_scroll,
+.accordion-permision.view_rol_permission ::ng-deep.dataTables_wrapper .dataTables_scroll {
+    border: none;
+}
+
+.accordion-permision.view_prmissiontab ::ng-deep.dataTables_scrollHead,
+.accordion-permision.view_rol_permission ::ng-deep.dataTables_scrollHead {
+    display: none;
+}
+
+.accordion-permision.view_prmissiontab td,
+.accordion-permision.view_rol_permission td {
+    padding: 0px;
+    border: none !important;
+    vertical-align: middle;
+}
+
+.typ_prmsn_slect ::ng-deep.mat-form-field-wrapper {
+    padding-bottom: 0px;
+}
+
+.typ_prmsn_slect ::ng-deep.mat-form-field-wrapper .mat-form-field-infix {
+    margin: 0px;
+    padding: 0px !important;
+    border: none;
+}
+
+.typ_prmsn_slect ::ng-deep.mat-form-field-wrapper .mat-form-field-underline {
+    display: none !important;
+}
+
+.typ_prmsn_slect ::ng-deep.mat-form-field-wrapper .mat-select-arrow-wrapper {
+    display: none;
+}
+
+.typ_prmsn_slect mat-select {
+    border: 2px solid #DADEE1;
+    border-radius: 8px;
+    padding: 5px 8px 5px 12px;
+    height: 32px;
+    font-size: .8rem;
+    color: #696f7f;
+}
+
+::ng-deep.mat-form-field-type-mat-select.typ_prmsn_slect .mat-form-field-label {
+    padding: 6px 12px !important;
+    font-size: 0.8rem !important;
+}
+
+::ng-deep.typ_prmsn_slect.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    display: none;
+}
+
+::ng-deep.typ_prmsn_slect_pnl .form-control {
+    margin: 4px;
+    font-size: .8rem;
+    color: #696f7f;
+    border-radius: 8px;
+    width: calc(100% - 8px);
+    position: sticky;
+    top: 8px;
+    z-index: 1;
+}
+
+::ng-deep.typ_prmsn_slect_pnl .form-control:focus {
+    box-shadow: none;
+}
+
+.view_rol_permission ::ng-deep td.dataTables_empty .nodata-absolute,
+.view_prmissiontab ::ng-deep td.dataTables_empty .nodata-absolute {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.mat-error {
+    font-size: .6rem;
+    position: absolute;
+    width: max-content;
+    left: 2px;
+    bottom: -12px;
+    color: var(--red);
+}
+
+@media screen and (min-width: 768px) {
+    .h-100-custom {
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .userpermission-page .nav.nav-tabs {
+        height: auto;
+        border-radius: 6px;
+    }
+
+    .userpermission-page .tab-pane table tbody tr td:first-child {
+        width: 60%;
+    }
+
+    .permission-page-main .btn-reset {
+        max-width: 100%;
+    }
+}

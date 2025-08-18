@@ -1,0 +1,143 @@
+<!--
+  * Project Name: MIS.
+* Date: 12/05/2022
+* CreatedBy: Rahul kumar
+* Contact: Echelon Edge MIS developement.
+* Copyright: Echelon Edge Pvt. Ltd.
+* Purpose:user listing process -->
+
+
+
+<div class="row align-items-center userpage_listing" *ngIf="this.module">
+    <div class="col-sm-12">
+        <div class="title-part">
+            <h2>User Management</h2>
+
+            <div class="upper_button">
+                <button class="btn btn_create" [disabled]="module[0].CREATE_ACCESS==0" (click)="addUpdateUser('')"><i
+                        class="fa-solid fa-plus"></i>
+                    Create</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 p_relative mt-2">
+        <div class="table-responsive listing-table lastchild_fix">
+            <table datatable [dtOptions]="dtOptions" class="table resize common-table mb-0"
+                [ngClass]="{ datatable_noRecord: userList?.length != 0 }" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Username</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Contact No</th>
+                        <th>Role</th>
+                        <th>Type</th>
+                        <th>Zone</th>
+                        <th>Circle</th>
+                        <th>BA</th>
+                        <th class="text-center" disabled="module[0].EDIT_ACCESS">Status</th>
+                        <th disabled="module[0].EDIT_ACCESS || module[0]?.DELETE_ACCESS">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let item of userList ; let i = index">
+                        <td>{{item.RN}}</td>
+                        <td (click)="descriptionDialogBox({zone:item.ZONE_NAMES,circle:item.CIRCLE_NAMES,ssa:item.SC_DESC,type:item.TYPE_NAMES},item)"
+                            title="{{item.USER_NAME}}">{{item.USER_NAME?.length>10? (item.USER_NAME |
+                            slice:0:10)+'...':item.USER_NAME}}
+
+                        </td>
+                        <td (click)="descriptionDialogBox({zone:item.ZONE_NAMES,circle:item.CIRCLE_NAMES,ssa:item.SC_DESC,type:item.TYPE_NAMES},item)"
+                            class="td_capital" title="{{item.FULL_NAME}}">{{item.FULL_NAME?.length>10? (item.FULL_NAME |
+                            slice:0:10)+'...':item.FULL_NAME
+                        }}
+
+                        </td>
+                        <td (click)="descriptionDialogBox({zone:item.ZONE_NAMES,circle:item.CIRCLE_NAMES,ssa:item.SC_DESC,type:item.TYPE_NAMES},item)"
+                            title="{{item.USER_EMAIL}}"> {{item.USER_EMAIL?.length>10? (item.USER_EMAIL |
+                            slice:0:10)+'...':item.USER_EMAIL}}
+                        </td>
+
+                        <td (click)="descriptionDialogBox({zone:item.ZONE_NAMES,circle:item.CIRCLE_NAMES,ssa:item.SC_DESC,type:item.TYPE_NAMES},item)"
+                            title="{{item.USER_CONTACT}}">{{item.USER_CONTACT?.length>10? (item.USER_CONTACT |
+                            slice:0:10)+'...':item.USER_CONTACT}}
+                        </td>
+                        <td (click)="descriptionDialogBox({zone:item.ZONE_NAMES,circle:item.CIRCLE_NAMES,ssa:item.SC_DESC,type:item.TYPE_NAMES},item)"
+                            class="td_capital" title="{{item.ROLE_NAME}}"> {{item.ROLE_NAME?.length>10? (item.ROLE_NAME |
+                            slice:0:10)+'...':item.ROLE_NAME}}</td>
+                        <td class="td_capital" title="{{item.TYPE_NAMES}}"
+                            (click)="descriptionDialogBox({zone:item.ZONE_NAMES,circle:item.CIRCLE_NAMES,ssa:item.SC_DESC,type:item.TYPE_NAMES},item)">
+                            {{item.TYPE_NAMES?.length>10? (item.TYPE_NAMES |
+                            slice:0:10)+'...':item.TYPE_NAMES}}
+                        </td>
+
+                        <!-- <td class="td_capital" title="{{item.ZONE_NAMES}}"
+                            (click)="descriptionDialogBox({zone:item.ZONE_NAMES,circle:item.CIRCLE_NAMES},'Zone & Circle Details')">
+                            {{item.ZONE_NAMES?.length>12? (item.ZONE_NAMES | slice:0:12)+'...':item.ZONE_NAMES}}
+                        </td> -->
+
+                        <td class="td_capital" title="{{item.ZONE_NAMES}}"
+                            (click)="descriptionDialogBox({zone:item.ZONE_NAMES,circle:item.CIRCLE_NAMES,ssa:item.SC_DESC,type:item.TYPE_NAMES},item)">
+                            {{item.ZONE_NAMES?.length>12? (item.ZONE_NAMES | slice:0:12)+'...':item.ZONE_NAMES}}
+                        </td>
+
+                        <td class="td_capital" title="{{item.CIRCLE_NAMES}}"
+                            (click)="descriptionDialogBox({zone:item.ZONE_NAMES,circle:item.CIRCLE_NAMES,ssa:item.SC_DESC,type:item.TYPE_NAMES},item)">
+                            {{item.CIRCLE_NAMES?.length>12? (item.CIRCLE_NAMES |
+                            slice:0:12)+'...':item.CIRCLE_NAMES}}
+                        </td>
+                        <td class="td_capital" title="{{item.SC_DESC}}"
+                            (click)="descriptionDialogBox({zone:item.ZONE_NAMES,circle:item.CIRCLE_NAMES,ssa:item.SC_DESC,type:item.TYPE_NAMES},item)">
+                            {{item.SC_DESC?.length>12? (item.SC_DESC |
+                        slice:0:10)+'...':item.SC_DESC}}
+                        </td>
+                        <td disabled="module[0].EDIT_ACCESS" class="text-center acqui_status">
+                            <label class="switch">
+                                <input type="checkbox" [checked]="item.USER_ACTIVE=='0'?true:false"
+                                    (change)="onToggleChange(item, $event)"
+                                    [title]="item.USER_ACTIVE=='0'?'Active':'Deactive'"
+                                    [disabled]="userDetails.USER_ID===item.USER_ID || module[0].EDIT_ACCESS==0">
+
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                        <td class="text-left action_td">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <button title="Edit" class="edit_green ml-0" title="Edit"
+                                            (click)="addUpdateUser(item);"
+                                            [disabled]="userDetails.USER_ID===item.USER_ID || module[0].EDIT_ACCESS==0 || item.USER_ACTIVE==1">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </button>
+                                    </td>
+                                    <td *ngIf="userDetails.USER_ROLE==3">
+                                        <button class="chnage_pass" type="button" title="Unblock/Reset Password"
+                                            (click)="resetPassword(item)"
+                                            [disabled]="userDetails.USER_ID===item.USER_ID || item.USER_ACTIVE==1">
+
+                                            <i class="fas fa-key"></i></button>
+                                    </td>
+                                    <!-- <td *ngIf="module[0].DELETE_ACCESS">
+                                        <button class="trash_red" title="Delete" (click)="deleteUser(item)">
+                                        </button>
+                                    </td> -->
+                                    <td>
+                                        <button class="trash_red" title="Delete" (click)="deleteUser(item)"
+                                            [disabled]="userDetails.USER_ID===item.USER_ID || module[0].DELETE_ACCESS==0">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

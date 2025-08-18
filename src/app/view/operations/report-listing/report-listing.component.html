@@ -1,0 +1,99 @@
+<div class="row align-items-center reportcreation_listing" *ngIf="module">
+    <div class="col-sm-12">
+        <div class="title-part">
+            <h2>Report Creation</h2>
+
+            <div class="upper_button">
+                <button class=" btn btn_create" [disabled]=" module[0].CREATE_ACCESS==0"
+                    (click)=" addUpdateReport('')"><i class="fa-solid fa-plus"></i>
+                    Create</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 p_relative mt-2">
+        <div class="table-responsive listing-table">
+            <table datatable [dtOptions]="dtOptions" class="table resize common-table mb-0"
+                [ngClass]="{ datatable_noRecord: repoList?.length != 0 }" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Report Name</th>
+                        <th>Execution type</th>
+                        <th>Type Name</th>
+                        <th>Header</th>
+                        <th>Query</th>
+                        <th class="text-center">Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor=" let item of repoList ; let i=index">
+                        <td>{{item.RN}}</td>
+                        <td title="{{item.REPO_NAME}}">
+                            {{item.REPO_NAME?.length>22? (item.REPO_NAME | slice:0:22)+'...':item.REPO_NAME}}
+                        </td>
+                        <td>
+                            <span *ngIf="item.EXECUTION_TYPE == 1" title="Scheduler">{{"Scheduler"}}
+                            </span>
+                            <span *ngIf="item.EXECUTION_TYPE == 2" title="Immediate Execution">{{"Immediate Execution"}}
+                            </span>
+                            <!-- {{item.EXECUTION_TYPE?.length>22? (item.EXECUTION_TYPE | slice:0:22)+'...':item.EXECUTION_TYPE}} -->
+                        </td>
+                        <!-- <td title="{{item.TYPE_NAME}}">
+                            {{item.PARENT_TYPE_NAME?.length>22? (item.PARENT_TYPE_NAME | slice:0:22)+'...':item.PARENT_TYPE_NAME}}
+                            >
+                            {{item.TYPE_NAME?.length>22? (item.TYPE_NAME | slice:0:15)+'...':item.TYPE_NAME}}
+                        </td> -->
+                        <td title="{{item.PARENT_TYPE_NAME+'>'+item.TYPE_NAME}}">
+                            {{ 
+                                (item.PARENT_TYPE_NAME) + 
+                                (item.TYPE_NAME?.length > 4 
+                                  ? '>' + (item.TYPE_NAME | slice:0:6) + '...' 
+                                  : '>' + item.TYPE_NAME) 
+                              }}
+                           
+
+                        </td>
+                        <td title="{{item.REPO_HEADER}}">
+                            {{item.REPO_HEADER?.length>15? (item.REPO_HEADER | slice:0:15)+'...':item.REPO_HEADER}}
+                        </td>
+                        <td title="{{item.QUERY}}">{{item.QUERY?.length>14? (item.QUERY | slice:0:14)+'...':item.QUERY}}
+                        </td>
+                        <td class="text-center acqui_status">
+                            <label class="switch">
+                                <input type="checkbox" [checked]="item.STATUS=='0'?true:false"
+                                    (change)="onToggleChangeReport(item,$event)" title="DeActive"
+                                    [disabled]="userDetails.USER_ROLE==item.REPOID|| module[0].EDIT_ACCESS==0">
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                        <td class="text-left action_td">
+                            <table>
+                                <tr>
+                                    <td>
+
+                                        <button title="Edit" (click)="addUpdateReport(item)" class="edit_green ml-0"
+                                            title="Edit"
+                                            [disabled]="userDetails.USER_ROLE==item.REPOID || item.STATUS==1 || module[0].EDIT_ACCESS==0">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+
+                                        <button class="trash_red" title="Delete"
+                                            [disabled]="userDetails.USER_ROLE==item.REPOID|| module[0].DELETE_ACCESS==0"
+                                            (click)="deleteReport(item)">
+                                            <i class=" fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

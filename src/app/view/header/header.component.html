@@ -1,0 +1,127 @@
+<div class="wrapper">
+    <!--- ./ Header --->
+    <section class="header-section">
+
+        <div class="top_nav"><!--- ./ Top nav --->
+            <div class="container_custom">
+                <div class="topnav_inner">
+                    <div class="logo">
+                        <img src="../../../assets/images/logo.png">
+                    </div>
+
+
+                    <!--- ./ Nav-Bar --->
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <div class="container_custom">
+                            <!-- <a class="navbar-brand" href="#">Bootstrap <span class="badge bg-primary">v5.2.0-beta1</span></a> -->
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link" aria-current="page" (click)="closepopUp()"
+                                            routerLink="/MIS/dashboard"
+                                            [class.active]="this.titleBreadcrum=='dashboard'"><button><img
+                                                    src="../../../assets/images/menu-icon1.svg">Dashboard</button></a>
+                                    </li>
+                                    <li class="nav-item" *ngFor="let item of getReportList  ">
+
+                                        <!-- Handle branch node buttons here -->
+                                        <a class="nav-link" *ngIf="item.children && item.children.length > 0"
+                                            [class.active]="this.selectedparentId == item.children[0].parent_Id && this.titleBreadcrum!='dashboard'">
+
+                                            <button mat-raised-button color="primary"
+                                                (click)="getSelectedParentId(item.type_id)"
+                                                [matMenuTriggerFor]="menu.childMenu" [routerLink]="item.routing">
+                                                <img [src]="item.icon" alt="icon">
+                                                {{ item.display }}
+
+                                                <mat-icon
+                                                    src="../../../assets/images/menu-icon1.svg">expand_more</mat-icon>
+                                            </button>
+                                            <app-menu-list #menu [items]="item.children"></app-menu-list>
+                                        </a>
+                                        <!-- Leaf node buttons here -->
+                                        <a class="nav-link" *ngIf="!item.children || item.children.length === 0  ">
+
+                                            <button mat-button color="primary" [routerLink]="item.routing"
+                                                [disabled]="item.children.length===0">
+                                                <img [src]="item.icon" alt="icon">
+                                                {{ item.display }}
+                                            </button>
+
+                                        </a>
+                                    </li>
+                                    <!-- </li> -->
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                    <!--- ./ END Nav-Bar --->
+
+                    <div class="topnav_right ms-auto">
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="active_name"> {{firstname}} <br />
+                                    <!-- <pre>Superadmin</pre> -->
+                                </span>
+                                <img [src]="imageUrl" height="200" *ngIf="imageUrl">
+                                <ngx-avatar *ngIf="!imageUrl" size="37"
+                                    name="{{ngxAvatarFrstName}} {{ngxAvatarLastName}}">{{ngxAvatarFrstName}}
+                                    {{ngxAvatarLastName}}
+                                </ngx-avatar>
+                            </a>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li class="active"><a routerLink="/MIS/user/user-profile" class="dropdown-item"><i
+                                            class="far fa-user"></i> My Profile</a>
+
+                                    <!-- <app-user-profile [profile_data]="profileData"></app-user-profile> -->
+                                </li>
+                                <li><a class="dropdown-item" (click)="changepasswordpopup()"><i
+                                            class="fas fa-unlock"></i>
+                                        Change Password</a></li>
+                                <li><a class="dropdown-item" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Log
+                                        Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--- ./ END Top nav --->
+
+
+    </section>
+    <!--- ./ END Header --->
+
+    <!--- ./ Middel Content --->
+    <section class="middel-section">
+        <div class="container_custom">
+            <router-outlet></router-outlet>
+        </div>
+    </section>
+    <!--- ./ END Middel Content --->
+
+
+    <!--- ./ Footer --->
+    <footer>
+        <div class="container_custom">
+            <div class="row justify-content-end align-items-center">
+                <div class="col-sm-6">
+                    <p>Copyright ©2024 Echelon Edge Pvt Ltd</p>
+                </div>
+                <div class="col-sm-6 text-end fotr_logo">
+                    <span _ngcontent-qij-c65="">Powered By</span>
+                    <img src="../../../../assets/images/footer_logo.png" alt="footer_logo"
+                        class="d-inline-block align-top">
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--- ./ END Footer --->
+
+</div>

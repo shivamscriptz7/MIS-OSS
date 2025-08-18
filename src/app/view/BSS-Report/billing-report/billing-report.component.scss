@@ -1,0 +1,501 @@
+/***************Left Sidebar Listing***************/
+.reportpage_section .report_lstng .row .col-sm-12 {
+    padding: 0px 2px;
+}
+
+.reportpage_section .report_lstng h4 {
+    color: #696f7f;
+    font-size: 1rem;
+    font-family: "Poppins-SemiBold";
+    position: relative;
+    padding: 0 10px;
+}
+
+.reportpage_section .report_lstng h4::before {
+    content: '';
+    background-color: #696f7f;
+    width: 100%;
+    position: absolute;
+    height: 1px;
+    bottom: -7px;
+    left: 0px;
+    opacity: 0.4;
+}
+
+/**************Custome Check box*****************/
+.reportpage_section .custom_radio {
+    display: block;
+    position: relative;
+    padding-left: 23px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #696f7f;
+    font-size: 13px;
+    font-family: 'Poppins-Medium';
+    display: flex;
+    align-items: center;
+}
+
+/* Hide the browser's default radio button */
+.reportpage_section .custom_radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    left: 0;
+    top: 2px;
+}
+
+/* Create a custom radio button */
+.reportpage_section .custom_radio .checkmark {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #eee;
+    border-radius: 50%;
+    border: 1px solid #18284880;
+}
+
+/* On mouse-over, add a grey background color */
+.reportpage_section .custom_radio:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.reportpage_section .custom_radio input:checked~.checkmark {
+    background-color: #182848;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.reportpage_section .custom_radio .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.reportpage_section .custom_radio input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.reportpage_section .custom_radio .checkmark:after {
+    top: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+/***************END Left Sidebar Listing***************/
+
+/***************Ride Side Box Query Editor********************/
+.reportpage_section .filter_table_design .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.reportpage_section .filter_table_design .title h4 {
+    color: #696f7f;
+    font-size: 1rem;
+    font-family: "Poppins-SemiBold";
+    position: relative;
+    padding: 0 10px;
+}
+
+.reportpage_section .filter_table_design .title:before {
+    content: "";
+    background-color: #696f7f;
+    width: 100%;
+    position: absolute;
+    height: 1px;
+    bottom: 2px;
+    left: 0;
+    opacity: .4;
+}
+
+/************No Data Placeholder*************/
+.reportpage_section .placeholder_box {
+    position: relative;
+    height: calc(100vh - 200px);
+}
+
+.reportpage_section .placeholder_box .without_box_error {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.reportpage_section .placeholder_box .without_box_error h2 {
+    color: #cc2a2a;
+    font-size: 34px;
+    margin-bottom: 5px;
+    font-family: "Poppins-SemiBold";
+    text-transform: uppercase;
+}
+
+.reportpage_section .placeholder_box .without_box_error img {
+    width: 280px;
+}
+
+.reportpage_section .placeholder_box .withoutdata_box {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.reportpage_section .placeholder_box .withoutdata_box img {
+    max-width: 190px;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.reportpage_section .placeholder_box .withoutdata_box p,
+.reportpage_section .placeholder_box .without_box_error p {
+    color: #696f7f;
+    font-family: 'Poppins-Medium';
+    font-size: 14px;
+}
+
+.reportpage_section .billing_report_table {
+    background-color: transparent;
+    padding: 0px;
+    box-shadow: none;
+    border: 2px solid rgba(0, 0, 0, .1);
+    border-radius: 8px;
+}
+
+.reportpage_section .billing_report_table thead tr th {
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+    position: sticky;
+    top: 0;
+    background-color: #ffffff;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.reportpage_section .billing_report_table tbody tr td span {
+    width: 90px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    cursor: pointer;
+}
+
+.reportpage_section .billing_report_table::-webkit-scrollbar {
+    width: 5px;
+    padding: 2px;
+    height: 8px;
+}
+
+/* Track */
+.reportpage_section .billing_report_table::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.reportpage_section .billing_report_table::-webkit-scrollbar-thumb {
+    background: #4b6cb7;
+}
+
+/* Handle on hover */
+.reportpage_section .billing_report_table::-webkit-scrollbar-thumb:hover {
+    background: #4b6cb7;
+}
+
+
+/***************END Ride Side Box Query Editor********************/
+
+/****************Sidebar Filter Start*******************/
+.reportpage_section .filter_icon {
+    text-align: right;
+    padding: 2px 7px;
+    margin: 0px 0px 0px 8px;
+    color: #fff;
+    font-family: 'Poppins-Medium';
+    background-color: #182848;
+    border-radius: 8px;
+    font-size: .9rem;
+    cursor: pointer;
+}
+
+.reportpage_section .filter_icon:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.reportpage_section .filter_icon i.fas.fa-filter {
+    margin-right: 2px;
+    padding: 4px 0px 0px;
+}
+
+.reportpage_section .filter_table_design .title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.reportpage_section .filter_table_design .title h4 {
+    color: #696f7f;
+    font-size: 1rem;
+    font-family: "Poppins-SemiBold";
+    position: relative;
+    padding: 0 10px;
+}
+
+.reportpage_section .filter_table_design .title:before {
+    content: "";
+    background-color: #696f7f;
+    width: 100%;
+    position: absolute;
+    height: 1px;
+    bottom: 2px;
+    left: 0;
+    opacity: .4;
+}
+
+.reportpage_section .filter-sidebar {
+    padding: 10px 12px;
+    box-shadow: 0 3px 10px #4b6cb733;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.reportpage_section .filter-sidebar h2 {
+    margin-bottom: 20px;
+    color: #4b6cb7;
+    font-family: "Poppins-SemiBold";
+    font-size: 1.2rem;
+}
+
+.reportpage_section .filter-sidebar button.close {
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    border: none;
+    background-color: transparent;
+    color: #696f7f;
+    font-size: 1.4rem;
+}
+
+.reportpage_section .filter-sidebar .form-group {
+    margin-bottom: 8px;
+}
+
+.reportpage_section .filter-sidebar .form-group .form-control,
+.reportpage_section .filter-sidebar .form-group .form-select {
+    height: 34px;
+    font-size: 12px;
+    border-radius: 10px;
+}
+
+.reportpage_section .filter-sidebar .form-group label {
+    margin-bottom: 2px;
+    color: #4f4a3f;
+    font-size: 13px;
+    text-transform: lowercase;
+}
+
+.reportpage_section .filter-sidebar .form-group label::first-letter {
+    text-transform: uppercase;
+}
+
+.reportpage_section .filter-sidebar .submit_button-filtr {
+    display: flex;
+    position: absolute;
+    width: calc(100% - 20px);
+    left: 10px;
+    right: 0;
+    bottom: 20px;
+}
+
+.reportpage_section .filter-sidebar .submit_button-filtr button {
+    width: 100%;
+    min-width: auto !important;
+    margin: 0 2px;
+}
+
+.reportpage_section .filter-sidebar .submit_button-filtr button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.reportpage_section .filter-sidebar .submit_button-filtr .btn-reset {
+    border: 1px solid var(--blue2);
+    border-radius: 8px;
+    color: var(--blue2);
+    min-width: 120px;
+    background-color: transparent;
+    font-size: 14px;
+    letter-spacing: 0px;
+    box-shadow: 0 12px 24px #0000000d;
+}
+
+.reportpage_section .filter-sidebar .submit_button-filtr .btn-submit {
+    background: transparent linear-gradient(180deg, #4B6CB7 0%, #182848 100%) 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    color: #fff;
+    min-width: 120px;
+    border: 1px solid #4B6CB7;
+    font-size: 14px;
+    letter-spacing: 0px;
+    box-shadow: 7px 7px 20px #4b6cb766;
+}
+
+/***************Sidebar Filter END****************/
+.reportpage_section td.report_dnlod_icons ul {
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+}
+
+.reportpage_section .billing_report_table tbody tr td.report_dnlod_icons ul li {
+    list-style: none;
+}
+
+.reportpage_section .billing_report_table tbody tr td.report_dnlod_icons ul li span {
+    width: auto !important;
+}
+
+.reportpage_section .report_dnlod_icons ul li i {
+    font-size: 20px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.reportpage_section .report_dnlod_icons ul li i.fa-solid.fa-file-pdf {
+    color: #FF0000;
+}
+
+.reportpage_section .report_dnlod_icons ul li i.fa-solid.fa-file-excel {
+    color: #0C8346;
+}
+
+::ng-deep .mat-select-min-line {
+    font-size: 12px;
+    color: #212529;
+}
+
+.reportpage_section .error-message.text-danger.mat-error {
+    font-size: .7rem;
+    width: max-content;
+    left: 2px;
+    bottom: -16px;
+    color: var(--red);
+}
+
+.reportpage_section .filter_icon_sort h4 button {
+    margin-left: auto;
+    float: right;
+    background-color: #4b6cb7;
+    padding: 0 6px 2px;
+    border-radius: 6px;
+    position: absolute;
+    right: 12px;
+    top: -2px;
+    cursor: pointer;
+    border: none;
+    line-height: 1.3;
+}
+
+.reportpage_section .filter_icon_sort h4 ul {
+    height: auto;
+    min-height: auto;
+    min-width: auto;
+    padding: 0px;
+}
+
+.reportpage_section .filter_icon_sort h4 ul li {
+    padding: 0px;
+}
+
+.reportpage_section .filter_icon_sort h4 ul li a {
+    padding: 8px 28px;
+    font-size: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #CCD1D2;
+    font-family: 'Poppins-Medium';
+}
+
+.reportpage_section .filter_icon_sort h4 ul li a.active {
+    background-color: #EFEEF1 !important;
+    color: #000;
+}
+
+.reportpage_section .filter_icon_sort h4 ul li a.active::before {
+    content: '\2713';
+    display: inline-block;
+    color: #000;
+    position: absolute;
+    left: 12px;
+    font-weight: 600;
+}
+
+.reportpage_section .filter_icon_sort h4 ul li a:hover,
+.reportpage_section .filter_icon_sort h4 ul li a:focus {
+    background-color: #EFEEF1;
+    color: #000;
+}
+
+.reportpage_section .filter_icon_sort h4 button:after {
+    display: none;
+}
+
+.reportpage_section .filter_icon_sort h4 button:focus,
+.reportpage_section .filter_icon_sort h4 button:hover {
+    background-color: #4b6cb7;
+}
+
+.reportpage_section .filter_icon_sort h4 button img {
+    width: 14px;
+    filter: invert(1);
+}
+
+/*******************/
+.report_datepicker ::ng-deep.dp-picker-input {
+    border: none;
+    width: 100%;
+    margin-top: -4px;
+    padding: 0px;
+}
+
+::ng-deep.dp-material .dp-calendar-weekday {
+    font-size: 12px;
+}
+
+::ng-deep.dp-material .dp-calendar-month,
+::ng-deep.dp-material .dp-calendar-day {
+    font-size: 14px;
+}
+
+::ng-deep.dp-material .dp-selected {
+    background-color: #182848 !important;
+    border-color: #182848 !important;
+}
+
+::ng-deep.dp-material .dp-current-day {
+    border-color: #182848 !important;
+}
+
+::ng-deep.dp-material .dp-nav-header-btn {
+    text-align: left;
+}

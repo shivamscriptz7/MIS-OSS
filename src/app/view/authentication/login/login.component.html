@@ -1,0 +1,233 @@
+<!-- Wrapper -->
+<div class="wrapper" *ngIf=" selectedForm==='loginFormGroup'">
+  <div class="login-page">
+    <!-- Container -->
+    <div class="container login_contain">
+      <div class="login-inner">
+        <div class="row column-reverse">
+          <div class="col-md-5">
+
+          </div>
+
+          <div class="col-md-7">
+            <div class="logo-sec">
+              <img src="../../../../assets/images/logo.png" width="125" alt="Logo">
+            </div>
+          </div>
+
+        </div>
+        <div class="row custm_height align-items-center">
+          <!-- Col-lg-5 -->
+          <div class="col-lg-5 p_relative">
+
+            <div class="login-form">
+              <div class="usersec">
+                <h1 class="m-0">Hello User !</h1>
+                <p>Please enter your username and password to login</p>
+              </div>
+              <form [formGroup]="loginFormGroup" (keydown.enter)="$event.preventDefault()">
+                <div class="form-group">
+                  <label>Username</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter your Username" formControlName="userName"
+                      oninput="this.value = this.value.replace(/[^A-Za-z0-9_-]|^ /g,'')">
+                    <div class="input-group-addon">
+                      <!-- <i class="fas fa-times-circle"></i> -->
+                      <i arial-hidden="true"
+                        [ngClass]="!this.loginFormGroup.controls['userName'].valid && this.loginFormGroup.controls['userName'].value.length>0 ?'fas fa-times-circle': this.loginFormGroup.controls['userName'].value.length>0? 'fas fa-check-circle':''"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Password</label>
+                  {{title}}
+                  <div class="input-group">
+                    <input [type]="isShowPassword?'text':'password'" class="form-control"
+                      placeholder="Enter your Password" formControlName="password" (paste)="$event.preventDefault()"
+                      (keydown.space)="$event.preventDefault()">
+                    <div class="input-group-addon">
+                      <i *ngIf="isShowPassword==false" class="fas fa-eye-slash " aria-hidden="true"
+                        (click)="isShowPassword= true"></i>
+                      <i *ngIf="isShowPassword==true" class="fas fa-eye" aria-hidden="true"
+                        (click)="isShowPassword= false"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex form-btnsec align-items-center justify-content-between mt-4">
+                  <button type="" [disabled]="!this.loginFormGroup.valid && this.loginbtn==false" class="btn btn-submit"
+                    (click)="userLogin()">Login</button>
+                  <button class="forgot-link" [routerLink]="['../forgot-password']">Forgot Password ?</button>
+                </div>
+                <div class="powerby d-flex align-items-center justify-content-center">
+                  <p>Powered By</p>
+                  <img src="../../../../assets/images/echelon-logo.png" width="120">
+                </div>
+              </form>
+            </div>
+
+            <div class="copyright text-end">
+              <p class="mb-0">2024 All Rights Reserved | Privacy | Terms of Service</p>
+            </div>
+          </div>
+          <!-- /.Col-lg-5 -->
+
+          <!-- Col-lg-7 -->
+          <div class="col-lg-7">
+            <div class="login-banner text-end">
+              <img src="../../../../assets/images/login-banner.png" alt="login-banner">
+            </div>
+          </div>
+          <!-- /.Col-lg-7 -->
+
+        </div>
+        <!-- /.Row -->
+      </div>
+
+    </div>
+    <!-- /.Container -->
+
+  </div>
+</div>
+<!-- /.Wrapper -->
+
+<!-- used for reset password screen -->
+<div class="wrapper" *ngIf=" selectedForm==='resetPswdForm'">
+  <div class="login-page reset_passpage">
+    <!-- Container -->
+    <div class="container login_contain">
+      <div class="login-inner">
+        <div class="row column-reverse">
+          <div class="col-md-5">
+
+          </div>
+
+          <div class="col-md-7">
+            <div class="logo-sec">
+              <img src="../../../../assets/images/logo.png" width="125" alt="Logo">
+            </div>
+          </div>
+
+        </div>
+        <div class="row custm_height align-items-center">
+          <!-- Col-lg-5 -->
+          <div class="col-lg-5 p_relative">
+
+            <div class="login-form">
+              <div class="usersec">
+                <h1 class="m-0">Change Password?</h1>
+                <p>Please enter the details below to change password.</p>
+              </div>
+              <form [formGroup]="resetPswdForm">
+                <div class="form-group">
+                  <label>New Password</label>
+                  <div class="input-group">
+                    <input [type]="isConfirmPassword?'text':'password'" required="" class="form-control"
+                      placeholder="Enter your new password" formControlName="new_pswd"
+                      (keydown.space)="$event.preventDefault();">
+                    <div class="input-group-addon">
+                      <i *ngIf="isConfirmPassword==false" class="fas fa-eye-slash " aria-hidden="true"
+                        (click)="isConfirmPassword= true"></i>
+                      <i *ngIf="isConfirmPassword==true" class="fas fa-eye" aria-hidden="true"
+                        (click)="isConfirmPassword= false"></i>
+                    </div>
+                    <!-- <i aria-hidden="true" class="fas fa-eye"></i> -->
+                    <div class="input-group-addon">
+                      <i *ngIf="isConfirmPassword==false" class="fas fa-eye-slash " aria-hidden="true"
+                        (click)="isConfirmPassword= true"></i>
+                      <i *ngIf="isConfirmPassword==true" class="fas fa-eye" aria-hidden="true"
+                        (click)="isConfirmPassword= false"></i>
+                    </div>
+
+                    <span class="text-danger mat-error"
+                      *ngIf="(resetPswdForm.controls['new_pswd'].touched)&& resetPswdForm.controls['new_pswd'].invalid">
+                      <div *ngIf="resetPswdForm.controls['new_pswd'].errors?.['required']">New Password is required.
+                      </div>
+                      <div *ngIf="resetPswdForm.controls['new_pswd'].errors?.['pattern']">please enter valid new
+                        password
+                      </div>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label> Confirm Password</label>
+                  <div class="input-group">
+                    <input [type]="isMatchPassword?'text':'password'" required="" class="form-control"
+                      placeholder="Enter your  confirm password" formControlName="confirm_pswd"
+                      (keydown.space)="$event.preventDefault();">
+                    <!-- <i class="fas fa-eye-slash" aria-hidden="true"></i> -->
+                    <!-- <i aria-hidden="true" class="fas fa-eye"></i> -->
+                    <div class="input-group-addon">
+                      <i *ngIf="isMatchPassword==false" class="fas fa-eye-slash " aria-hidden="true"
+                        (click)="isMatchPassword= true"></i>
+                      <i *ngIf="isMatchPassword==true" class="fas fa-eye" aria-hidden="true"
+                        (click)="isMatchPassword= false"></i>
+                    </div>
+
+
+                    <span class="text-danger mat-error"
+                      *ngIf="(resetPswdForm.controls['confirm_pswd'].touched)&& resetPswdForm.controls['confirm_pswd'].invalid">
+                      <div *ngIf="resetPswdForm.controls['confirm_pswd'].errors?.['required']">Confirm Password is
+                        required.</div>
+                      <!-- <div *ngIf="resetPswdForm['new_pswd'].errors?.['pattern']">please enter valid new password
+                      </div> -->
+                      <!-- <div *ngIf="resetPswdForm.controls['confirm_pswd'].errors?.['MustMatch']">Passsword and
+                        Confirm Password didn't match. </div> -->
+                    </span>
+                  </div>
+                </div>
+                <div class="password-hint">
+                  <ul>
+                    <!-- {{passwordObj}} -->
+                    <li [ngClass]="{'blue':passwordObj.specialCharacter}" class="orange">At least 1 special
+                      character(!&#64;#$%^&*?) <!--&#64 represent @keyword-->
+                    </li>
+                    <li [ngClass]="{'blue':passwordObj.minimunSeven}" class="orange">
+                      At least 8 and maximum 30 characters
+                    </li>
+                    <li [ngClass]="{'blue':passwordObj.oneNumber}" class="orange">
+                      At least min of 1 number.</li>
+                    <li [ngClass]="{'blue':passwordObj.upperCase}" class="orange">
+                      At least 1 uppercase letter
+                    </li>
+                    <li [ngClass]="{'blue':passwordObj.lowerCase}" class="orange">
+                      At least 1 lowercase letter</li>
+                  </ul>
+
+                </div>
+                <div class="d-flex form-btnsec align-items-center justify-content-between mt-4">
+                  <button type="" class="btn btn-submit" (click)="resetUserPswd()"
+                    [disabled]="!resetPswdForm.valid || !resetPswdForm.dirty">Submit</button>
+
+                </div>
+                <div class="powerby d-flex align-items-center justify-content-center">
+                  <p>Powered By</p>
+                  <img src="../../../../assets/images/echelon-logo.png" width="120">
+                </div>
+              </form>
+            </div>
+
+            <div class="copyright text-end">
+              <p class="mb-0">2024 All Rights Reserved | Privacy | Terms of Service</p>
+            </div>
+          </div>
+          <!-- /.Col-lg-5 -->
+
+          <!-- Col-lg-7 -->
+          <div class="col-lg-7">
+            <div class="login-banner text-end">
+              <img src="../../../../assets/images/forgot-img.png" alt="login-banner">
+            </div>
+          </div>
+          <!-- /.Col-lg-7 -->
+
+        </div>
+        <!-- /.Row -->
+      </div>
+
+    </div>
+    <!-- /.Container -->
+
+  </div>
+</div>

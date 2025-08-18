@@ -1,0 +1,334 @@
+.monitoring_graph_view .modal-body {
+    text-align: center;
+    overflow: visible !important;
+}
+
+.monitoring_graph_view .job_flowchart {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 0;
+    margin: 0 auto;
+}
+
+.monitoring_graph_view .job_flowchart ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    row-gap: 50px;
+    display: flex;
+    flex-direction: column-reverse;
+    margin-left: 50px;
+    height: 218px;
+}
+
+.monitoring_graph_view .job_flowchart ul:first-child {
+    margin-left: 0px !important;
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(odd) {
+    flex-direction: column !important;
+}
+
+.monitoring_graph_view .job_flowchart ul:first-child li:first-child .steps_flow h4 {
+    font-family: 'Poppins-SemiBold';
+}
+
+.monitoring_graph_view .job_flowchart ul li {
+    min-width: 170px;
+    text-align: center;
+    position: relative;
+}
+
+.monitoring_graph_view .job_flowchart ul li .steps_flow {
+    border: 1px solid var(--blue);
+    border-radius: 40px;
+    padding: 11px 8px;
+    position: relative;
+    text-align: center;
+}
+
+.monitoring_graph_view .job_flowchart ul li .steps_flow::before {
+    content: '';
+    border: 1px solid #000;
+    height: 44px;
+    width: 1px;
+    position: absolute;
+    top: -52px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(odd) li:first-child .steps_flow::before {
+    display: none;
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(even) li:last-child .steps_flow::before {
+    display: none;
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(even) li:first-child::before {
+    content: '';
+    width: 50px;
+    height: 1px;
+    border: 1px solid #000;
+    position: absolute;
+    left: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(odd) li:first-child::before {
+    content: '';
+    width: 50px;
+    height: 1px;
+    border: 1px solid #000;
+    position: absolute;
+    left: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(1) li:first-child::before {
+    display: none;
+}
+
+.monitoring_graph_view .job_flowchart ul li .steps_flow span.number {
+    background-color: var(--blue);
+    width: 22px;
+    height: 22px;
+    display: flex;
+    border-radius: 100px;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: -19px;
+    font-size: 11px;
+    color: #fff;
+    border: 1px solid var(--blue);
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(odd) li .steps_flow span.number::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    display: block;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #000;
+    transform: translate(-50%);
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(odd) li:first-child .steps_flow span.number::before {
+    display: none;
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(even) li .steps_flow span.number::before {
+    content: "";
+    position: absolute;
+    top: -33px;
+    left: 50%;
+    display: block;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #000000;
+    transform: translate(-50%);
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(even) li:first-child .steps_flow::after {
+    content: '';
+    position: absolute;
+    left: -6px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid #000000;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(odd) li:first-child .steps_flow::after {
+    content: '';
+    position: absolute;
+    left: -6px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid #000000;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(1) li:first-child .steps_flow::after {
+    display: none;
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(even) li:last-child .steps_flow span.number::before {
+    display: none;
+}
+
+.monitoring_graph_view .job_flowchart ul:nth-child(1) li:first-child .steps_flow span.number {
+    background-color: #fff;
+    color: #696f7f;
+}
+
+.monitoring_graph_view .job_flowchart ul li .steps_flow h4 {
+    color: var(--blue);
+    font-size: 13px;
+    margin: 0;
+}
+
+.monitoring_graph_view .job_flowchart ul li .steps_flow h5 {
+    font-weight: 600;
+    font-size: 12px;
+    padding: 4px 5px 4px;
+    word-break: break-word;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 2px;
+}
+
+.monitoring_graph_view .job_flowchart ul li.success_process .steps_flow {
+    background: var(--dot_success-bg);
+    border-color: var(--dot_success-bg);
+}
+
+.monitoring_graph_view .job_flowchart ul li.success_process .steps_flow h4,
+.monitoring_graph_view .job_flowchart ul li.failed_process .steps_flow h4,
+.monitoring_graph_view .job_flowchart ul li.progress_process .steps_flow h4,
+.monitoring_graph_view .job_flowchart ul li.waiting_process .steps_flow h4 {
+    color: #fff !important;
+}
+
+.monitoring_graph_view .job_flowchart ul li.success_process .steps_flow span.number {
+    background-color: var(--dot_success-num-bg) !important;
+    border-color: var(--dot_success-border) !important;
+}
+
+.monitoring_graph_view .job_flowchart ul li.failed_process .steps_flow {
+    background: var(--dot_failed-bg);
+    border-color: var(--dot_failed-bg);
+}
+
+.monitoring_graph_view .job_flowchart ul li.failed_process .steps_flow span.number {
+    background-color: var(--dot_failed-num-bg) !important;
+    border-color: var(--dot_failed-border) !important;
+}
+
+.monitoring_graph_view .job_flowchart ul li.progress_process .steps_flow {
+    background: var(--dot_progress-bg);
+    border-color: var(--dot_progress-bg);
+}
+
+.monitoring_graph_view .job_flowchart ul li.progress_process .steps_flow span.number {
+    background-color: var(--dot_progress-num-bg) !important;
+    border-color: var(--dot_progress-border) !important;
+}
+
+/******************/
+
+.monitoring_graph_view .job_flowchart ul li.waiting_process .steps_flow {
+    background: var(--dot_waiting-bg);
+    border-color: var(--dot_waiting-bg);
+}
+
+.monitoring_graph_view .job_flowchart ul li.waiting_process .steps_flow span.number {
+    background-color: var(--dot_waiting-num-bg) !important;
+    border-color: var(--dot_waiting-border) !important;
+}
+
+.monitoring_graph_view .colorcode_chart {
+    margin: 15px 0 35px;
+    position: sticky;
+    left: 0;
+    right: 0;
+}
+
+.monitoring_graph_view .colorcode_chart ul {
+    margin: 0px;
+    padding: 0px;
+    column-count: 4;
+    list-style: none;
+    column-gap: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.monitoring_graph_view .colorcode_chart ul li {
+    text-align: left;
+    font-size: 14px;
+}
+
+.monitoring_graph_view .colorcode_chart ul li span.circle {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.tooltip-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    width: 164px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    text-align: left;
+    border-radius: 4px;
+    padding: 1px 0px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    /* Position above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 11px;
+}
+
+.tooltip-text p {
+    margin: 0;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 0 4px;
+}
+
+.tooltip-text p:last-child {
+    border-bottom: none !important;
+}
+
+.tooltip-text span {
+    font-family: 'Poppins-Medium';
+    width: 114px;
+    display: inline-block;
+    text-align: left;
+}
+
+.tooltip-text::before {
+    content: "";
+    bottom: -6px;
+    left: 50%;
+    display: block;
+    width: 13px;
+    position: absolute;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 0.4rem .4rem 0;
+    border-top-color: rgba(0, 0, 0, 0.9);
+    transform: translate(-50%);
+}
+
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}

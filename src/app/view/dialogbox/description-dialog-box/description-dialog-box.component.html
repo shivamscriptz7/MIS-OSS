@@ -1,0 +1,109 @@
+<!--
+  * Project Name: MIS.
+* Created By: Ankush Kochhar
+* Date: 12/04/2023
+* Contact: Echelon Edge MIS Development Team.
+* Copyright: Echelon Edge Pvt. Ltd.
+* Purpose: Discription Dialog box -->
+
+
+
+<div class="modal-dialog modal_all discription_dialog">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h5 class="modal-title">{{this.data.title}}</h5>
+      <button title="Close" type="button" class="btn-close" (click)="closePopUp()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+
+
+      <!-- <div class="zone_listed" *ngIf="this.data.title!='Type Details'">
+        <h4>Zone</h4>
+        <ul>
+          <li *ngFor="let item of this.data.details.zone ; let i = index">{{item}}</li>         
+        </ul>
+      </div> -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="circle_listed border_bottom mb-3 pb-2">
+            <h4>Username</h4>
+            <ul>
+              <li>{{this.data.itemData.USER_NAME}}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="circle_listed border_bottom mb-3 pb-2">
+            <h4>Full Name</h4>
+            <ul>
+              <li>{{this.data.itemData.FULL_NAME}}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="circle_listed border_bottom mb-3 pb-2">
+            <h4>Email</h4>
+            <ul>
+              <li>{{this.data.itemData.USER_EMAIL}}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="circle_listed border_bottom mb-3 pb-2">
+            <h4>Contact no.</h4>
+            <ul>
+              <li>{{this.data.itemData.USER_CONTACT}}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="circle_listed border_bottom mb-3 pb-2">
+            <h4>Role</h4>
+            <ul>
+              <li>{{this.data.itemData.ROLE_NAME}}</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="circle_listed border_bottom mb-3 pb-2">
+        <h4>Type:</h4>
+        <ul>
+          <li *ngFor="let item of this.data.details.type ; let i = index">{{item}}</li>
+        </ul>
+      </div>
+
+      <div class="circle_listed border_bottom mb-3 pb-2" >
+        <h4>Zone</h4>
+        <ul>
+          <li *ngFor="let item of this.data.details.zone ; let i = index">{{item}}</li>
+        </ul>
+      </div>
+
+      <div class="circle_listed border_bottom mb-3 pb-2">
+        <h4>Circles</h4>
+        <ul>
+          <li *ngFor="let item of this.data.details.circle ; let i = index">{{item}}</li>
+        </ul>
+      </div>
+
+      <div class="circle_listed" >
+        <h4>B.A</h4>
+        <ul>
+          <li *ngFor="let item of this.data.details.ssa ; let i = index">{{item}}</li>
+        </ul>
+      </div>
+
+
+    </div>
+
+  </div>

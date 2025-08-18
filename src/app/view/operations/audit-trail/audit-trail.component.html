@@ -1,0 +1,176 @@
+<div class="monitoringpage_section" [ngClass]="classTrue==true?'filter_open':''" *ngIf="this.moduleData?.length!=0">
+    <div class="filter-sidebar">
+        <button class="close" (click)="filterClose()"><i class="fas fa-times"></i></button>
+        <form autocomplete="off" [formGroup]="logsFiltersForm">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>Logs Filter</h2>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">From Date <span class="requireds"></span></label>
+                        <dp-date-picker [config]="config" class="form-control report_datepicker"
+                            placeholder="Select from date" theme="dp-material" [mode]="'day'"
+                            formControlName="logFromDt">
+                        </dp-date-picker>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">To Date <span class="requireds"></span></label>
+
+                        <dp-date-picker class="form-control report_datepicker" placeholder="Select to date"
+                            theme="dp-material" [config]="configEnd" [mode]="'day'" formControlName="logToDt"
+                            [minDate]="logsFiltersForm.controls['logFromDt'].value" [maxDate]="this.formattedDate">
+                        </dp-date-picker>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Log Action</label>
+                        <select class="form-control placeholder-select" formControlName="logAction">
+                            <option value="" selected="selected">Select action</option>
+                            <option value="Insert">Insert</option>
+                            <option value="Update">Update</option>
+                            <option value="Delete">Delete</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Log User</label>
+                        <select class="form-control" formControlName="userId">
+                            <option value="" selected>Select user</option>
+                            <option value={{user.USER_NAME}} *ngFor="let user of userNameData">{{user.USER_NAME}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-12" *ngIf=" this.moduleId==8 ">
+                    <div class="form-group">
+                        <label class="form-label">Log Type</label>
+                        <select class="form-control" formControlName="type">
+                            <option value="" selected>Select type</option>
+                            <!-- <option value={{user.USER_NAME}} *ngFor="let user of userNameData">{{user.USER_NAME}}
+                            </option> -->
+                            <option value="ROLE PERMISSION">Role Permission</option>
+                            <option value="TYPE PERMISSION">Type Permission</option>
+
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class=" col-sm-12">
+                    <div class="submit_button-filtr">
+                        <button type="reset" (click)="resetFilters()" class="btn btn-primary btn-reset">Reset</button>
+                        <button class="btn_create" [disabled]="logsFiltersForm.invalid" (click)=" submitFilterForm()"
+                            type="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+    <div class="row align-items-center">
+        <div class="col-sm-12">
+            <div class="title-part">
+                <h2>Audit Trail</h2>
+
+                <div class="filter_logs">
+
+                    <div class="upper_button d-flex">
+                        <div class="dropdown export-btn d-flex float-end">
+                            <button type="button" data-bs-toggle="dropdown" aria-expanded="true"
+                                class="dropdown-toggle common-btn export_btn show">
+                                <i class="fa-regular fa-share-from-square"></i> Export as</button>
+                            <div aria-labelledby="dropdownMenuButton1" class="dropdown-menu">
+                                <a class="dropdown-item" (click)="downloadExcel()"><i
+                                        class="fa-solid fa-file-lines"></i>
+                                    Excel file </a>
+                                <a class="dropdown-item" (click)="downloadPdf()"><i class="fa-solid fa-file-lines"></i>
+                                    PDF
+                                    file</a>
+                                <!-- <a class="dropdown-item"><i class="fa-solid fa-file-lines"></i> CSV
+                                    file</a> -->
+                            </div>
+                        </div>
+
+                        <button class="filter_icon" (click)="filterClick()"><!--[disabled]="filterBtn"-->
+                            <i class="fas fa-filter"></i> Filter
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row h-100 mt-2 monitoring_listing">
+        <div class="col-sm-3 col-md-2 pe-md-0 mb-sm-0 mb-2">
+            <div class="report_lstng">
+                <div class="row">
+                    <div class="col-sm-12 filter_icon_sort">
+                        <h4>Module</h4>
+                        <div class="listing_search">
+                            <input type="search" [(ngModel)]="searchData" (input)="searchFunction()"
+                                placeholder="Search" class="form-control">
+                        </div>
+
+                        <div class="table-responsive reportleft_responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr *ngFor="let moduleName of moduleData_filter; let index=index">
+                                        <td title="">
+                                            <label class=" custom_radio">{{moduleName.MODULES_NAME}}
+                                                <input type="radio" name="report_file"
+                                                    [checked]="index== userModuleChecked"
+                                                    (click)="toggleReportListing(moduleName,index)">
+                                                <span class="checkmark"></span>
+
+                                            </label>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-9 col-md-10">
+            <div class="filter_table_design listing-table filter_design monitoring_listing">
+                <div class="row align-items-center">
+                    <div class="col-sm-12 mt-2">
+                        <div class="table-responsive lastchild_fix">
+                            <app-user-monitoring *ngIf="this.moduleId == 6"></app-user-monitoring>
+                            <app-role-monitoring *ngIf="this.moduleId == 7"
+                                [filter]="this.logsFiltersForm.value"></app-role-monitoring>
+                            <app-permission-monitoring *ngIf="this.moduleId == 8"
+                                [filter]="this.logsFiltersForm.value"></app-permission-monitoring>
+                            <app-report-monitoring *ngIf="this.moduleId == 19"
+                                [filter]="this.logsFiltersForm.value"></app-report-monitoring>
+                            <app-schedule-monitoring *ngIf="this.moduleId == 9"
+                                [filter]="this.logsFiltersForm.value"></app-schedule-monitoring>
+                            <app-email-config-monitoring *ngIf="this.moduleId==99"
+                                [filter]="this.logsFiltersForm.value"></app-email-config-monitoring>
+                            <app-process-monitoring *ngIf="this.moduleId==10"
+                                [filter]="this.logsFiltersForm.value"></app-process-monitoring>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,276 @@
+<div class="modal-dialog modal_all monitoring_create">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">{{this.data.title}}
+            </h5>
+            <button type="button" class="btn-close" [mat-dialog-close]="false"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <form autocomplete="off" [formGroup]="monitoringForm">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Job Name <span class="requireds"></span></label>
+                            <input type="text" class="form-control" placeholder="Enter Job name"
+                                formControlName="jobName" maxlength="30">
+                            <span class="text-danger mat-error"
+                                *ngIf="(monitoringFormcontrol['jobName'].touched)&& monitoringFormcontrol['jobName'].invalid">
+                                <div *ngIf="monitoringFormcontrol['jobName'].errors?.['required']">
+                                    Please enter Job Name.
+                                </div>
+                                <div *ngIf="monitoringFormcontrol['jobName'].errors?.['pattern']">
+                                    Please
+                                    enter a
+                                    valid Job Name.
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <!-- <label class="form-label">Full Script Path
+                                <div class="info-icon">
+                                    <span class="tooltip-text">Example: /home/etc/filename.txt</span> <i
+                                        class="fa-solid fa-circle-info"></i>
+                                </div>
+                            </label> -->
+                            <label for="lname" class="label_tooltip">Full Script Path
+                                <h4 matTooltipClass="allow-cr"
+                                    matTooltip="Example: /home/etc/filename.txt"
+                                    matTooltipPosition="above" class="tooltip-text">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                </h4>
+                            </label>
+                            <input type="text" class="form-control" placeholder="Enter Full Script Path"
+                                formControlName="jobScript" maxlength="150">
+                            <span class="text-danger mat-error"
+                                *ngIf="(monitoringFormcontrol['jobScript'].touched)&& monitoringFormcontrol['jobScript'].invalid">
+                                <div *ngIf="monitoringFormcontrol['jobScript'].errors?.['required']">
+                                    Please enter Full Script Path.
+                                </div>
+                                <div *ngIf="monitoringFormcontrol['jobScript'].errors?.['pattern']">Please enter a
+                                    valid Full Script Path.
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label class="form-label">Host IP Address<span class="requireds"></span></label>
+                            <input type="text" class="form-control" formControlName="hostName"
+                                placeholder="Enter Host IP">
+
+                            <span class="text-danger mat-error"
+                                *ngIf="(monitoringFormcontrol['hostName'].touched)&& monitoringFormcontrol['hostName'].invalid">
+                                <div *ngIf="monitoringFormcontrol['hostName'].errors?.['required']">
+                                    Please enter Host IP.
+                                </div>
+                                <div *ngIf="monitoringFormcontrol['hostName'].errors?.['pattern']">
+                                    Please
+                                    enter a
+                                    valid Host IP.
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12" formArrayName="stepArray">
+                        <div class="fielset_scroll" #formContainer>
+                            <fieldset *ngFor="let row of stepArray.controls; let i = index" [formGroupName]="i"
+                                class="form-row">
+                                <legend>Process: {{i+1}}</legend>
+                                <div class="row">
+                                    <!-- <div class="col-sm-4 pe-0">
+                                        <div class="form-group mb-1">
+                                            <label for="fname">Unique id</label>
+                                            <input type="text" class="form-control" placeholder="" maxlength="6"
+                                                formControlName="processId" readonly>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-sm-4" *ngIf="row.get('processId')?.value">
+                                        <div class="form-group mb-1">
+                                            <label for="fname">Process Id</label>
+                                            <div class="form-control-static">
+                                                <div class="form-control">
+                                                    {{ row.get('processId')?.value }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group mb-1">
+                                            <label for="fname">Process Name <span class="requireds"></span></label>
+                                            <input type="text" class="form-control" placeholder="Enter Process"
+                                                maxlength="50" formControlName="stepName">
+                                            <span class="text-danger mat-error"
+                                                *ngIf="row.get('stepName')?.touched && row.get('stepName')?.invalid">
+                                                <div *ngIf="row.get('stepName')?.errors?.['required']">Please enter a
+                                                    process name.</div>
+                                                <div *ngIf="row.get('stepName')?.errors?.['pattern']">Please enter a
+                                                    valid process name.</div>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group mb-1">
+                                            <label for="fname">Description</label>
+                                            <input type="text" class="form-control" placeholder="Enter Description"
+                                                maxlength="100" formControlName="stepDescription">
+
+                                            <span class="text-danger mat-error"
+                                                *ngIf="row.get('stepDescription')?.touched && row.get('stepDescription')?.invalid">
+                                                <div *ngIf="row.get('stepDescription')?.errors?.['pattern']">Please
+                                                    enter a
+                                                    valid Description.</div>
+                                            </span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group mb-1">
+                                            <!-- <label for="lname">Log File Path <span class="requireds"></span>
+                                                <div class="info-icon">
+                                                    <span class="tooltip-text">Example: /home/etc/filename.txt</span>
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                </div>
+                                            </label> -->
+                                            <label for="lname" class="label_tooltip">Log File Path <span
+                                                    class="requireds"></span>
+                                                <h4 matTooltipClass="allow-cr"
+                                                    matTooltip="Example: /home/etc/filename.txt"
+                                                    matTooltipPosition="above" class="tooltip-text">
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                </h4>
+                                            </label>
+
+                                            <input type="text" class="form-control" placeholder="Enter Log File Path"
+                                                formControlName="filePath" maxlength="150">
+
+                                            <span class="text-danger mat-error"
+                                                *ngIf="row.get('filePath')?.touched && row.get('filePath')?.invalid">
+                                                <div *ngIf="row.get('filePath')?.errors?.['required']">Please enter a
+                                                    path.</div>
+                                                <div *ngIf="row.get('filePath')?.errors?.['pattern']">Please enter a
+                                                    valid path.</div>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group mb-1">
+                                            <label for="lname" class="label_tooltip">Excecutable Script
+                                                <h4 matTooltipClass="allow-cr"
+                                                    matTooltip="Example: /home/etc/filename.txt"
+                                                    matTooltipPosition="above" class="tooltip-text">
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                </h4>
+                                            </label>
+
+                                            <input type="text" class="form-control"
+                                                placeholder="Enter Excecutable Script" formControlName="shellScript"
+                                                maxlength="150">
+                                            <span class="text-danger mat-error"
+                                                *ngIf="row.get('shellScript')?.touched && row.get('shellScript')?.invalid">
+
+                                                <div *ngIf="row.get('shellScript')?.errors?.['pattern']">Please enter a
+                                                    valid path.</div>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group mb-1">
+                                            <label for="lname">No. Of Task <span class="requireds"></span></label>
+                                            <input type="text" formControlName="noOfProcess" class="form-control"
+                                                placeholder="Enter No. Of Task" maxlength="5" min="0"
+                                                oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                                            <span class="text-danger mat-error"
+                                                *ngIf="row.get('noOfProcess')?.touched && row.get('noOfProcess')?.invalid">
+                                                <div *ngIf="row.get('noOfProcess')?.errors?.['required']">Please enter
+                                                    the number of task.</div>
+                                                <div *ngIf="row.get('noOfProcess')?.errors?.['pattern']">Please enter
+                                                    numberic value.</div>
+                                            </span>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="button_adding"
+                                        [ngStyle]="{ 'display': stepArray.length > 1 ? 'block' : 'none' }">
+                                        <button title="remove" (click)="removeRow(i)"><i
+                                                class="fa-solid fa-circle-xmark"></i></button>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                        <div class="button-add">
+                            <button title="add" (click)="addRow()"><i class="fa-solid fa-circle-plus"></i> Add
+                                Process</button>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 text-center mt-3">
+                        <div class="form-buttons">
+                            <button class="btn btn-primary btn-reset" (click)="resetform()"
+                                [disabled]="!monitoringForm.dirty">Reset</button>
+                            <button class="btn btn-success btn-submit ms-sm-2 mt-2 mt-sm-0"
+                                [disabled]="!monitoringForm.dirty || monitoringForm.invalid"
+                                (click)="onSubmit()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- <div class="container" #formContainer>
+                <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+                    <div formArrayName="rows">
+                        <div *ngFor="let row of rows.controls; let i = index" [formGroupName]="i" class="form-row">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Step name:</label>
+                                        <input type="text" class="form-control" formControlName="stepName"
+                                            placeholder="Enter step">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>File Path</label>
+                                        <input type="text" class="form-control" formControlName="filePath"
+                                            placeholder="Enter file path">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Shell Script</label>
+                                        <input type="text" class="form-control" formControlName="shellScript"
+                                            placeholder="Enter shell script">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>No. of process</label>
+                                        <input type="text" class="form-control" formControlName="noOfProcess"
+                                            placeholder="Enter no of process">
+                                    </div>
+                                </div>
+                                <div class="button-actions">
+                                    <button type="button" (click)="removeRow(i)">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-add">
+                        <button type="button" (click)="addRow()">+ Add Step</button>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div> -->
+        </div>
+    </div>
+</div>

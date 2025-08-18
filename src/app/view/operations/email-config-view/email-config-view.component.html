@@ -1,0 +1,50 @@
+<div class="modal-dialog modal_all email_confi_view_template">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Email Config View</h5>
+            <button type="button" class="btn-close"><i class="fas fa-times" (click)="closeUserDialogRef()"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>Group Name</th>
+                                    <td>{{this.data.details.GROUP_NAME}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Created By</th>
+                                    <td>{{this.data.details.CREATED_BY}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Created on</th>
+                                    <td>{{this.data.details.CREATED_DATE |date:'YYYY-MM-dd HH:mm:ss'}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Reports Name</th>
+                                    <td>
+                                        <ul *ngFor="let report of this.reportNameArr">
+                                            <li>{{report}}</li>
+
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>
+                                        <ul *ngFor="let email of this.emailArr">
+                                            <li>{{email}}</li>
+
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,360 @@
+<div class="row align-items-center monitoring_page_list" [ngClass]="classTrue==true?'filter_open':''">
+
+    <div class="col-sm-12">
+        <div class="title-part">
+            <h2>Monitoring</h2>
+            <div class="upper_button">
+                <button class="btn btn_create" (click)="createPopup()" *ngIf="listingDiv==false"
+                    [disabled]="module[0].CREATE_ACCESS==0"><i class="fa-solid fa-plus"></i>
+                    Create</button>
+
+                <button class="execute_btn" *ngIf="stepsDiv==false "
+                    (click)="openDialogWithSingleExecute(singleExecute,1,listingArr[0].JOB_NAME,'')">
+                    <i class="fas fa-cog"></i> Job Execute
+                </button>
+
+                <button class="btn back_btn_monitoring" (click)="backToViewPage()" *ngIf="stepsDiv==false "
+                    data-toggle="tooltip" title="Back">
+                    <i class="fas fa-long-arrow-left"></i> Back</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 p_relative mt-2" *ngIf="stepsDiv==false "><!----*ngIf="stepsDiv==false "-->
+        <div class="wrapper">
+            <!-- <nav [ngClass]="{'active': sidebarActive}" id="sidebar"> -->
+            <nav id="sidebar" [ngClass]="{'active': sidebarActive}" class="sidebar">
+                <div class="sidebar-header">
+                    <h3>Process Listing</h3>
+                </div>
+                <h4>{{this.processName}}</h4>
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item" *ngFor="let stepName of listingArr let i=index;">
+                        <h2 class="accordion-header" [id]="'heading'+i">
+                            <!-- {{ activeButton}} -->
+                            <!-- <button (click)="setActive(i,stepName.FILE_PATH,stepName.STATUS,stepName.PROC_ID)"
+                                title="{{stepName.STEP_NAME}}"
+                                [ngClass]="{'active': (activeButton === 'InProgress' ? activeButton === stepName.STATUS : activeButton === i)}"
+
+                                class="accordion-button" type="button" data-bs-toggle="collapse"
+                                [attr.data-bs-target]="'#collapse' + i"
+                                [attr.aria-expanded]="i === 0 ? 'true' : 'false'" [ngClass]="{'collapsed': i !== 0}"
+                                [attr.aria-controls]="'collapse' + i"> -->
+                            <button (click)="setActive(i, stepName.FILE_PATH, stepName.STATUS, stepName.HOST_NAME)"
+                                title="{{stepName.STEP_NAME}}"
+                                [ngClass]="{'active': activeButton==i, 'collapsed': activeButton != i}"
+                                class="accordion-button " type="button" data-bs-toggle="collapse"
+                                [attr.data-bs-target]="'#collapse' + i"
+                                [attr.aria-expanded]="stepName.STATUS !== 'Waiting' && (i === activeButton || stepName.STATUS === 'InProgress' || stepName.STATUS === 'Failed') ? 'true' : 'false'"
+                                [attr.aria-controls]="'collapse' + i"
+                                [disabled]="is_loader || stepName.STATUS === 'Waiting'">
+
+                                <img *ngIf="stepName.STATUS=='Success'"
+                                    [ngClass]="{'status-success': stepName.STATUS == 'Success'}"
+                                    src="../../../../assets/images/check-green.png">
+
+                                <img *ngIf="stepName.STATUS=='Failed'"
+                                    [ngClass]="{'status-failed': stepName.STATUS == 'Failed'}"
+                                    src="../../../../assets/images/check-red.png">
+
+                                <span [ngClass]="{'status-in-progress': stepName.STATUS == 'InProgress'}">
+                                    <img *ngIf="stepName.STATUS=='InProgress'"
+                                        src="../../../../assets/images/inprocess.png"></span>
+
+                                <img *ngIf="stepName.STATUS=='Waiting'"
+                                    [ngClass]="{'status-waiting': stepName.STATUS == 'Waiting'}"
+                                    src="../../../../assets/images/check-gray.png">
+                                {{stepName.STEP_NAME?.length>16? (stepName.STEP_NAME | slice:0:16)+'...':stepName.STEP_NAME}}
+                            </button>
+                        </h2>
+                        <div [id]="'collapse'+i" class="accordion-collapse collapse"
+                            [ngClass]="{'show': stepName.STATUS !== 'Waiting' && (i === stepIndex || stepName.STATUS === 'InProgress' || stepName.STATUS === 'Failed')}"
+                            [attr.aria-labelledby]="'heading'+i" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <ul class="list-unstyled">
+                                    <li><span>
+                                            <img src="../../../../assets/images/monitoring-icon1.svg">
+                                            Process Status:</span>
+                                        <span class="badge" [ngClass]="{
+                                                    'bg-success text-light': stepName.STATUS === 'Success',
+                                                    'bg-danger text-light': stepName.STATUS === 'Failed',
+                                                    'bg-warning text-dark': stepName.STATUS === 'InProgress'
+                                                  }">
+                                            {{stepName.STATUS}}
+                                        </span>
+                                    </li>
+                                    <li><span><img src="../../../../assets/images/monitoring-icon7.svg"> Log
+                                            Time:</span>
+                                        {{stepName.LOG_TIME!=null? stepName.LOG_TIME :''}}
+                                    </li>
+                                    <li><span><img src="../../../../assets/images/monitoring-icon2.svg">
+                                            No of Task:</span>
+                                        {{stepName.NO_OF_PROCESS}}
+                                    </li>
+                                    <li><span><i class="fa-solid fa-chart-line"></i>In
+                                            Progress
+                                            Task:</span>
+                                        {{stepName.INPROGRESS_PROCESS}}
+                                    </li>
+                                    <li><span><img src="../../../../assets/images/monitoring-icon4.svg"> Complete
+                                            Task:</span>
+                                        {{stepName.COMPLETE_PROCESS}}
+                                    </li>
+                                    <li><span><img src="../../../../assets/images/monitoring-icon7.svg"> Error Task
+                                            Count:</span>
+                                        {{stepName.ERROR_PROCESS}}
+                                    </li>
+                                    <!-- <li><span><i
+                                                    class="fa-solid fa-chart-line"></i>Failed
+                                                Process:</span>
+                                            {{stepName.ERROR_PROCESS}}</li> -->
+                                    <li><span><img src="../../../../assets/images/monitoring-icon5.svg">
+                                            Start Time:</span>
+                                        {{stepName.START_PROCESS_TIME |date:'YYYY-MM-dd HH:mm:ss'}}
+                                    </li>
+                                    <li><span><img src="../../../../assets/images/monitoring-icon6.svg">
+                                            End Time:
+                                        </span>
+                                        {{stepName.END_PROCESS_TIME |date:'YYYY-MM-dd HH:mm:ss'}}
+                                    </li>
+                                    <li><span><img src="../../../../assets/images/monitoring-icon7.svg"> Last Turnover
+                                            Time:</span>
+                                        {{stepName.EXPECTED_TIME!=0 || stepName.EXPECTED_TIME!=null ? stepName.EXPECTED_TIME+'Hrs':''}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </nav>
+
+            <div id="content" class="loader">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <button (click)="toggleSidebar()" type="button" id="sidebarCollapse" class="btn btn-taskbar">
+                            <i class="fas fa-align-left"></i>
+                            <span></span>
+                        </button>
+                        <div class="end_taskbar">
+
+                            <button title="Execute" class="execute_btn_icon" *ngIf="this.scriptBtn==false"
+                                (click)="openDialogWithSingleExecute(singleExecute,0,this.processNameReExc,this.filePathName)">
+                                <img src="../../../../assets/images/execute-icon.png">
+                            </button>
+                            <button [disabled]="refreshBtn==true"
+                                (click)="refreshScreen(this.filePathName,this.refreshJobId)" type="button"
+                                title="Refresh data" class="refresh_btn">
+                                <span><i class="fa-solid fa-rotate"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="log_black_sec">
+                    <div class="copy_btn-text">
+                        <button title="Copy to clipboard" class="btn btn-primary copy-btn" (click)="copyToClipboard()"
+                            (mouseleave)="hideTooltip()"><svg focusable="false" preserveAspectRatio="xMidYMid meet"
+                                fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true"
+                                class="cds--snippet__icon" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M28,10V28H10V10H28m0-2H10a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2Z">
+                                </path>
+                                <path d="M4,18H2V4A2,2,0,0,1,4,2H18V4H4Z"></path>
+                            </svg></button>
+                        <div class="tooltip" [class.show]="showTooltip">Copied!</div>
+                    </div>
+                    <div class="loader-section" *ngIf="is_loader">
+                        <div class="loader_single"></div>
+                    </div>
+                    <pre class="codeblock" #logContainer>
+                        <code id="logContent" class="hljs language-plaintext-ibm">
+                            {{this.fileContent}}                            
+                          
+                        </code>
+                    </pre>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="col-sm-12 p_relative mt-2" *ngIf="listingDiv==false"><!----*ngIf="listingDiv==false"----->
+        <div class="table-responsive listing-table monitoring_listingpage">
+            <table datatable [dtOptions]="dtOptions" [ngClass]="{ datatable_noRecord: roleList?.length != 0 }"
+                class="table resize common-table mb-0" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Job Name</th>
+                        <th>Job Status</th>
+                        <th>Action Performed By</th>
+                        <th>Action Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor=" let item of roleList ; let i=index">
+
+                        <td>{{item.RN}}</td>
+                        <td>{{item.JOB_NAME}}</td>
+                        <td><span class="badge" [ngClass]="{ 
+                            'bg-success' : item.STATUS==='Success',
+                            'bg-danger' :item.STATUS==='Failed',
+                            'dot_process': item.STATUS==='InProgress',
+                            'dot_waiting':item.STATUS === 'Waiting'
+                    
+                    }">{{item.STATUS}}</span></td>
+                        <td>{{item.USER_NAME}}</td>
+                        <td>{{item.CREATED_DATE |date:'YYYY-MM-dd HH:mm:ss'}}</td>
+                        <td class="text-left action_td">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <button title="View" (click)="viewStepsMonitoring(item.JOB_ID)"
+                                            class="edit_green ml-0" [disabled]="item.STATUS=='Waiting'">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button title="Flow Chart" (click)="MonitoringGraphPopup(item)"
+                                            class="edit_green ml-0">
+                                            <i class="fas fa-project-diagram"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button [disabled]="module[0].EDIT_ACCESS==0" title="Edit"
+                                            (click)="editStepsMonitoringPopup(item.JOB_ID,'edit')"
+                                            class="edit_green ml-0" title="Edit">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </button>
+
+                                    </td>
+                                    <td>
+                                        <button [disabled]="module[0].DELETE_ACCESS==0" class="trash_red" title="Delete"
+                                            (click)="deleteJob(item)">
+                                            <i class=" fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<!------------------>
+<ng-template #singleExecute>
+    <div class="modal-dialog modal_all monitoring_create" *ngIf="isFormVisible">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{popuptitle}}
+                </h5>
+                <button type="button" class="btn-close" (click)="resetValues()" [mat-dialog-close]="false"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="table-responsive top_monitoring-tril">
+                            <table class="table table-striped mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th>Process Name</th>
+                                        <td>{{this.titleHead}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>File Path</th>
+                                        <td>{{ popupFlag === 0 ? this.stepScript : listingArr[0].JOB_SCRIPT}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr />
+                        <form [formGroup]="singleExecuteForm">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Host IP Address<span class="requireds"></span></label>
+                                        <input type="text" class="form-control" formControlName="hostName"
+                                            placeholder="Enter Host IP">
+
+                                        <span class="text-danger mat-error"
+                                            *ngIf="(singleExecuteFormControlls['hostName'].touched)&& singleExecuteFormControlls['hostName'].invalid">
+                                            <div *ngIf="singleExecuteFormControlls['hostName'].errors?.['required']">
+                                                Please enter Host IP.
+                                            </div>
+                                            <div *ngIf="singleExecuteFormControlls['hostName'].errors?.['pattern']">
+                                                Please
+                                                enter a
+                                                valid Host IP.
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">User Name<span class="requireds"></span></label>
+                                        <input type="text" class="form-control" formControlName="userName"
+                                            placeholder="Enter User Name">
+
+                                        <span class="text-danger mat-error"
+                                            *ngIf="(singleExecuteFormControlls['userName'].touched)&& singleExecuteFormControlls['userName'].invalid">
+                                            <div *ngIf="singleExecuteFormControlls['userName'].errors?.['required']">
+                                                Please enter User name.
+                                            </div>
+                                            <div *ngIf="singleExecuteFormControlls['userName'].errors?.['pattern']">
+                                                Please
+                                                enter a
+                                                valid User
+                                                name.
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group pass_field mb-3">
+                                        <label class="form-label">User Password<span class="requireds"></span></label>
+                                        <div class="input-group">
+                                            <input [type]="isShowPassword?'text':'password'" class="form-control"
+                                                formControlName="userPassword" placeholder="User Password"
+                                                autocomplete="off">
+
+                                            <div class="input-group-addon">
+                                                <i *ngIf="isShowPassword==false" class="fas fa-eye-slash "
+                                                    aria-hidden="true" (click)="isShowPassword= true"></i>
+                                                <i *ngIf="isShowPassword==true" class="fas fa-eye" aria-hidden="true"
+                                                    (click)="isShowPassword= false"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 text-center mt-3">
+                                    <div class="form-buttons">
+                                        <button class="btn btn-primary btn-reset" [disabled]="!singleExecuteForm.dirty"
+                                            (click)="resetform()">Reset</button>
+                                        <button class="btn btn-success btn-submit ms-sm-2 mt-2 mt-sm-0"
+                                            (click)="onSubmit()"
+                                            [disabled]="!singleExecuteForm.dirty || singleExecuteForm.invalid">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

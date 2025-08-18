@@ -1,0 +1,38 @@
+<table datatable [dtOptions]="dtOptions" class="table resize common-table mb-0" style="width: 100%"
+    [ngClass]="{ datatable_noRecord: roleList?.length != 0 }" *ngIf="listView">
+    <thead>
+        <tr>
+            <th>S.No</th>
+            <th>Action Performed by</th>
+            <th>Log Action</th>
+            <th>Role Name</th>
+            <th>Action Date</th>
+            <th>View</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor=" let item of roleList ; let i=index">
+            <td>{{item.RN}}</td>
+            <td title="{{item.USER_NAME}}">{{item.USER_NAME?.length>18? (item.USER_NAME |
+                            slice:0:18)+'...':item.USER_NAME}}</td>
+            <td><span
+                    [ngClass]="item.LOG_ACTION =='Update'? 'badge bg-success': item.LOG_ACTION=='Insert' ? 'badge bg-primary':'badge bg-danger'">{{item.LOG_ACTION}}</span>
+            </td>
+            
+            <td class="td_capital" title="{{item.LOG_NAME}}">{{item.LOG_NAME?.length>18? (item.LOG_NAME |
+                            slice:0:18)+'...':item.LOG_NAME}}</td>
+            <td>{{item.LOG_CREATED_DATE}}</td>
+            <td class="text-left action_td">
+                <table>
+                    <tr>
+                        <td>
+                            <button title="View" class="edit_green ml-0" (click)="dialogBox(item)">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>

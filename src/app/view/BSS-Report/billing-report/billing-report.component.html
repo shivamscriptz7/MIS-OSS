@@ -1,0 +1,369 @@
+<div class="reportpage_section" [ngClass]="classTrue===true?'filter_open':''">
+
+    <div class="row align-items-center">
+        <div class="col-sm-12">
+            <div class="title-part">
+                <!-- <h2>MIS Report</h2> -->
+
+                <ul class="breadcrum" *ngFor="let name of bredCrumParentName">
+                    <li>{{name.parent_name}}</li>
+                    <li class="active">{{name.value}}</li>
+                </ul>
+
+                <div class="upper_button d-flex" *ngIf="exportButtonEnable==true">
+                    <div class="dropdown export-btn d-flex float-end">
+                        <button type="button" data-bs-toggle="dropdown" aria-expanded="true"
+                            class="dropdown-toggle common-btn export_btn show">
+                            <i class="fa-regular fa-share-from-square"></i> Export as </button>
+                        <div aria-labelledby="dropdownMenuButton1" class="dropdown-menu">
+                            <a class="dropdown-item" (click)="downloadExcel()"><i class="fa-solid fa-file-lines"></i>
+                                Excel file </a>
+                            <!-- <div *ngIf="listKeys.length >11"> -->
+                            <div>
+                                <a class="dropdown-item" (click)="downloadPDF()"><i class="fa-solid fa-file-lines"></i>
+                                    PDF
+                                    file</a>
+                            </div>
+                            <a class="dropdown-item" (click)="downloadCSV()"><i class="fa-solid fa-file-lines"></i> CSV
+                                file</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row h-100 mt-2">
+
+        <div class="col-sm-3 col-md-2 pe-md-0 mb-sm-0 mb-2">
+            <div class="report_lstng">
+                <div class="row">
+                    <div class="col-sm-12 filter_icon_sort">
+
+                        <h4>Reports Listing <button class="btn btn-secondary dropdown-toggle" type="button"
+                                id="dropdownMenuButtonList" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="../../../../assets/images/filter.png"></button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonList">
+                                <li><a class="dropdown-item" [ngClass]="{'active': isActiveClass==='All'}" (click)="
+                                        getRepoFilter('All')">All</a>
+                                </li>
+                                <li><a class="dropdown-item" [ngClass]="{'active': isActiveClass==='1'}"
+                                        (click)="getRepoFilter('1')">Scheduled</a>
+                                </li>
+                                <li><a class="dropdown-item" [ngClass]="{'active': isActiveClass==='2'}"
+                                        (click)="getRepoFilter('2')">Immediate
+                                        Execute</a>
+                                </li>
+                            </ul>
+                        </h4>
+                        <div class="listing_search">
+                            <input type="search" placeholder="Search listing" class="form-control"
+                                [(ngModel)]="searchData" (input)="searchFunction()">
+                        </div>
+
+                        <!-- <ul>
+                            <li *ngFor="let reportName of filteredReports">
+                                <label title="{{reportName.REPO_NAME}}" class="custom_radio">{{reportName.REPO_NAME}}
+                                    <input type="radio" name="report_file" (click)="getReportQuery(reportName)">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                        </ul> -->
+
+                        <div class="table-responsive reportleft_responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr *ngFor="let reportName of filteredReports">
+                                        <td title="{{reportName.REPO_NAME}}">
+                                            <label class="custom_radio">{{reportName.REPO_NAME}}
+                                                <input type="radio" name="report_file"
+                                                    (click)="getReportQuery(reportName)">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            [ngClass]="!this.selectedRepoFilter && !this.selectedRepoBA && !this.selectedRepoCircle?'col-sm-9 col-md-10':'col-sm-7 col-md-8'">
+            <!---col-sm-10-->
+
+            <div class="filter_table_design filter_design">
+                <div class="row align-items-center">
+                    <div class="col-sm-12" style="padding: 0px 2px">
+                        <div class="title">
+                            <h4>
+                                {{this.selectedReportName}}
+                                <span *ngIf="!selectedReportName">Query Data</span>
+                            </h4>
+                        </div>
+
+                    </div>
+                    <!-- *ngIf="this.tableShown==false" -->
+                    <div class="col-sm-12">
+                        <div class="placeholder_box text-center"
+                            *ngIf="this.tableShown==false && this.selectedFormat !== '1' ">
+                            <div class=" withoutdata_box" *ngIf="this.selectedFormat !== '1' ">
+                                <img *ngIf="selectedRepoFormat=='1' || selectedQueryResult?.length==0 "
+                                    src="../../../../assets/images/no-available.svg">
+                                <img *ngIf="selectedRepoFormat!='1'" src="../../../../assets/images/select_report.svg">
+                                <div class="withoutdata_box_inner">
+                                    <p *ngIf="selectedRepoFormat!='1'">Please select report from report listing.<br />
+                                    </p>
+                                    <p *ngIf="selectedRepoFormat=='1' || selectedQueryResult?.length==0 ">No data found
+                                        or report not yet executed.<br />
+                                    </p>
+                                    <!--p *ngif="this.this.selectedReportName.length!=0">No data found or report not yet executed.<br /></!--p-->
+
+                                    <div
+                                        *ngIf="selectedRepoFormat=='1' && !this.selectedRepoFilter && !this.selectedRepoBA && !this.selectedRepoCircle && !this.errorShown && !this.tableShown">
+                                        <button *ngIf="this.selectedReportQuery" class="btn btn_create btn_execute"
+                                            (click)="executeBillingQuery()">Execute
+                                            Query</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="placeholder_box text-center" *ngIf="this.errorShown==true">
+                            <div class="without_box_error">
+                                <h2>Error</h2>
+                                <img src="../../../../assets/images/oops-img.svg" class="mb-2">
+                                <div class="withoutdata_box_error_inner">
+                                    <p>{{this.errorMsg}}</p>
+                                    <!-- <button *ngIf="this.selectedReportQuery" class="btn btn_create btn_execute"
+                                        (click)="executeBillingQuery()">Execute
+                                        Query</button> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive listing-table billing_report_table scroll-container"
+                            style="height: calc(100vh - 200px); overflow-y: auto;"
+                            *ngIf="tableShown==true && this.errorShown==false && this.selectedFormat != '1'"
+                            (scroll)="onScroll($event)">
+                            <table class="table common-table">
+                                <thead>
+                                    <tr>
+                                        <th *ngFor="let header of this.listKeys">
+                                            <!-- <input type="checkbox" (change)="selectColumn($event)" value="{{header}}"> -->
+                                            {{header}}
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let item of top50Data;">
+                                        <td title="{{item[header]}}" *ngFor="let header of this.listKeys">
+                                            <span>{{item[header]}}</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="table-responsive listing-table billing_report_table"
+                            style="height: calc(100vh - 200px);" *ngIf="this.selectedFormat == '1'">
+                            <table class="table common-table" *ngIf="this.selectedReport.length>0">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            File Name
+                                        </th>
+                                        <th>Type</th>
+                                        <th>Report Status</th>
+                                        <th>Generated Time</th>
+                                        <th>Download</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let item of this.selectedReport">
+                                        <!-- {{item|json}} -->
+                                        <td>{{ item.REPO_NAME}}</td>
+                                        <td>{{item.REPO_FORMATS}}</td>
+                                        <td>
+                                            {{item.RECENT_STATUS}}
+                                        </td>
+                                        <td>{{item.CREATED_DATE | date:'dd/MM/yy HH:mm'}}</td>
+                                        <td class="report_dnlod_icons">
+
+                                            <!-- <table> -->
+                                            <ul>
+                                                <li *ngFor="let formats of item.REPO_FORMATS?.split(',')">
+                                                    <span title="PDF Download" *ngIf="formats=='Pdf'"><a
+                                                            href='../../../../../uploads/{{item.REPORT_PATH}}/{{this.repoFolder}}/{{ item.REPORT_NAME}}.{{formats}}'
+                                                            download="{{item.REPORT_NAME}}.{{formats}}"><i
+                                                                class="fa-solid fa-file-pdf"></i></a></span>
+                                                    <span title="Excel Download" *ngIf="formats=='xlsx'"><a
+                                                            href='../../../../../uploads/{{item.REPORT_PATH}}/{{this.repoFolder}}/{{ item.REPORT_NAME}}.{{formats}}'
+                                                            download="{{ item.REPORT_NAME}}.{{formats}}"><i
+                                                                class="fa-solid fa-file-excel"></i></a>
+                                                    </span>
+                                                    <span title="CSV Download" *ngIf="formats=='csv'"><a
+                                                            href='../../../../../uploads/{{item.REPORT_PATH}}/{{this.repoFolder}}/{{ item.REPORT_NAME}}.{{formats}}'
+                                                            download="{{ item.REPORT_NAME}}.{{formats}}"><i
+                                                                class="fa-solid fa-file-csv"></i></a></span>
+                                                </li>
+                                            </ul>
+                                            <!-- </table> -->
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+
+                            <div class="placeholder_box text-center" style="height: 100%;"
+                                *ngIf="this.selectedReport.length===0">
+                                <div class=" withoutdata_box">
+                                    <img src="../../../../assets/images/no-scheduled.svg">
+                                    <div class="withoutdata_box_inner">
+                                        <p
+                                            style="width: 310px;margin-left: auto;margin-right: auto;margin-bottom: 40px;">
+                                            Report is not scheduled yet. Please wait for download the report....</p>
+                                        <!-- <div>
+                                            <button class="btn btn_create btn_execute"
+                                                (click)="executeBillingQuery()">Dashboard</button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <!----******* Filter************---->
+        <div class="col-sm-2 ps-0"
+            *ngIf=" isFilterShown && (this.selectedRepoFilter || this.selectedRepoBA || this.selectedRepoCircle)">
+            <div class="filter-sidebar filter_table_design filter_design">
+                <!-- <button class="close" (click)="classTrue=false"><i class="fas fa-times"></i></button> -->
+                <form #reportForm="ngForm" autocomplete="off">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h2>Report Filter</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 filtersidebar_scroll">
+                            <div class="row" *ngFor="let item of this.selectedRepoFilter; let i=index;">
+                                <div class="col-sm-12" *ngIf="item.type=='Date'">
+                                    <div class="form-group report_datepicker">
+                                        <label class="form-label">{{item.input}}</label> <span class="requireds"></span>
+                                        <dp-date-picker class="form-control arow_picker" placeholder="Please Select"
+                                            theme="dp-material" [(ngModel)]="item.dyncdate" id="dyncdate{{i}}"
+                                            name="dyncdate{{i}}" [config]="config" [required]="item.isRequired">
+                                        </dp-date-picker>
+                                        <div *ngIf="!reportForm.controls['dyncdate' + i]?.valid && reportForm.controls['dyncdate' + i]?.touched"
+                                            class="error-message text-danger mat-error">
+                                            Field is required.
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12" *ngIf="item.type=='String/Number' ">
+                                    <div class="form-group">
+                                        <label class="form-label">{{item.input}}</label> <span class="requireds"></span>
+                                        <input type="text" [(ngModel)]="item.inputField" placeholder="Please Enter....."
+                                            name="inputField{{i}}" class="form-control" [required]="item.isRequired">
+                                        <div *ngIf="!reportForm.controls['inputField' + i]?.valid && reportForm.controls['inputField' + i]?.touched"
+                                            class="error-message text-danger mat-error">
+                                            Field is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12" *ngIf="this.selectedRepoCircle==1">
+                                    <div class="form-group">
+                                        <label>Circle</label><span class="requireds"></span>
+                                        <mat-form-field class="custom_matselect arow_picker_mat">
+                                            <mat-select placeholder="Select Circle" [(ngModel)]="filterkeys.circleField"
+                                                [required]="requiredFiled" name="circleField"
+                                                (selectionChange)="onItemSelectCircle($event.value)">
+
+                                                <mat-option *ngFor="let circle of circleData"
+                                                    [value]="circle?.CIRCLE_ID">
+                                                    {{ circle.CIRCLE_NAME }}</mat-option>
+
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <div *ngIf="!reportForm.controls['circleField']?.valid && reportForm.controls['circleField']?.touched"
+                                            class="error-message text-danger mat-error">
+                                            Field is required.
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12" *ngIf="this.selectedRepoBA==1">
+                                    <div class="form-group">
+                                        <label><span class="text-uppercase">BA</span></label><span
+                                            class="requireds"></span>
+                                        <mat-form-field class="custom_matselect arow_picker_mat" floatLabel="never">
+
+                                            <mat-select disableOptionCentering placeholder="Select BA"
+                                                [(ngModel)]="filterkeys.baField" multiple #select1
+                                                (selectionChange)="onItemSelectBA($event.value)"
+                                                [required]="requiredBAFiled" name="baField">
+
+                                                <mat-select-trigger>
+                                                    {{reportForm.controls['baField'].value ?displayBaName(reportForm.controls['baField'].value[0]) : ''}}
+
+                                                    <span *ngIf="reportForm.controls['baField'].value?.length> 1"
+                                                        class="additional-selection">
+                                                        (+{{reportForm.controls['baField'].value?.length-1}}{{reportForm.controls['baField'].value?.length
+                                                        === 2 ? 'other' : 'others'}})
+                                                    </span>
+                                                    <span *ngIf="reportForm.controls['baField'].value == '-1' ">
+                                                        All
+                                                    </span>
+                                                </mat-select-trigger>
+                                                <mat-option [disabled]="allSSACheck" value="-1"
+                                                    *ngIf="this.ssaListData?.length!=0">All</mat-option>
+
+                                                <mat-option [value]="item.SSA_CODE" [disabled]=" ssaCheck "
+                                                    *ngFor="let item of this.ssaListData">
+                                                    {{item.SC_DESC}}
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field>
+
+                                        <div *ngIf="!reportForm.controls['baField']?.valid && reportForm.controls['baField']?.touched"
+                                            class="error-message text-danger mat-error">
+                                            Field is required.
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="submit_button-filtr">
+                                        <button type="reset" (click)="resetForm(reportForm)" class="btn-reset"
+                                            [disabled]="!reportForm?.dirty">Reset</button>
+                                        <button (click)="submitForm(reportForm)" class="btn_create" type="submit"
+                                            [disabled]="!( reportForm?.valid)">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
