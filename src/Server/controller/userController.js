@@ -6,7 +6,7 @@
  * Copyright: Echelon Edge Pvt. Ltd.
  */
 "use strict"
-const { dbConnection } = require('../CommonFiles/connection');
+const { dbConnection } = require("../CommonFiles/connection");
 // const pool = require('../CommonFiles/connection');
 const userCtrl = {};
 const oracledb = require('oracledb');
@@ -17,7 +17,7 @@ const bcrypt = require('bcryptjs');
 const mail = require('../CommonFiles/mailService');
 const { async, catchError } = require('rxjs');
 const socketService = require('../CommonFiles/socket_server')
-var dbCon;
+//let client;
 const sceretEncrypt_Decryptkey = require('../../../config.json')
 
 // const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(echelonedge.com)$/
@@ -26,9 +26,16 @@ const singleSpaceValidation = /^[a-zA-Z0-9-_](\s?[a-zA-Z0-9-_]){0,50}$/
 //const singleSpace = /^[a-zA-Z0-9-_](\s?[a-zA-Z0-9-_]){0,50}$/
 
 //const alphabet=
-// var myCon = connection.then((connection) => {
-//     dbCon = connection;
-// });
+var dbCon;
+var myCon = dbConnection.then((client) => {
+    dbCon = client;
+    // console.log("PostgreSQL client assigned in usercontroller:", new Date());
+}).catch((err) => {
+    console.error("Error assigning PostgreSQL client in usercontroller:", err.message, new Date());
+});
+
+
+
 
 
 userCtrl.customValidations = (req, res, validation_obj) => {
@@ -134,214 +141,14 @@ userCtrl.customValidationsEncryptDecryption = (req, res, validation_obj) => {
 }
 
 
-// userCtrl.signIn = async (req, res) => {
-//     try {
-//         const { client } = await dbConnection;
-
-//         // Validate input data
-//         let validation = userCtrl.customValidationSignIn(req, res, [
-//             { userName: [/^.{1,100}$/, 1, ""] },
-//             { password: [/^.{1,100}$/, 1, ""] }
-//         ]);
-
-
-
-//         if (validation !== 0) {
-//             return res.end(commonFunction.getErrorResponse(validation));
-//         }
-
-//         let { userName, password } = req.body;
-//         let decryptedPassword = CryptoJS.AES.decrypt(password, sceretEncrypt_Decryptkey.encrypt_decryptKey).toString(CryptoJS.enc.Utf8);
-
-//         // const client = await pool.connect();
-//         try {
-//             await client.query('BEGIN');
-
-//             // await client.query('CALL USER_LOGIN($1, $2, $3, $4)', [userName, decryptedPassword, 'CUR_DATA', 'P_CURSOR']);
-//             await client.query('CALL get_users_info($1)', ['CUR_DATA']);
-
-//             const curDataRes = await client.query('FETCH ALL IN "CUR_DATA"');
-//             const finalData = curDataRes.rows;
-
-//             // const pCursorRes = await client.query('FETCH ALL IN "P_CURSOR"');
-//             console.log(finalData);
-//             return;
-
-//             const permData = pCursorRes.rows;
-
-//             await client.query('COMMIT');
-
-//             if (finalData[0].ERR === 'X') {
-
-//                 return res.end(commonFunction.getLoginErrRes(finalData, finalData[0].ERR, finalData[0].MSG));
-//             }
-
-
-//             // Generate token for authentication
-//             let token = auth.generateToken(finalData);
-//             const responseObj = { token };
-//             res.end(commonFunction.getLoginSuccessResponse(finalData, responseObj, permData));
-
-//             console.log(responseObj);
-
-//             if (socketService.isUserLoggedIn(finalData[0].USER_ID)) {
-//                 socketService.singleUserLogout(finalData[0].USER_ID);
-//             }
-//             socketService.singleUserLogin(finalData[0].USER_ID);
-//         } catch (innerError) {
-//             await client.query('ROLLBACK');
-//             throw innerError;
-//         } finally {
-//             client.release();
-//         }
-
-//     } catch (error) {
-
-//         res.end(commonFunction.getErrorResponse(error.toString()));
-//     }
-// }
-
-
-
-
-
-
-
-
-// userCtrl.signIn = async (req, res) => {
-//     try {
-
-//         oracledb.fetchAsString = [oracledb.CLOB];
-//         // Validate input data
-//         let validation = userCtrl.customValidationSignIn(req, res, [
-//             { userName: [/^.{1,100}$/, 1, ""] },
-//             { password: [/^.{1,100}$/, 1, ""] }
-//         ]);
-
-
-
-//         if (validation !== 0) {
-//             return res.end(commonFunction.getErrorResponse(validation));
-//         }
-
-//         let { userName, password } = req.body;
-//         let decryptedPassword = CryptoJS.AES.decrypt(password, sceretEncrypt_Decryptkey.encrypt_decryptKey).toString(CryptoJS.enc.Utf8);
-//         const result = await dbCon.execute(
-//             `BEGIN USER_LOGIN(:user_name,:user_pswd,:CUR_DATA,:P_CURSOR);END;`,
-//             {
-//                 user_name: { dir: oracledb.BIND_IN, type: oracledb.STRING, val: userName },
-//                 user_pswd: { dir: oracledb.BIND_IN, type: oracledb.STRING, val: decryptedPassword },
-//                 CUR_DATA: { dir: oracledb.BIND_OUT, type: oracledb.CURSOR },
-//                 P_CURSOR: { dir: oracledb.BIND_OUT, type: oracledb.CURSOR }
-//             }
-//         );
-
-//         const finalData = await commonFunction.getResultSet(result.outBinds.CUR_DATA);
-//         const permData = await commonFunction.getResultSet(result.outBinds.P_CURSOR);
-
-//         if (finalData[0].ERR === 'X') {
-
-//             return res.end(commonFunction.getLoginErrRes(finalData, finalData[0].ERR, finalData[0].MSG));
-//         }
-
-
-//         // Generate token for authentication
-//         let token = auth.generateToken(finalData);
-//         const responseObj = { token };
-//         res.end(commonFunction.getLoginSuccessResponse(finalData, responseObj, permData));
-
-//         if (socketService.isUserLoggedIn(finalData[0].USER_ID)) {
-//             socketService.singleUserLogout(finalData[0].USER_ID);
-//         }
-//         socketService.singleUserLogin(finalData[0].USER_ID);
-
-//     } catch (error) {
-
-//         res.end(commonFunction.getErrorResponse(error.toString()));
-//     }
-// }
-
-
-
-
-
-
-
-
-
-// function socketIo(userData) {
-//     // Handle socket connections
-//     io.on('connection', (socket) => {
-//         console.log('New client connected');
-
-//         // Handle login event
-//         socket.on('login', (userData) => {
-//             // Perform authentication logic here
-//             console.log('User logged in:', userData);
-//             // Emit event to notify the frontend about successful login
-//             socket.emit('loginSuccess', userData);
-//         });
-
-//         // Handle disconnection
-//         socket.on('disconnect', () => {
-//             console.log('Client disconnected');
-//         });
-//     });
-
-// }
-
-
-// used for update user profile 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 userCtrl.signIn = async (req, res) => {
     try {
-        const { client, release } = await dbConnection;
+        // Wait for dbCon to be assigned
+        await myCon;
 
-        console.log("start api")
+        if (!dbCon) {
+            throw new Error("Database connection not established");
+        }
 
         // Validate input data
         let validation = userCtrl.customValidationSignIn(req, res, [
@@ -357,27 +164,21 @@ userCtrl.signIn = async (req, res) => {
         let decryptedPassword = CryptoJS.AES.decrypt(password, sceretEncrypt_Decryptkey.encrypt_decryptKey).toString(CryptoJS.enc.Utf8);
 
         // Begin transaction
-        await client.query('BEGIN');
-
-        console.log("start 2")
-
-        // Execute the function
-        await client.query(`CALL user_login($1, $2, $3, $4)`, [userName, decryptedPassword, 'cur_data', 'p_cursor']);
-        console.log("after proc")
+        await dbCon.query('BEGIN');
+        // Declare cursors for PostgreSQL
+        // Execute the function (assuming user_login is a PostgreSQL function)
+        await dbCon.query(`CALL user_login($1, $2, $3, $4)`, [userName, decryptedPassword, 'cur_data', 'p_cursor']);
 
         // Fetch cursor results
-        const curDataResult = await client.query('FETCH ALL FROM cur_data');
-        const pCursorResult = await client.query('FETCH ALL FROM p_cursor');
-
-        console.log(curDataResult, "curDataResult data")
-        console.log(pCursorResult, "pCursorResult data")
+        const curDataResult = await dbCon.query('FETCH ALL FROM cur_data');
+        const pCursorResult = await dbCon.query('FETCH ALL FROM p_cursor');
 
         // Commit transaction
-        await client.query('COMMIT');
+        await dbCon.query('COMMIT');
 
         const finalData = curDataResult.rows;
         const permData = pCursorResult.rows;
-        console.log(finalData, "final data")
+
         if (finalData[0].err === 'X') {
             return res.end(commonFunction.getLoginErrRes(finalData, finalData[0].err, finalData[0].msg));
         }
@@ -392,14 +193,91 @@ userCtrl.signIn = async (req, res) => {
         }
         socketService.singleUserLogin(finalData[0].USER_ID);
 
-
-
     } catch (error) {
+        // Rollback transaction on error
+        if (dbCon) {
+            await dbCon.query('ROLLBACK');
+        }
         res.end(commonFunction.getErrorResponse(error.toString()));
     }
+    // Note: No client.release() here since dbCon is reused across requests
 };
 
 
+
+
+
+
+
+
+
+// userCtrl.signIn = async (req, res) => {
+//     try {
+//         const { client } = await dbConnection;
+
+//        // console.log("start api");
+
+//         // Validate input data
+//         let validation = userCtrl.customValidationSignIn(req, res, [
+//             { userName: [/^.{1,100}$/, 1, ""] },
+//             { password: [/^.{1,100}$/, 1, ""] }
+//         ]);
+
+//         if (validation !== 0) {
+//             return res.end(commonFunction.getErrorResponse(validation));
+//         }
+
+//         let { userName, password } = req.body;
+//         let decryptedPassword = CryptoJS.AES.decrypt(password, sceretEncrypt_Decryptkey.encrypt_decryptKey).toString(CryptoJS.enc.Utf8);
+
+//         // Begin transaction
+//         await client.query('BEGIN');
+
+//         // console.log("start 2");
+
+//         // Execute the function
+//         const queryText = `SELECT * FROM user_login($1, $2)`;
+//         const queryParams = [userName, decryptedPassword];
+//         const result = await client.query(queryText, queryParams);
+//         // console.log("after function");
+
+//         // console.log(result.rows, "oooooooooooo")
+
+//         // Process results
+//         const finalData = result.rows
+//             .filter(row => row.result_type === 'user_details')
+//             .map(row => row.result_data)[0] || {};
+//         const permData = result.rows
+//             .filter(row => row.result_type === 'permissions')
+//             .map(row => row.result_data)[0] ? [result.rows.filter(row => row.result_type === 'permissions')[0].result_data] : [];
+
+//         // console.log(finalData, "final data");
+//         // console.log(permData, "permData");
+
+//         // Commit transaction
+//         await client.query('COMMIT');
+
+//         if (finalData.err === 'X') {
+//             return res.end(commonFunction.getLoginErrRes([finalData], finalData.err, finalData.msg));
+//         }
+
+//         // Generate token for authentication
+//         let token = auth.generateToken([finalData]);
+//         const responseObj = { token };
+//         res.end(commonFunction.getLoginSuccessResponse([finalData], responseObj, permData));
+
+//         if (socketService.isUserLoggedIn(finalData.USER_ID)) {
+//             socketService.singleUserLogout(finalData.USER_ID);
+//         }
+//         socketService.singleUserLogin(finalData.USER_ID);
+
+//     } catch (error) {
+//         // Roll back transaction on error
+//         //await client.query('ROLLBACK').catch(err => console.error('Rollback error:', err));
+//         console.error('Error in signIn:', error);
+//         res.end(commonFunction.getErrorResponse(error.toString()));
+//     }
+// };
 
 
 
@@ -1729,98 +1607,52 @@ userCtrl.getSSAList = async (req, res) => {
 
 }
 
-// GET_UPDATE_LOGIN_FLAG
-// userCtrl.fetchLoginFlag = async (req, res) => {
-//     let proc_flag = 0
-//     try {
-//         const { client } = await dbConnection;
-
-//         await client.query('BEGIN');
-
-//         // await client.query('CALL USER_LOGIN($1, $2, $3, $4)', [userName, decryptedPassword, 'CUR_DATA', 'P_CURSOR']);
-//         await client.query(`
-//             CALL get_update_login_flag(
-//                 $1::varchar,
-//                 $2::bigint,
-//                 $3::int,
-//                 $4::int,
-//                 $5::refcursor
-//             )
-//         `, ['superadmin', null, null, 0, 'CUR_DATA']);
-
-//         const curDataRes = await client.query('FETCH ALL IN "CUR_DATA"');
-//         const finalData = curDataRes.rows;
-
-//         // const pCursorRes = await client.query('FETCH ALL IN "P_CURSOR"');
-//         console.log(finalData);
-//         // return;
-
-//         const permData = pCursorRes.rows;
-
-//         // await client.query('COMMIT');
-
-//     }
-//     catch (error) {
-//         console.log(error)
-//     }
-
-
-// }
 
 
 userCtrl.fetchLoginFlag = async (req, res) => {
-    let client;
     try {
-        // Get database connection
-        const db = await dbConnection;
-        client = db.client;
+        // Wait for dbCon to be assigned
+        await myCon;
+
+        if (!dbCon) {
+            throw new Error("Database connection not established");
+        }
 
         // Start transaction
-        await client.query('BEGIN');
-
-        // Call the stored procedure
-        await client.query(`CALL get_update_login_flag( $1,$2,$3,$4,$5) `, ['superadmin', null, null, 0, 'mycursor']);
-
+        await dbCon.query('BEGIN');
+        // Call the PostgreSQL stored procedure
+        const queryText = 'CALL get_update_login_flag($1, $2, $3, $4, $5)';
+        const queryValues = ['superadmin', null, null, 0, 'mycursor'];
+        await dbCon.query(queryText, queryValues);
         // Fetch data from the cursor
-        const curDataRes = await client.query('FETCH ALL IN "mycursor"');
-
-        // // Commit the transaction
-        // await client.query('COMMIT');
-
-        // Extract rows from the result
+        const curDataRes = await dbCon.query('FETCH ALL IN mycursor');
         const finalData = curDataRes.rows;
+        // Commit transaction
+        await dbCon.query('COMMIT');
 
-        // const finalData = await commonFunction.getResultSet(curDataRes.rows);
-
-
+        // Send response using commonFunction
         res.end(commonFunction.getSuccessResponse(finalData, '', 'Login flag Fetch Successfully'));
 
-
-
-
-        // Send response
-        // res.json(finalData);
     } catch (error) {
         // Roll back transaction on error
-        if (client) {
-            await client.query('ROLLBACK');
+        if (dbCon) {
+            await dbCon.query('ROLLBACK');
         }
-        console.error('Error in fetchLoginFlag:', error);
-        res.status(500).json({ error: error.message });
-    } finally {
-        // Release the client back to the pool
-        if (client) {
-            await client.release();
-        }
+        console.error('Error in fetchLoginFlag:', error.stack);
+        res.status(500).json({ error: 'Internal server error', message: error.message });
     }
+    // Note: No client.release() since dbCon is reused
 };
 
 
 
+
+
+
+
+
+
 userCtrl.update_loginFlag = async (req, res) => {
-
-
-
     try {
         const result = await dbCon.execute(
             `BEGIN GET_UPDATE_LOGIN_FLAG(:P_USERNAME,:P_USERID,:P_LOGIN_FLAG,:P_PROC_FLAG,:CUR_DATA);END;`,

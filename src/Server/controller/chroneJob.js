@@ -28,9 +28,9 @@ const moment = require('moment');
 
 var dbCon;
 var scheduleJOBList = [];
-var myCon = connection.then((connection) => {
-    dbCon = connection;
-});
+// var myCon = connection.then((connection) => {
+//     dbCon = connection;
+// });
 // Create a Nodemailer transporter
 var transporter = nodemailer.createTransport({
     service: 'gmail',

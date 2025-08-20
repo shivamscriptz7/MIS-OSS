@@ -14,11 +14,11 @@ const { async } = require('rxjs');
 const CryptoJS = require("crypto-js");
 const sceretEncrypt_Decryptkey = require('../../../config.json');
 var dbCon;
-var myCon = connection.then((connection) => {
-    dbCon = connection;
-});
+// var myCon = connection.then((connection) => {
+//     dbCon = connection;
+// });
 
-console.log(myCon, "myCon");
+//console.log(myCon, "myCon");
 const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(echelonedge.com)$/
 operationCtrl.customValidations = (req, res, validation_obj) => {
 
