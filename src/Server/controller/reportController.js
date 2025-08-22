@@ -15,9 +15,9 @@ const commonFunction = require("../CommonFiles/commonFunction");
 const CryptoJS = require("crypto-js");
 const repoUrl = require("../../../config.json");
 var dbCon;
-var myCon = connection.then((connection) => {
-    dbCon = connection;
-});
+// var myCon = connection.then((connection) => {
+//     dbCon = connection;
+// });
 
 reportCtrl.customValidations = (req, res, validation_obj) => {
     for (let i = 0; i < validation_obj.length; i++) {

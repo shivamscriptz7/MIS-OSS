@@ -14,9 +14,9 @@ const common = require('../../../config.json');
 const connection = require('../CommonFiles/connection').dbConnection;
 const oracledb = require('oracledb');
 var dbCon;
-var myCon = connection.then((connection) => {
-    dbCon = connection;
-});
+// var myCon = connection.then((connection) => {
+//     dbCon = connection;
+// });
 /**
  * Global varaiable.
  */

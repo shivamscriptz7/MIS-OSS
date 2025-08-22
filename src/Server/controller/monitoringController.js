@@ -20,9 +20,9 @@ const CryptoJS = require('crypto-js');
 const socketService = require('../CommonFiles/socket_server')
 const sceretEncrypt_Decryptkey = require('../../../config.json');
 const { log } = require('console');
-var myCon = connection.then((connection) => {
-    dbCon = connection;
-});
+// var myCon = connection.then((connection) => {
+//     dbCon = connection;
+// });
 
 const Hostname = require('../../../remote-server.json');
 const sftpClient = require('ssh2-sftp-client');
